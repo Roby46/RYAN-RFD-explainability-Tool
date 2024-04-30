@@ -1,0 +1,238 @@
+<head>
+    <!--  SUNBURST LIBRARIES -->
+    <script src="sunburst.js"></script>
+    <script src="//unpkg.com/d3"></script>
+
+    <!--  COLLAPSIBLE TREE LIBRARIES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap4.min.js"></script>
+    <!--<script src="dndTree.js"></script>-->
+
+
+  <style>
+ .node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#EEE;
+  }
+   
+  .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+   
+  .node text {
+    font-size:14px; 
+    font-family:sans-serif;
+  }
+   
+  .link {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2px;
+  }
+
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+
+  .ghostCircle.show{
+      display:block;
+  }
+
+  .ghostCircle, .activeDrag .ghostCircle{
+       display: none;
+  }
+
+  body { margin: 0;  
+  font-size: large;}
+
+  #colltree {
+    background-color: #CFE7FF !important;
+    border-radius: 20px 0px 0px 20px;
+  }
+
+  #contenitore{
+    margin-top: 10px;
+  }
+
+  #tree-container{
+    border: #343a40;
+  }
+
+  .sunburst-viz .slice path {
+    cursor: pointer;
+  }
+  
+  
+  .sunburst-viz{
+    position: inherit;
+  }
+
+  .sunburst-viz text {
+    dominant-baseline: middle;
+    text-anchor: middle;
+    pointer-events: none;
+    fill: white;
+    font-size: 1em;
+     }
+  
+  .sunburst-viz .text-contour {
+    fill: none;
+    stroke: none !important;
+  }
+  
+  .sunburst-viz .main-arc {
+    stroke-width: 4px;
+    transition: opacity .4s;
+  }
+  
+  .sunburst-viz .main-arc:hover {
+    opacity: 0.85;
+    transition: opacity .05s;
+  }
+  
+  .sunburst-viz .hidden-arc {
+    fill: none;
+  }
+  
+  .sunburst-viz .tooltip {
+    max-width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    font-size: medium;
+  }
+  
+  .sunburst-viz .tooltip-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  svg{
+    width: 80% !important;
+    height: 80% !important;
+    display: block;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tooltip {
+    opacity: 1 !important;
+ }
+
+  /* Aggiungi stile alla riga dell'intestazione */
+   #risultati thead,tfoot {
+      background-color: #007bff; /* Colore di sfondo */
+      color: white; /* Colore del testo */
+  }
+
+  /* Stile per la barra colorata con testo al centro */
+  .custom-bar {
+      background-color: #007bff; /* Colore di sfondo */
+      color: white; /* Colore del testo */
+      text-align: center; /* Testo centrato */
+      font-weight:bold;
+      font-size: 1.1em;
+      padding: 10px 0; /* Spaziatura interna */
+  }
+
+  /* Stile per il footer colorato */
+  .custom-footer {
+      background-color: #343a40; /* Colore di sfondo */
+      color: white; /* Colore del testo */
+      text-align: center; /* Testo centrato */
+      padding: 10px 0; /* Spaziatura interna */
+      width: 100%; /* Larghezza del footer */
+      position: fixed; /* Posizione fissa */
+      bottom: 0; /* Fissa il footer in basso */
+      left: 0; /* Allinea il footer a sinistra */
+  }
+
+   </style>
+</head>
+<body>
+
+<div class="custom-bar">
+   RFD Comparator
+   <img src="Images/logo_dais_bianco.png" style="width: 75px; height: 26px; float: right; margin-right: 2%;">
+</div>
+
+  <div class="" style="margin: 23px;">
+    <div class="row">
+      <div class="col-lg-12" >
+        <fieldset class="border p-2">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;">Chose results file...
+        </legend>
+        <div class="input-group">
+          <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
+          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
+        </div>
+      </fieldset>
+    </div>
+
+    
+      <div class="col-lg-6" id="contenitore">
+        <div id="tree-container"></div>
+      </div>
+      <div class="col-lg-6">
+        <div id="sunburst"></div>
+      </div>
+    
+
+
+    </div>
+      
+
+<div class="col-lg-13" style="display: none;" id="sezioneRisultati">
+  <span><br></span>
+  <table id="risultati" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+      <tr>
+          <th>LHS of Oracle</th>
+          <th>RHS of Oracle</th>
+          <th>Type</th>
+          <th>LHS of Results</th>
+          <th>RHS of Results</th>
+          <th>Explanation</th>
+      </tr>
+      </thead>
+      <tbody id="bodyrisultati">
+
+      </tbody>
+      <tfoot>
+      <tr>
+          <th>LHS of Oracle</th>
+          <th>RHS of Oracle</th>
+          <th>Type</th>
+          <th>LHS of Results</th>
+          <th>RHS of Results</th>
+          <th>Explanation</th>
+      </tr>
+      </tfoot>
+  </table>
+</div>
+
+
+<!-- Footer colorato personalizzabile -->
+<div class="custom-footer">
+</div>
+
+
+
+</body>
