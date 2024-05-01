@@ -137,12 +137,12 @@
  }
 
   #risultati{
-      text-align: center;
+      text-align: center !important;
   }
 
   /* Aggiungi stile alla riga dell'intestazione */
    #risultati thead,tfoot {
-      background-color: #007bff; /* Colore di sfondo */
+      background-color: rgb(5, 6, 45); /* Colore di sfondo */
       color: white; /* Colore del testo */
       text-align: center;
   }
@@ -154,7 +154,7 @@
 
   /* Stile per la barra colorata con testo al centro */
   .custom-bar {
-      background-color: #007bff; /* Colore di sfondo */
+      background-color: rgb(5, 6, 45); /* Colore di sfondo */
       color: white; /* Colore del testo */
       text-align: center; /* Testo centrato */
       font-weight:bold;
@@ -174,111 +174,65 @@
       left: 0; /* Allinea il footer a sinistra */
   } 
 
-
 /* CSS */
-.button-82-pushable {
-  position: relative;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  outline-offset: 4px;
-  transition: filter 250ms;
+
+/*Numero di pagina*/
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color:rgb(5, 6, 45);
+    border-color: rgb(5, 6, 45);
+}
+
+/*Bottone explainability*/
+.button-64 {
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 10px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-.button-82-shadow {
-  position: absolute;
-  top: 0;
-  left: 0;
+.button-64:active,
+.button-64:hover {
+  outline: 0;
+}
+
+.button-64 span {
+  background-color: rgb(5, 6, 45);
+  padding: 8px 8px;
+  border-radius: 6px;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
-  background: hsl(0deg 0% 0% / 0.25);
-  will-change: transform;
-  transform: translateY(2px);
-  transition:
-    transform
-    600ms
-    cubic-bezier(.3, .7, .4, 1);
+  transition: 300ms;
 }
 
-.button-82-edge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: linear-gradient(
-    to left,
-    hsl(340deg 100% 16%) 0%,
-    hsl(340deg 100% 32%) 8%,
-    hsl(340deg 100% 32%) 92%,
-    hsl(340deg 100% 16%) 100%
-  );
-}
-
-.button-82-front {
-  display: block;
-  position: relative;
-  padding: 12px 27px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  color: white;
-  background: hsl(345deg 100% 47%);
-  will-change: transform;
-  transform: translateY(-4px);
-  transition:
-    transform
-    600ms
-    cubic-bezier(.3, .7, .4, 1);
+.button-64:hover span {
+  background: none;
 }
 
 @media (min-width: 768px) {
-  .button-82-front {
-    font-size: 1.25rem;
-    padding: 12px 42px;
+  .button-64 {
+    font-size: 24px;
+    min-width: 196px;
   }
 }
-
-.button-82-pushable:hover {
-  filter: brightness(110%);
-  -webkit-filter: brightness(110%);
-}
-
-.button-82-pushable:hover .button-82-front {
-  transform: translateY(-6px);
-  transition:
-    transform
-    250ms
-    cubic-bezier(.3, .7, .4, 1.5);
-}
-
-.button-82-pushable:active .button-82-front {
-  transform: translateY(-2px);
-  transition: transform 34ms;
-}
-
-.button-82-pushable:hover .button-82-shadow {
-  transform: translateY(4px);
-  transition:
-    transform
-    250ms
-    cubic-bezier(.3, .7, .4, 1.5);
-}
-
-.button-82-pushable:active .button-82-shadow {
-  transform: translateY(1px);
-  transition: transform 34ms;
-}
-
-.button-82-pushable:focus:not(:focus-visible) {
-  outline: none;
-}
-
    </style>
 </head>
 <body>
@@ -289,17 +243,32 @@
 </div>
 
   <div class="" style="margin: 23px;">
+
     <div class="row">
-      <div class="col-lg-12" >
+
+     <!-- <div class="col-lg-12" >
         <fieldset class="border p-2">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;">Chose results file...
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload Dataset
         </legend>
         <div class="input-group">
           <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
           <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
+          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
         </div>
-      </fieldset>
-    </div>
+       </fieldset>
+      </div>-->
+
+      
+      <div class="col-lg-12" >
+        <fieldset class="border p-2">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload results file...
+        </legend>
+        <div class="input-group">
+          <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
+          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()" >Upload</button>
+        </div>
+       </fieldset>
+      </div>
 
     
       <div class="col-lg-6" id="contenitore">
@@ -342,12 +311,6 @@
       </tfoot>
   </table>
 </div>
-
-
-<!-- Footer colorato personalizzabile -->
-<div class="custom-footer">
-</div>
-
 
 
 </body>

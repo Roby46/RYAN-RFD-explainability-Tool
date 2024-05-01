@@ -3548,7 +3548,6 @@ function createchart(){
 };
 
 
-
 treeJSON = d3.json(a, function(error, treeData) {
     
    
@@ -4051,7 +4050,13 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"generalizations",
 								"" + listalhs[j].name,
 								"" + lista[i].name,
-								'<button class="btn btn-primary" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+
+
+								//'<button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button>'
+
+								'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+
 							  ]).draw(false).node();         
                         }
                     } else {
