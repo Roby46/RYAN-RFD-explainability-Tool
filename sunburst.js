@@ -3532,8 +3532,11 @@ function createchart(){
     var a = document.getElementById('file1').value;
     var temp2 = a.split("jsonForChart");
     var b = "percentuali"+temp2[1];
+	
 	generateSunburst(b);
-    a = "jsonForChart"+temp2[1];
+
+	
+    a = "Json_chart/jsonForChart"+temp2[1];
 
 
 	jQuery.fn.d3Click = function()
