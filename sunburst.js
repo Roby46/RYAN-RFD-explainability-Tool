@@ -3469,6 +3469,9 @@
 		});
 	return Ii
 }));
+
+
+
 function generateSunburst(filename){
 
 	className='sunburst-viz';
@@ -3489,6 +3492,9 @@ function generateSunburst(filename){
 	
 	// Define a color scale using d3.scale.category10()
     const color = d3.scale.category20();
+
+	filename="Json_percentuali/"+ filename;
+	console.log(filename);
 
     fetch(filename).then(res => res.json()).then(data => {
       Sunburst()
