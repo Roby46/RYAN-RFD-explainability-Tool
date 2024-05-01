@@ -3510,6 +3510,28 @@ function generateSunburst(filename){
 
 function createchart(){
 
+		// Select all elements with the class 'example-class'
+		const elementsToDelete = document.querySelectorAll('.waves');
+
+		// Iterate over the selected elements
+		elementsToDelete.forEach(function(element) {
+   		 // Remove each element
+    	element.remove();
+		});
+
+
+	// Select all elements with the class 'logo'
+	const logos = document.querySelectorAll('.logo');
+
+	// Iterate over the selected elements
+	logos.forEach(function(logo) {
+    	// Replace the class 'logo' with 'logo_small'
+   	 logo.classList.remove('logo');
+    	logo.classList.add('logo_small');
+	});	
+
+
+	
 	var element = document.getElementById("sezioneRisultati");
         if (element) {
             element.style.display = "block";

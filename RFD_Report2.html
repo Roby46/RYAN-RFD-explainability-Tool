@@ -20,6 +20,120 @@
 
 
   <style>
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:24px;
+}
+p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #333333;
+}
+
+.header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  color:white;
+}
+.logo {
+  padding: 3% 0% 0% 0%;
+  width:18%;  
+  fill:white;
+  padding-right:15px;
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.logo_small {
+  width:10%;  
+  fill:white;
+  display:inline-block;
+  vertical-align: middle;
+}
+
+
+.inner-header {
+  height:10%;
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.waves {
+  position:relative;
+  width: 100% !important;
+  height:15vh;
+  margin-top: 5% !important;
+  margin-bottom:-7px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
+}
+
+.content {
+  position:relative;
+  height:20vh;
+  text-align:center;
+  background-color: white;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    min-height:40px;
+  }
+  .content {
+    height:30vh;
+  }
+  h1 {
+    font-size:24px;
+  }
+}
+
+
+
  .node {
     cursor: pointer;
   }
@@ -60,7 +174,8 @@
   }
 
   body { margin: 0;  
-  font-size: large;}
+  font-size: large;
+}
 
   #colltree {
     background-color: #CFE7FF !important;
@@ -142,7 +257,7 @@
 
   /* Aggiungi stile alla riga dell'intestazione */
    #risultati thead,tfoot {
-      background-color: rgb(5, 6, 45); /* Colore di sfondo */
+      background-color: #1590bf; /* Colore di sfondo */
       color: white; /* Colore del testo */
       text-align: center;
   }
@@ -154,7 +269,7 @@
 
   /* Stile per la barra colorata con testo al centro */
   .custom-bar {
-      background-color: rgb(5, 6, 45); /* Colore di sfondo */
+      background-color: #1590bf; /* Colore di sfondo */
       color: white; /* Colore del testo */
       text-align: center; /* Testo centrato */
       font-weight:bold;
@@ -180,8 +295,8 @@
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color:rgb(5, 6, 45);
-    border-color: rgb(5, 6, 45);
+    background-color:#1590bf;
+    border-color: #1590bf;
 }
 
 /*Bottone explainability*/
@@ -215,7 +330,7 @@
 }
 
 .button-64 span {
-  background-color: rgb(5, 6, 45);
+  background-color: #1590bf;
   padding: 8px 8px;
   border-radius: 6px;
   width: 100%;
@@ -236,11 +351,38 @@
    </style>
 </head>
 <body>
+  <div class="header">
 
-<div class="custom-bar">
-   RFD Comparator
-   <img src="Images/logo_dais_bianco.png" style="width: 75px; height: 26px; float: right; margin-right: 2%;">
-</div>
+    <!--Content before waves-->
+    <div class="inner-header flex">
+    <!--Just the logo.. Don't mind this-->
+      <img src="Images/logo_dais_bianco.png" class="logo">
+    </div>
+    
+    <!--Waves Container-->
+    <div>
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+    <defs>
+    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+    </defs>
+    <g class="parallax">
+    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+    </g>
+    </svg>
+    </div>
+    <!--Waves end-->
+    
+    </div>
+    <!--Header ends-->
+    
+    <!--Content starts-->
+
+    <!--Content ends-->
+    
 
   <div class="" style="margin: 23px;">
 
