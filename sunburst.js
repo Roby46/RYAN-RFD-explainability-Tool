@@ -3882,7 +3882,13 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);     
+							var newRow = risultati.row.add([
+								"Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();            
                         }    
                     }
                     else{
@@ -3891,7 +3897,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                        var listalhs = lista[i]._children;
                         update(lista[i]);
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);        
+							
+							var newRow = risultati.row.add([
+								"Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();   
                         }    
                     }
                 }
@@ -3954,7 +3967,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                     
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {
-                            risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false); 
+							
+							var newRow = risultati.row.add([
+								""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();   
 
                         }    
                     } else{
@@ -3963,7 +3983,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var listalhs = lista[i]._children;
                         update(lista[i]);
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);         
+							
+							var newRow = risultati.row.add([
+								""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();   
                         }    
                     }    
                 }
@@ -4026,7 +4053,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {
-                            risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);                         
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);      
+							
+							var newRow = risultati.row.add([
+								""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available",
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();   
                         }
                     } else {
                         lista[i]._children = lista[i].children;
@@ -4034,7 +4068,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var listalhs = lista[i]._children;
                         update(lista[i]);
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);                         
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);    
+							
+							var newRow = risultati.row.add([
+								""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available",
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();   
                         }  
                     }    
                 }
@@ -4107,12 +4148,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"" + listalhs[j].name,
 								"" + lista[i].name,
 								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
-
-
-								//'<button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button>'
-
-								'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
-
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
 							  ]).draw(false).node();         
                         }
                     } else {
@@ -4121,7 +4158,17 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var listalhs = lista[i]._children;
                         update(lista[i]);
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add(["Not Available","Not Available","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add(["Not Available","Not Available","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false); 
+							var newRow = risultati.row.add([
+								"Not Available",
+								"Not Available",
+								"generalizations",
+								"" + listalhs[j].name,
+								"" + lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();                        
                         }   
                     }   
                 }
@@ -4184,7 +4231,17 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) { 
-                            risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);          
+							var newRow = risultati.row.add([
+								"Not Available",
+								"Not Available",
+								"specializations",
+								"" + listalhs[j].name,
+								"" + lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();            
                         }
                     } else {
                       lista[i]._children = lista[i].children;
@@ -4192,7 +4249,17 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var listalhs = lista[i]._children;
                         update(lista[i]);
                         for (let j = 0; j<listalhs.length;j++) {                        
-                            risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);                
+                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);   
+							var newRow = risultati.row.add([
+								"Not Available",
+								"Not Available",
+								"specializations",
+								"" + listalhs[j].name,
+								"" + lista[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();           
                         }  
                     }    
                 }
@@ -4268,7 +4335,19 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        risultati.row.add([""+lista[i].name,""+word,"RFD found: "+word,""+lista[i].name, ""+word]).draw(false);                        
+                        //risultati.row.add([""+lista[i].name,""+word,"RFD found: "+word,""+lista[i].name, ""+word]).draw(false);    
+						
+						var newRow = risultati.row.add([
+							""+lista[i].name,
+							""+word,
+							"RFD found: "+word,
+							""+lista[i].name,
+							""+word,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
+
                     }    
                 }
             } else {
@@ -4299,7 +4378,18 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = figli[i]._children;
                     
                     for (let j = 0; j<listalhs.length;j++) {
-                            risultati.row.add(["Not Available","Not Available","RFD found",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+                            //risultati.row.add(["Not Available","Not Available","RFD found",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+
+							var newRow = risultati.row.add([
+								"Not Available",
+								"Not Available",
+								"RFD found",
+								""+listalhs[j].name, 
+								""+figli[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();  
                     }    
                 }
                 }         
@@ -4345,7 +4435,20 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        risultati.row.add(["Not Available","Not Available","new RFD: "+word,""+lista[i].name,""+word]).draw(false);                         
+                        
+						//risultati.row.add(["Not Available","Not Available","new RFD: "+word,""+lista[i].name,""+word]).draw(false);      
+						
+						
+						var newRow = risultati.row.add([
+							"Not Available",
+							"Not Available",
+							"new RFD: "+word,
+							""+lista[i].name,
+							""+word,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
                     }    
                 }
             } else {
@@ -4377,7 +4480,20 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = figli[i]._children;
                     
                     for (let j = 0; j<listalhs.length;j++) {
-                            risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+
+
+							var newRow = risultati.row.add([
+
+								"Not Available",
+								"Not Available",
+								"new RFD",
+								""+listalhs[j].name, 
+								""+figli[i].name,
+								//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+							  ]).draw(false).node();  
                     }    
                 }
                 }
@@ -4421,7 +4537,19 @@ treeJSON = d3.json(a, function(error, treeData) {
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        risultati.row.add([""+lista[i].name,""+word,"RFD not found: "+word,"Not Available","Not Available"]).draw(false);                            
+                        //risultati.row.add([""+lista[i].name,""+word,"RFD not found: "+word,"Not Available","Not Available"]).draw(false);   
+						
+						
+						var newRow = risultati.row.add([
+							""+lista[i].name,
+							""+word,
+							"RFD not found: "+word,
+							"Not Available",
+							"Not Available",
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
                     }    
                 }
             } else {
@@ -4451,7 +4579,18 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = figli[i]._children;
                     
                     for (let j = 0; j<listalhs.length;j++) {
-                        risultati.row.add([""+listalhs[j].name,figli[i].name,"RFD not found","Not Available","Not Available"]).draw(false);                            
+                        //risultati.row.add([""+listalhs[j].name,figli[i].name,"RFD not found","Not Available","Not Available"]).draw(false);         
+						
+						var newRow = risultati.row.add([
+							""+listalhs[j].name,
+							figli[i].name,
+							"RFD not found",
+							"Not Available",
+							"Not Available",
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
                     }    
                 }
                 }  
@@ -4496,7 +4635,18 @@ treeJSON = d3.json(a, function(error, treeData) {
 
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[1];
-                        risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);                         
+                        //risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);           
+						
+						var newRow = risultati.row.add([
+							""+word,
+							""+d.name,
+							"specializations: "+d.name,
+							""+lista[i].name, 
+							""+d.name,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
 
                     }    
                 }
@@ -4526,7 +4676,18 @@ treeJSON = d3.json(a, function(error, treeData) {
                 for (let i = 0; i<figli.length;i++) {
                     var figlidifiglio = figli[i]._children;
                     for(let j = 0; j<figlidifiglio.length; j++){
-                        risultati.row.add(["Not Available","Not Available","specializations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
+                        //risultati.row.add(["Not Available","Not Available","specializations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
+						var newRow = risultati.row.add([
+							"Not Available",
+							"Not Available",
+							"specializations",
+							""+figlidifiglio[j].name, 
+							""+figli[i].name,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
+
                     }
                 }   
             }
@@ -4569,7 +4730,18 @@ treeJSON = d3.json(a, function(error, treeData) {
 
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[1];
-                        risultati.row.add([""+word,""+d.name,"",""+lista[i].name, ""+d.name]).draw(false);                         
+                        //risultati.row.add([""+word,""+d.name,"",""+lista[i].name, ""+d.name]).draw(false);      
+						
+						var newRow = risultati.row.add([
+							""+word,
+							""+d.name,
+							"",
+							""+lista[i].name, 
+							""+d.name,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node();  
                     }    
                 }
             } else {
@@ -4598,7 +4770,14 @@ treeJSON = d3.json(a, function(error, treeData) {
                 for (let i = 0; i<figli.length;i++) {
                     var figlidifiglio = figli[i]._children;
                     for(let j = 0; j<figlidifiglio.length; j++){
-                        risultati.row.add(["Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
+                        //risultati.row.add(["Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
+
+						var newRow = risultati.row.add([
+							"Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name,
+							//'<button class="button-75" onclick="alert(\'Hai cliccato su un bottone nella riga\')">Read explanation</button>' // Bottone aggiunto direttamente come stringa HTML
+							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-64" role="button"  onclick="alert(\'Hai cliccato su un bottone nella riga\')" ><span class="text" style="font-size: 0.7em">Read explanation</span></button></center>'
+						  ]).draw(false).node(); 
                     }
                 }   
             }
