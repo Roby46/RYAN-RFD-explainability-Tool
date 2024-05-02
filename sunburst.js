@@ -3508,6 +3508,34 @@ function generateSunburst(filename){
 }
 
 
+function uploadDataset(){
+	var a = document.getElementById('file2').value;
+
+	// faccio elaborare gli input al backend python
+	$.ajax({
+		type:"POST",
+		dataType:"text",
+		contentType: "application/text",
+		xhrFields: { withCredentials: false },
+		crossDomain: true,
+		// async: false, // async dovrebbe andare bene in quanto è una componente di output
+		data:document.getElementById('file2').value,
+		url:"http://127.0.0.1:5000/upload",
+		//url:"http://127.0.0.1:5000/compare",
+	})
+	.done(function(response){
+		//   console.log("Response StatisticsComponent: ",outputs['rfds'])
+	})
+	.fail(function(xhr, textStatus, errorThrown){
+		console.log("ERROR: ",xhr.responseText)
+		return xhr.responseText;
+
+	}).then(function(value){
+		
+	})
+}
+
+
 function createchart(){
 
 		// Select all elements with the class 'example-class'
@@ -3529,7 +3557,6 @@ function createchart(){
    	 logo.classList.remove('logo');
     	logo.classList.add('logo_small');
 	});	
-
 
 	
 	var element = document.getElementById("sezioneRisultati");
@@ -3555,48 +3582,13 @@ function createchart(){
     var temp2 = a.split("jsonForChart");
     var b = "percentuali"+temp2[1];
 
-	// faccio elaborare gli input al backend python
-	$.ajax({
-		type:"POST",
-		dataType:"text",
-		contentType: "application/text",
-		xhrFields: { withCredentials: false },
-		crossDomain: true,
-		// async: false, // async dovrebbe andare bene in quanto è una componente di output
-		data:document.getElementById('file1').value,
-		url:"http://127.0.0.1:5000/upload",
-		//url:"http://127.0.0.1:5000/compare",
-	})
-	.done(function(response){
-		//   console.log("Response StatisticsComponent: ",outputs['rfds'])
-	})
-	.fail(function(xhr, textStatus, errorThrown){
-		console.log("ERROR: ",xhr.responseText)
-		return xhr.responseText;
-
-	}).then(function(value){
-		
-	})
-
-
-	//const formData = new FormData();
-    //formData.append('file', document.getElementById('file1').value);
-	//
-	//fetch('/upload', {
-	//	method: 'POST',
-	//	body: formData
-	//})
-	//.then(response => {
-	//	if (response.ok) {
-	//		console.log('File caricato con successo!');
-	//	} else {
-	//		console.error('Errore durante il caricamento del file.');
-	//	}
-	//})
-	//.catch(error => {
-	//	console.error('Si è verificato un errore:', error);
-	//});
 	
+	var element = document.getElementById("load_dataset");
+	element.remove();
+	var element = document.getElementById("load_json");
+	element.remove();
+
+
 	generateSunburst(b);
 
 	

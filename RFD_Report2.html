@@ -141,10 +141,14 @@ p {
   .overlay{
       background-color:#EEE;
   }
+
+  element.style{
+    fill:#19a4c0;
+  }
    
   .node circle {
     fill: #fff;
-    stroke: steelblue;
+    stroke: #533fb8;
     stroke-width: 1.5px;
   }
    
@@ -177,8 +181,23 @@ p {
   font-size: large;
 }
 
+#load_json, #load_dataset{
+  border: #5050b9 !important;
+  border-style: solid !important;
+  border-width: 3px !important;
+  padding: 20px !important;
+  border-radius: 10px;
+}
+
+.form-control{
+  height: 10%;
+}
+
+
   #colltree {
-    background-color: #CFE7FF !important;
+    /*background-color: #1ba3c038 !important;*/
+    /*background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB) !important;*/
+    background-image: linear-gradient(144deg,#af40ff38, #5b42f329 50%,#00ddeb2b) !important;
     border-radius: 20px 0px 0px 20px;
   }
 
@@ -299,6 +318,12 @@ p {
     border-color: #1590bf;
 }
 
+
+#load1{
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB) !important;
+}
+
+
 /*Bottone explainability*/
 .button-64 {
   align-items: center;
@@ -356,8 +381,9 @@ p {
     <!--Content before waves-->
     <div class="inner-header flex">
     <!--Just the logo.. Don't mind this-->
-      <img src="Images/logo_dais_bianco.png" class="logo">
+      <img src="Images/logo_dais_bianco.png" onclick="location.reload();" class="logo"> 
     </div>
+
     
     <!--Waves Container-->
     <div>
@@ -388,22 +414,23 @@ p {
 
     <div class="row">
 
-     <!-- <div class="col-lg-12" >
-        <fieldset class="border p-2">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload Dataset
+
+      <div class="col-lg-12" >
+        <fieldset class="border p-2" id="load_dataset">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload dataset
         </legend>
         <div class="input-group">
-          <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
-          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
-          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
+          <input  class="form-control form-control-lg" type="file" name="file2" id="file2" >
+          <button class="btn btn-primary" type="button" id="load1" onclick="uploadDataset()" >Upload</button>
         </div>
        </fieldset>
-      </div>-->
+      </div>
+
 
       
       <div class="col-lg-12" >
-        <fieldset class="border p-2">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload results file...
+        <fieldset class="border p-2" id="load_json">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload results
         </legend>
         <div class="input-group">
           <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
