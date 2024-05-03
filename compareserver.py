@@ -36,7 +36,7 @@ def get_data():
 
 
 @app.route('/getRFD',methods = ['POST'])
-def get_data():
+def get_rfds():
    # Leggi il JSON inviato nel corpo della richiesta
     json_data = request.get_json()
     
@@ -49,7 +49,7 @@ def get_data():
     print("RHS:", rhs)
     print("LHS:", lhs)
     print("Type:", rfd_type)
-   return "json ricevuto con successo.",200
+    return "json ricevuto con successo.",200
 
 if __name__ == '__main__':
    app.run(debug = True)
