@@ -34,5 +34,22 @@ def get_data():
    print(df)
    return 'File caricato con successo!', 200 
 
+
+@app.route('/getRFD',methods = ['POST'])
+def get_data():
+   # Leggi il JSON inviato nel corpo della richiesta
+    json_data = request.get_json()
+    
+    # Estrai i valori dal JSON
+    rhs = json_data.get('rhs')
+    lhs = json_data.get('lhs')
+    rfd_type = json_data.get('type')
+
+    # Ad esempio, puoi stampare i valori ricevuti
+    print("RHS:", rhs)
+    print("LHS:", lhs)
+    print("Type:", rfd_type)
+   return "json ricevuto con successo.",200
+
 if __name__ == '__main__':
    app.run(debug = True)
