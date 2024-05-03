@@ -4232,7 +4232,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"specializations",
 								"" + listalhs[j].name,
 								"" + lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 							  ]).draw(false).node();            
                         }
                     } else {
@@ -4248,7 +4248,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"specializations",
 								"" + listalhs[j].name,
 								"" + lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 							  ]).draw(false).node();           
                         }  
                     }    
@@ -4333,8 +4333,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"RFD found: "+word,
 							""+lista[i].name,
 							""+word,
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();  
 
                     }    
                 }
@@ -4374,8 +4374,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"RFD found",
 								""+listalhs[j].name, 
 								""+figli[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();  
+								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();  
                     }    
                 }
                 }         
@@ -4431,7 +4431,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"new RFD: "+word,
 							""+lista[i].name,
 							""+word,
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node();  
                     }    
                 }
@@ -4474,8 +4474,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"new RFD",
 								""+listalhs[j].name, 
 								""+figli[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();  
+								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();  
                     }    
                 }
                 }
@@ -4528,8 +4528,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"RFD not found: "+word,
 							"Not Available",
 							"Not Available",
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();  
                     }    
                 }
             } else {
@@ -4567,8 +4567,8 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"RFD not found",
 							"Not Available",
 							"Not Available",
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();  
                     }    
                 }
                 }  
@@ -4621,7 +4621,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"specializations: "+d.name,
 							""+lista[i].name, 
 							""+d.name,
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node();  
 
                     }    
@@ -4659,7 +4659,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"specializations",
 							""+figlidifiglio[j].name, 
 							""+figli[i].name,
-							'<center><button class="button-82-pushable" role="button" onclick="alert(\'Hai cliccato su un bottone nella riga\')"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node();  
 
                     }
