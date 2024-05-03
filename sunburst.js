@@ -3508,34 +3508,6 @@ function generateSunburst(filename){
 }
 
 
-function uploadDataset(){
-	var a = document.getElementById('file2').value;
-
-	// faccio elaborare gli input al backend python
-	$.ajax({
-		type:"POST",
-		dataType:"text",
-		contentType: "application/text",
-		xhrFields: { withCredentials: false },
-		crossDomain: true,
-		// async: false, // async dovrebbe andare bene in quanto è una componente di output
-		data:document.getElementById('file2').value,
-		url:"http://127.0.0.1:5000/upload",
-		//url:"http://127.0.0.1:5000/compare",
-	})
-	.done(function(response){
-		//   console.log("Response StatisticsComponent: ",outputs['rfds'])
-	})
-	.fail(function(xhr, textStatus, errorThrown){
-		console.log("ERROR: ",xhr.responseText)
-		return xhr.responseText;
-
-	}).then(function(value){
-		
-	})
-}
-
-
 function createchart(){
 
 		// Select all elements with the class 'example-class'

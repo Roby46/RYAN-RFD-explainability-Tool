@@ -28,8 +28,10 @@ def login():
 
 @app.route('/upload',methods = ['POST'])
 def get_data():
-   file = request.data
-   print("request data\n",file)
+   name = request.data.decode("utf-8")
+   print("request data\n",name)
+   df = pd.read_csv("./datasets/"+name, delimiter=";")
+   print(df)
    return 'File caricato con successo!', 200 
 
 if __name__ == '__main__':
