@@ -43,11 +43,13 @@ def get_rfds():
     # Estrai i valori dal JSON
     rhs = json_data.get('rhs')
     lhs = json_data.get('lhs')
+    old_lhs = json_data.get('old_lhs')
     rfd_type = json_data.get('type')
 
     # Ad esempio, puoi stampare i valori ricevuti
     print("RHS:", rhs)
     print("LHS:", lhs)
+    print("LHS_OLD", old_lhs)
     print("Type:", rfd_type)
     return "json ricevuto con successo.",200
 
