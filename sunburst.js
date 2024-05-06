@@ -4716,7 +4716,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 						var newRow = risultati.row.add([
 							""+word,
 							""+d.name,
-							"",
+							"generalizations: "+d.name,
 							""+lista[i].name, 
 							""+d.name,
 							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
@@ -4754,8 +4754,8 @@ treeJSON = d3.json(a, function(error, treeData) {
                         //risultati.row.add(["Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
 
 						var newRow = risultati.row.add([
-							"Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\', \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							"Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name,""
+							//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\', \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node(); 
                     }
                 }   

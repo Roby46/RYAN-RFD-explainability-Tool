@@ -4,6 +4,9 @@ from flask import Flask, redirect, url_for, request, jsonify
 from flask_cors import CORS
 from io import BytesIO
 import pandas as pd
+from StarDust import PatternLoader
+import sys
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -69,7 +72,7 @@ def get_rfds():
    lhs = lhs.replace("'","")
    lhs = lhs.replace("[","")
    lhs = lhs.replace("]","")
-   print(lhs)
+   #print(lhs)
    lhs_attr = lhs.split(", ")
 
    lhs_puliti = []
@@ -79,7 +82,7 @@ def get_rfds():
 
    rhs = rhs.strip()
    rhs_col = dataset.loc[:,rhs]
-   print(rhs_col)
+   #print(rhs_col)
    rhs_data = (rhs,rhs_col)
 
    lhs_data = []
@@ -93,7 +96,7 @@ def get_rfds():
       old_lhs = old_lhs.replace("'","")
       old_lhs = old_lhs.replace("[","")
       old_lhs = old_lhs.replace("]","")
-      print(old_lhs)
+      #print(old_lhs)
       old_lhs_attr = old_lhs.split(", ")
 
       old_lhs_puliti = []
@@ -103,7 +106,7 @@ def get_rfds():
 
       old_rhs = old_rhs.strip()
       old_rhs_col = dataset.loc[:,old_rhs]
-      print(old_rhs_col)
+      #print(old_rhs_col)
       old_rhs_data = (old_rhs,old_rhs_col)
 
       old_lhs_data = []
@@ -120,8 +123,13 @@ def get_rfds():
       rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type, "old_rhs":"none", "old_lhs":"none"}
       print(rfd_data)
 
+
+
+   
+
    return "json ricevuto con successo.",200
-   response = render_template('Explaination.html', explaination = results)
+   response = render_template('LLM_Answer2.html', explaination = results)
+
 
 
 if __name__ == '__main__':
