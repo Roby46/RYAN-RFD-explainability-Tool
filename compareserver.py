@@ -35,23 +35,52 @@ def get_data():
    return 'File caricato con successo!', 200 
 
 
+
+
+
 @app.route('/getRFD',methods = ['POST'])
 def get_rfds():
+   global dataset
+   #print(dataset)
    # Leggi il JSON inviato nel corpo della richiesta
-    json_data = request.get_json()
-    
-    # Estrai i valori dal JSON
-    rhs = json_data.get('rhs')
-    lhs = json_data.get('lhs')
-    old_lhs = json_data.get('old_lhs')
-    rfd_type = json_data.get('type')
+   json_data = request.get_json()
+   
+   # Estrai i valori dal JSON
+   rhs = json_data.get('rhs')
+   lhs = json_data.get('lhs')
+   old_lhs = json_data.get('old_lhs')
+   old_rhs = json_data.get('old_rhs')
+   rfd_type = json_data.get('type')
 
-    # Ad esempio, puoi stampare i valori ricevuti
-    print("RHS:", rhs)
-    print("LHS:", lhs)
-    print("LHS_OLD", old_lhs)
-    print("Type:", rfd_type)
-    return "json ricevuto con successo.",200
+   print("RHS:", rhs)
+   print("LHS:", lhs)
+   print("LHS_OLD", old_lhs)
+   print("RHS_OLD", old_rhs)
+   print("Type:", rfd_type)
+   
+   lhs = lhs.replace("'","")
+   lhs = lhs.replace("{","")
+   lhs = lhs.replace("}","")
+   lhs_attr = lhs.split(", ")
+
+   rhs = rhs.strip()
+   rhs_col = dataset.loc[:,rhs]
+   print(rhs_col)
+   rhs_data = (rhs,rhs_col)
+
+   lhs_data = []
+   for i in lhs_attr:
+      elem = i.strip()
+      lhs_col = dataset.loc[:,elem]
+      tmp = (elem,lhs_col)
+      lhs_data.append(tmp)
+
+   rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type}
+   print(rfd_data)
+
+   return "json ricevuto con successo.",200
+   response = render_template('Explaination.html', explaination = results)
+
 
 if __name__ == '__main__':
    app.run(debug = True)
