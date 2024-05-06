@@ -25,16 +25,6 @@ M2 = {0: {14: {0, 1, 4, 5}, 15: {0, 1, 2, 4, 5}, 16: {1, 2, 4}, 18:{1, 2, 4}},
 #
 #print(M, M2)
 
-# Funzione per calcolare la differenza con solo inserimenti
-#def compute_difference(obj1, obj2):
-#   diff_obj = {}
-#   for key1 in obj1:
-#       diff_obj[key1] = {}
-#       for key2 in obj1[key1]:
-#           diff_obj[key1][key2] = obj2[key1][key2] - obj1[key1][key2]
-#   return diff_obj
-
-
 
 # Funzione per calcolare la differenza
 def compute_difference(obj1, obj2):

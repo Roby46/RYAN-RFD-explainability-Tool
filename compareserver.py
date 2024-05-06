@@ -58,10 +58,11 @@ def get_rfds():
 
    tmp = rhs.split("_")
    rhs = tmp[0]
+   rhs_thr = tmp[1]
    if old_rhs != "none":
       tmp = old_rhs.split("_")
       old_rhs = tmp[0]
-
+      old_rhs_thr = tmp[1]
 
    print("RHS:", rhs)
    print("LHS:", lhs)
@@ -76,9 +77,11 @@ def get_rfds():
    lhs_attr = lhs.split(", ")
 
    lhs_puliti = []
+   lhs_thr = []
    for attr in lhs_attr:
       tmp = attr.split("_")
       lhs_puliti.append(tmp[0])
+      lhs_thr.append(tmp[1])
 
    rhs = rhs.strip()
    rhs_col = dataset.loc[:,rhs]
@@ -100,9 +103,11 @@ def get_rfds():
       old_lhs_attr = old_lhs.split(", ")
 
       old_lhs_puliti = []
+      old_lhs_thr = []
       for attr in old_lhs_attr:
          tmp = attr.split("_")
          old_lhs_puliti.append(tmp[0])
+         old_lhs_thr.append(tmp[1])
 
       old_rhs = old_rhs.strip()
       old_rhs_col = dataset.loc[:,old_rhs]
@@ -117,15 +122,22 @@ def get_rfds():
          old_lhs_data.append(tmp)
 
 
-      rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type, "old_rhs":old_rhs_data, "old_lhs":old_lhs_data}
-      print(rfd_data)
+      rfd_data = {"rhs":rhs_data, "rhs_thr":rhs_thr, "lhs":lhs_data, "lhs_thr":lhs_thr, "type":rfd_type, "old_rhs":old_rhs_data, "old_rhs_thr":old_rhs_thr, "old_lhs":old_lhs_data, "old_lhs_thr":old_lhs_thr}
+      #print(rfd_data)
    else:
-      rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type, "old_rhs":"none", "old_lhs":"none"}
-      print(rfd_data)
-
-
+      rfd_data = {"rhs":rhs_data, "rhs_thr":rhs_thr, "lhs":lhs_data, "lhs_thr":lhs_thr, "type":rfd_type, "old_rhs_thr":"none", "old_lhs":"none", "old_lhs_thr":"none"}
+      #print(rfd_data)
 
    
+
+   print(lhs_thr)
+   print(rhs_thr)
+   print(old_lhs_thr)
+   print(old_rhs_thr)
+
+   print(dataset)
+
+   print(rfd_data['rhs'][1].tolist())
 
    return "json ricevuto con successo.",200
    response = render_template('LLM_Answer2.html', explaination = results)

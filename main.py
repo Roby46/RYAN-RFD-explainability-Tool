@@ -12,6 +12,9 @@ pattern_loader = PatternLoader("Datasets/prova.csv", ",", [1, 1, 1, 1])
 # pattern_loader = PatternLoader("datasets/expIDEAS.csv", ",", [0, 1, 0, 1])
 # pattern_loader = PatternLoader("datasets/tuandromd.csv", ",", [1]*300)
 
+
+
+
 M, initial_partitions = pattern_loader.get_partition_local()
 print(M)
 print(20*'-')
