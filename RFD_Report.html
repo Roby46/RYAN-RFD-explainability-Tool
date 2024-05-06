@@ -1,9 +1,14 @@
 <head>
+
+  <link rel="stylesheet" href="style.css">
+
     <!--  SUNBURST LIBRARIES -->
     <script src="sunburst.js"></script>
+    <script src="dataset_loader.js"></script>
     <script src="//unpkg.com/d3"></script>
 
     <!--  COLLAPSIBLE TREE LIBRARIES -->
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,289 +22,73 @@
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap4.min.js"></script>
     <!--<script src="dndTree.js"></script>-->
-
-
-  <style>
- .node {
-    cursor: pointer;
-  }
-
-  .overlay{
-      background-color:#EEE;
-  }
-   
-  .node circle {
-    fill: #fff;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-  }
-   
-  .node text {
-    font-size:14px; 
-    font-family:sans-serif;
-  }
-   
-  .link {
-    fill: none;
-    stroke: #ffffff;
-    stroke-width: 2px;
-  }
-
-  .templink {
-    fill: none;
-    stroke: red;
-    stroke-width: 3px;
-  }
-
-  .ghostCircle.show{
-      display:block;
-  }
-
-  .ghostCircle, .activeDrag .ghostCircle{
-       display: none;
-  }
-
-  body { margin: 0;  
-  font-size: large;}
-
-  #colltree {
-    background-color: #CFE7FF !important;
-    border-radius: 20px 0px 0px 20px;
-  }
-
-  #contenitore{
-    margin-top: 10px;
-  }
-
-  #tree-container{
-    border: #343a40;
-  }
-
-  .sunburst-viz .slice path {
-    cursor: pointer;
-  }
-  
-  
-  .sunburst-viz{
-    position: inherit;
-  }
-
-  .sunburst-viz text {
-    dominant-baseline: middle;
-    text-anchor: middle;
-    pointer-events: none;
-    fill: white;
-    font-size: 1em;
-     }
-  
-  .sunburst-viz .text-contour {
-    fill: none;
-    stroke: none !important;
-  }
-  
-  .sunburst-viz .main-arc {
-    stroke-width: 4px;
-    transition: opacity .4s;
-  }
-  
-  .sunburst-viz .main-arc:hover {
-    opacity: 0.85;
-    transition: opacity .05s;
-  }
-  
-  .sunburst-viz .hidden-arc {
-    fill: none;
-  }
-  
-  .sunburst-viz .tooltip {
-    max-width: 100%;
-    white-space: nowrap;
-    text-align: center;
-    font-size: medium;
-  }
-  
-  .sunburst-viz .tooltip-title {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 5px;
-  }
-
-  svg{
-    width: 80% !important;
-    height: 80% !important;
-    display: block;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .tooltip {
-    opacity: 1 !important;
- }
-
-  #risultati{
-      text-align: center;
-  }
-
-  /* Aggiungi stile alla riga dell'intestazione */
-   #risultati thead,tfoot {
-      background-color: #007bff; /* Colore di sfondo */
-      color: white; /* Colore del testo */
-      text-align: center;
-  }
-
-
-  .sorting{
-      text-align: center !important;
-  }
-
-  /* Stile per la barra colorata con testo al centro */
-  .custom-bar {
-      background-color: #007bff; /* Colore di sfondo */
-      color: white; /* Colore del testo */
-      text-align: center; /* Testo centrato */
-      font-weight:bold;
-      font-size: 1.1em;
-      padding: 10px 0; /* Spaziatura interna */
-  }
-
-  /* Stile per il footer colorato */
-  .custom-footer {
-      background-color: #343a40; /* Colore di sfondo */
-      color: white; /* Colore del testo */
-      text-align: center; /* Testo centrato */
-      padding: 10px 0; /* Spaziatura interna */
-      width: 100%; /* Larghezza del footer */
-      position: fixed; /* Posizione fissa */
-      bottom: 0; /* Fissa il footer in basso */
-      left: 0; /* Allinea il footer a sinistra */
-  } 
-
-
-/* CSS */
-.button-82-pushable {
-  position: relative;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  outline-offset: 4px;
-  transition: filter 250ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-82-shadow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: hsl(0deg 0% 0% / 0.25);
-  will-change: transform;
-  transform: translateY(2px);
-  transition:
-    transform
-    600ms
-    cubic-bezier(.3, .7, .4, 1);
-}
-
-.button-82-edge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: linear-gradient(
-    to left,
-    hsl(340deg 100% 16%) 0%,
-    hsl(340deg 100% 32%) 8%,
-    hsl(340deg 100% 32%) 92%,
-    hsl(340deg 100% 16%) 100%
-  );
-}
-
-.button-82-front {
-  display: block;
-  position: relative;
-  padding: 12px 27px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  color: white;
-  background: hsl(345deg 100% 47%);
-  will-change: transform;
-  transform: translateY(-4px);
-  transition:
-    transform
-    600ms
-    cubic-bezier(.3, .7, .4, 1);
-}
-
-@media (min-width: 768px) {
-  .button-82-front {
-    font-size: 1.25rem;
-    padding: 12px 42px;
-  }
-}
-
-.button-82-pushable:hover {
-  filter: brightness(110%);
-  -webkit-filter: brightness(110%);
-}
-
-.button-82-pushable:hover .button-82-front {
-  transform: translateY(-6px);
-  transition:
-    transform
-    250ms
-    cubic-bezier(.3, .7, .4, 1.5);
-}
-
-.button-82-pushable:active .button-82-front {
-  transform: translateY(-2px);
-  transition: transform 34ms;
-}
-
-.button-82-pushable:hover .button-82-shadow {
-  transform: translateY(4px);
-  transition:
-    transform
-    250ms
-    cubic-bezier(.3, .7, .4, 1.5);
-}
-
-.button-82-pushable:active .button-82-shadow {
-  transform: translateY(1px);
-  transition: transform 34ms;
-}
-
-.button-82-pushable:focus:not(:focus-visible) {
-  outline: none;
-}
-
-   </style>
 </head>
-<body>
 
-<div class="custom-bar">
-   RFD Comparator
-   <img src="Images/logo_dais_bianco.png" style="width: 75px; height: 26px; float: right; margin-right: 2%;">
-</div>
+
+
+<body>
+  <div class="header">
+
+    <!--Content before waves-->
+    <div class="inner-header flex">
+    <!--Just the logo.. Don't mind this-->
+      <img src="Images/logo_dais_bianco.png" onclick="location.reload();" class="logo"> 
+    </div>
+
+    
+    <!--Waves Container-->
+    <div>
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+    <defs>
+    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+    </defs>
+    <g class="parallax">
+    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+    </g>
+    </svg>
+    </div>
+    <!--Waves end-->
+    
+    </div>
+    <!--Header ends-->
+    
+    <!--Content starts-->
+
+    <!--Content ends-->
+    
 
   <div class="" style="margin: 23px;">
+
     <div class="row">
+
+
       <div class="col-lg-12" >
-        <fieldset class="border p-2">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;">Chose results file...
+        <fieldset class="border p-2" id="load_dataset">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload dataset
+        </legend>
+        <div class="input-group">
+          <input  class="form-control form-control-lg" type="file" name="file2" id="file2" >
+          <button class="btn btn-primary" type="button" id="load1" onclick="load_data()" >Upload</button>
+        </div>
+       </fieldset>
+      </div>
+
+
+      
+      <div class="col-lg-12" >
+        <fieldset class="border p-2" id="load_json">
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload results
         </legend>
         <div class="input-group">
           <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
-          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()">Upload</button>
+          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()" >Upload</button>
         </div>
-      </fieldset>
-    </div>
+       </fieldset>
+      </div>
 
     
       <div class="col-lg-6" id="contenitore">
@@ -331,23 +120,9 @@
 
       </tbody>
       <tfoot>
-      <tr>
-          <th>LHS of Oracle</th>
-          <th>RHS of Oracle</th>
-          <th>Type</th>
-          <th>LHS of Results</th>
-          <th>RHS of Results</th>
-          <th>Explanation</th>
-      </tr>
       </tfoot>
   </table>
 </div>
-
-
-<!-- Footer colorato personalizzabile -->
-<div class="custom-footer">
-</div>
-
 
 
 </body>
