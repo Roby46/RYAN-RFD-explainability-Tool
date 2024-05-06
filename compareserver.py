@@ -8,7 +8,7 @@ import pandas as pd
 app = Flask(__name__)
 CORS(app)
 
-
+global dataset
 
 @app.route('/compare',methods = ['POST', 'GET'])
 def login():
@@ -28,10 +28,11 @@ def login():
 
 @app.route('/upload',methods = ['POST'])
 def get_data():
+   global dataset
    name = request.data.decode("utf-8")
    print("request data\n",name)
-   df = pd.read_csv("./datasets/"+name, delimiter=";")
-   print(df)
+   dataset = pd.read_csv("./datasets/"+name, delimiter=";")
+   print(dataset)
    return 'File caricato con successo!', 200 
 
 
@@ -52,6 +53,13 @@ def get_rfds():
    old_rhs = json_data.get('old_rhs')
    rfd_type = json_data.get('type')
 
+   tmp = rhs.split("_")
+   rhs = tmp[0]
+   if old_rhs != "none":
+      tmp = old_rhs.split("_")
+      old_rhs = tmp[0]
+
+
    print("RHS:", rhs)
    print("LHS:", lhs)
    print("LHS_OLD", old_lhs)
@@ -59,9 +67,15 @@ def get_rfds():
    print("Type:", rfd_type)
    
    lhs = lhs.replace("'","")
-   lhs = lhs.replace("{","")
-   lhs = lhs.replace("}","")
+   lhs = lhs.replace("[","")
+   lhs = lhs.replace("]","")
+   print(lhs)
    lhs_attr = lhs.split(", ")
+
+   lhs_puliti = []
+   for attr in lhs_attr:
+      tmp = attr.split("_")
+      lhs_puliti.append(tmp[0])
 
    rhs = rhs.strip()
    rhs_col = dataset.loc[:,rhs]
@@ -69,14 +83,42 @@ def get_rfds():
    rhs_data = (rhs,rhs_col)
 
    lhs_data = []
-   for i in lhs_attr:
+   for i in lhs_puliti:
       elem = i.strip()
       lhs_col = dataset.loc[:,elem]
       tmp = (elem,lhs_col)
       lhs_data.append(tmp)
 
-   rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type}
-   print(rfd_data)
+   if old_lhs != "none":
+      old_lhs = old_lhs.replace("'","")
+      old_lhs = old_lhs.replace("[","")
+      old_lhs = old_lhs.replace("]","")
+      print(old_lhs)
+      old_lhs_attr = old_lhs.split(", ")
+
+      old_lhs_puliti = []
+      for attr in old_lhs_attr:
+         tmp = attr.split("_")
+         old_lhs_puliti.append(tmp[0])
+
+      old_rhs = old_rhs.strip()
+      old_rhs_col = dataset.loc[:,old_rhs]
+      print(old_rhs_col)
+      old_rhs_data = (old_rhs,old_rhs_col)
+
+      old_lhs_data = []
+      for i in old_lhs_puliti:
+         elem = i.strip()
+         old_lhs_col = dataset.loc[:,elem]
+         tmp = (elem,old_lhs_col)
+         old_lhs_data.append(tmp)
+
+
+      rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type, "old_rhs":old_rhs_data, "old_lhs":old_lhs_data}
+      print(rfd_data)
+   else:
+      rfd_data = {"rhs":rhs_data, "lhs":lhs_data, "type":rfd_type, "old_rhs":"none", "old_lhs":"none"}
+      print(rfd_data)
 
    return "json ricevuto con successo.",200
    response = render_template('Explaination.html', explaination = results)
