@@ -39,7 +39,23 @@ def get_data():
    return 'File caricato con successo!', 200 
 
 
+# Funzione per calcolare la differenza tra partizioni
+def compute_difference(obj1, obj2):
+    diff_obj = {}
+    for attribute in obj1:
+        #print(attribute)
+        diff_obj[attribute] = {}
+        for pattern_value in obj2[attribute]:
+            #print(pattern_value)
+            if pattern_value in obj1.get(attribute, {}):
+                diff_obj[attribute][pattern_value] = obj2[attribute][pattern_value] - obj1[attribute][pattern_value]
+            else:
+                diff_obj[attribute][pattern_value] = obj2[attribute][pattern_value]  # Aggiungi il valore dall'oggetto 2
+    return diff_obj
 
+def remove_columns_if_exist(df, columns):
+    existing_columns = [col for col in columns if col in df.columns]
+    return df.drop(existing_columns, axis=1)
 
 
 @app.route('/getRFD',methods = ['POST'])
@@ -128,16 +144,80 @@ def get_rfds():
       rfd_data = {"rhs":rhs_data, "rhs_thr":rhs_thr, "lhs":lhs_data, "lhs_thr":lhs_thr, "type":rfd_type, "old_rhs_thr":"none", "old_lhs":"none", "old_lhs_thr":"none"}
       #print(rfd_data)
 
-   
 
-   print(lhs_thr)
-   print(rhs_thr)
-   print(old_lhs_thr)
-   print(old_rhs_thr)
+ 
+   print("LHS puliti: ", lhs_puliti)
+   columns_to_keep=['operation', 'index'] + lhs_puliti
+   columns_to_keep.append(rhs)
+   print("Cols to keep: ", columns_to_keep)
+   df=dataset[columns_to_keep]
+   print("Filtered dataset: ", df)
+   #print(rfd_data['rhs'][1].tolist())
+   #print(rfd_data['lhs'][1].tolist())
+   df = df[dataset.columns.intersection(columns_to_keep)]
 
-   print(dataset)
+   columns_to_remove = ['operation', 'index']
+   df_data = remove_columns_if_exist(df, columns_to_remove)
+   print(df_data)
 
-   print(rfd_data['rhs'][1].tolist())
+   index_rhs=df_data.columns.get_loc(rhs)
+   all_thresholds=lhs_thr.copy()
+   all_thresholds.insert(index_rhs,rhs_thr)
+   all_thresholds = [int(x) for x in all_thresholds]
+
+   all_thresholds_old=old_lhs_thr.copy()
+   all_thresholds_old.insert(index_rhs,old_rhs_thr)
+   all_thresholds_old = [int(x) for x in all_thresholds_old]
+
+
+   print("Thresholds ordinate nuova dipendenza: ", all_thresholds)
+   print("Thresholds ordinate vecchia dipendenza: ", all_thresholds_old)
+
+   # Filtra le righe con valore della prima colonna pari a zero
+   df_zero = df[df["operation"] == 0]
+
+   # Filtra le righe con valore della prima colonna maggiore di zero
+   df_insertions = df[df["operation"] > 0]
+
+   # Filtra le righe con valore della prima colonna minore di zero
+   df_deletions = df[df["operation"] < 0]
+
+   if (df_deletions.empty and not df_insertions.empty):
+      print(30 * "-")
+      print("Caso con solo inserimenti")
+      
+      #DF con dati originali più inserimenti
+      merged_df = pd.concat([df_zero, df_insertions])
+
+      df_full_data = remove_columns_if_exist(merged_df, columns_to_remove)
+      df_full_data.columns = range(len(df_full_data.columns))
+      df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
+      df_zero_data.columns = range(len(df_zero_data.columns))
+
+      print(df_full_data)
+      print(df_zero_data)
+
+      sys.setrecursionlimit(1500)
+      pattern_loader = PatternLoader("", "", all_thresholds, df_full_data)
+      M, initial_partitions = pattern_loader.get_partition_local()
+      print(M)
+     
+
+      pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire vecchie thresholds
+      M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
+      print(M_old)
+
+
+      difference = compute_difference(M_old, M)
+      print(difference)
+
+   elif (not df_deletions.empty and df_insertions.empty):
+      #Solo cancellazioni
+      pass
+   else:
+      #entrambi
+      pass
+
 
    return "json ricevuto con successo.",200
    response = render_template('LLM_Answer2.html', explaination = results)

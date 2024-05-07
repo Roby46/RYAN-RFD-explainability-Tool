@@ -14,9 +14,10 @@ def numeric_abs_function(x, y, t):
 
 
 class PatternLoader:
-    def __init__(self, dataset, separator, thresholds, process=1):
+    def __init__(self, dataset, separator, thresholds, df,process=1):
         self.columns_number = None
         self.dataset = dataset
+        self.df = df
         self.thresholds = thresholds
         self.separator = separator
         self.process = process
@@ -32,7 +33,8 @@ class PatternLoader:
 
     def get_partition(self, df=None, remove_singleton=True):
         if df is None:
-            df = pd.read_csv(self.dataset, sep=self.separator, header=None)
+            df = self.df
+
         df = df.drop_duplicates()
         df = df.reset_index(drop=True)
         self.row_number = len(df)

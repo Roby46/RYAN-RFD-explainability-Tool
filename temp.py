@@ -1,13 +1,13 @@
 # Definisci i due oggetti
-M = {0: {14: {0, 1, 4}, 15: {0, 1, 2, 4}, 16: {1, 2, 4}}, 
-        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1}, 46: {0, 1}}, 
-        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
-        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
-
-M2 = {0: {14: {0, 1, 4, 5}, 15: {0, 1, 2, 4, 5}, 16: {1, 2, 4}, 18:{1, 2, 4}}, 
-        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1, 5}, 46: {0, 1, 5}}, 
-        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
-        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
+#M = {0: {14: {0, 1, 4}, 15: {0, 1, 2, 4}, 16: {1, 2, 4}}, 
+#        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1}, 46: {0, 1}}, 
+#        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
+#        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
+#
+#M2 = {0: {14: {0, 1, 4, 5}, 15: {0, 1, 2, 4, 5}, 16: {1, 2, 4}, 18:{1, 2, 4}}, 
+#        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1, 5}, 46: {0, 1, 5}}, 
+#        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
+#        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
 
 
 #from StarDust import PatternLoader
@@ -16,12 +16,13 @@ M2 = {0: {14: {0, 1, 4, 5}, 15: {0, 1, 2, 4, 5}, 16: {1, 2, 4}, 18:{1, 2, 4}},
 #import pandas as pd
 #
 #
-#sys.setrecursionlimit(1500)
-#pattern_loader = PatternLoader("Datasets/prova.csv", ",", [1, 1, 1, 1])
-#M, initial_partitions = pattern_loader.get_partition_local()
-#
-#pattern_loader2 = PatternLoader("Datasets/prova2.csv", ",", [1, 1, 1, 1])
-#M2, initial_partitions2 = pattern_loader2.get_partition_local()
+
+sys.setrecursionlimit(1500)
+pattern_loader = PatternLoader("Datasets/prova.csv", ",", [1, 1, 1, 1])
+M, initial_partitions = pattern_loader.get_partition_local()
+
+pattern_loader2 = PatternLoader("Datasets/prova2.csv", ",", [1, 1, 1, 1])
+M2, initial_partitions2 = pattern_loader2.get_partition_local()
 #
 #print(M, M2)
 
