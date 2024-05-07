@@ -7,6 +7,7 @@ import pandas as pd
 from StarDust import PatternLoader
 import sys
 import numpy as np
+import copy
 
 app = Flask(__name__)
 CORS(app)
@@ -53,9 +54,23 @@ def compute_difference(obj1, obj2):
                 diff_obj[attribute][pattern_value] = obj2[attribute][pattern_value]  # Aggiungi il valore dall'oggetto 2
     return diff_obj
 
+   # Funzione per calcolare la differenza tra partizioni
+def clean_partition(obj1, indexes):
+    for attribute in obj1:
+      for pattern_value in obj1[attribute]:
+         obj1[attribute][pattern_value]= obj1[attribute][pattern_value] - set(indexes)       
+    print(obj1)
+    return obj1
+
 def remove_columns_if_exist(df, columns):
     existing_columns = [col for col in columns if col in df.columns]
     return df.drop(existing_columns, axis=1)
+
+def deep_copy_dict(d):
+    new_dict = {}
+    for key, value in d.items():
+        new_dict[key] = copy.deepcopy(value)
+    return new_dict
 
 
 @app.route('/getRFD',methods = ['POST'])
@@ -130,6 +145,9 @@ def get_rfds():
       #print(old_rhs_col)
       old_rhs_data = (old_rhs,old_rhs_col)
 
+      for i in range(0,len(old_lhs_puliti)):
+         old_lhs_puliti[i] = old_lhs_puliti[i].strip()
+
       old_lhs_data = []
       for i in old_lhs_puliti:
          elem = i.strip()
@@ -144,42 +162,52 @@ def get_rfds():
       rfd_data = {"rhs":rhs_data, "rhs_thr":rhs_thr, "lhs":lhs_data, "lhs_thr":lhs_thr, "type":rfd_type, "old_rhs_thr":"none", "old_lhs":"none", "old_lhs_thr":"none"}
       #print(rfd_data)
 
-
- 
-   print("LHS puliti: ", lhs_puliti)
-   columns_to_keep=['operation', 'index'] + lhs_puliti
-   columns_to_keep.append(rhs)
-   print("Cols to keep: ", columns_to_keep)
-   df=dataset[columns_to_keep]
-   print("Filtered dataset: ", df)
    #print(rfd_data['rhs'][1].tolist())
    #print(rfd_data['lhs'][1].tolist())
+ 
+
+   #Lista di colonne da mantere -- cambia sulla base di generalizzazioni e specializzazioni
+   columns_to_keep=[]
+   if(rfd_type == "specialization"):
+      columns_to_keep=['operation', 'index'] + old_lhs_puliti
+   elif(rfd_type == "generalization"):
+      columns_to_keep=['operation', 'index'] + lhs_puliti
+   columns_to_keep.append(rhs)
+   print("Cols to keep: ", columns_to_keep)
+   
+   #Filtro del dataset, mantenendo operation, index, lhs e rhs
+   df=dataset[columns_to_keep]   
+   #Ordinamento delle colonne per rimettere la colonna rhs nella giusta posizione
    df = df[dataset.columns.intersection(columns_to_keep)]
+   print("Filtered dataset: \n", df)
+
 
    columns_to_remove = ['operation', 'index']
+   #DF con solo i dati per le partizioni
    df_data = remove_columns_if_exist(df, columns_to_remove)
-   print(df_data)
 
+   #Indice di posizione dell'rhs nel dataset fitrato
    index_rhs=df_data.columns.get_loc(rhs)
+   #Creazione di un array di treshold della nuova dipendenza, prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
    all_thresholds=lhs_thr.copy()
    all_thresholds.insert(index_rhs,rhs_thr)
    all_thresholds = [int(x) for x in all_thresholds]
 
+   #Creazione di un array di treshold della dipendenza oracolo , prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
    all_thresholds_old=old_lhs_thr.copy()
    all_thresholds_old.insert(index_rhs,old_rhs_thr)
    all_thresholds_old = [int(x) for x in all_thresholds_old]
 
-
    print("Thresholds ordinate nuova dipendenza: ", all_thresholds)
-   print("Thresholds ordinate vecchia dipendenza: ", all_thresholds_old)
+   print("Thresholds ordinate dipendenza oracolo: ", all_thresholds_old)
 
-   # Filtra le righe con valore della prima colonna pari a zero
+   # Dataset con solo righe originali
    df_zero = df[df["operation"] == 0]
 
-   # Filtra le righe con valore della prima colonna maggiore di zero
+   # Dataset contenente solo le tuple inserite
    df_insertions = df[df["operation"] > 0]
 
-   # Filtra le righe con valore della prima colonna minore di zero
+   # Dataset contenente solo le tuple cancellate
    df_deletions = df[df["operation"] < 0]
 
    if (df_deletions.empty and not df_insertions.empty):
@@ -189,30 +217,61 @@ def get_rfds():
       #DF con dati originali più inserimenti
       merged_df = pd.concat([df_zero, df_insertions])
 
+      #DF con dati originali più inserimenti, togliendo le colonne aggiuntive e l'intestazione
       df_full_data = remove_columns_if_exist(merged_df, columns_to_remove)
       df_full_data.columns = range(len(df_full_data.columns))
+
+      #DF con dati originali, togliendo le colonne aggiuntive e l'intestazione
       df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
       df_zero_data.columns = range(len(df_zero_data.columns))
 
-      print(df_full_data)
-      print(df_zero_data)
+      print("Dati con inserimenti: \n", df_full_data)
+      print("Dati originali: \n", df_zero_data)
 
+      #Pattern dati aggiornati
       sys.setrecursionlimit(1500)
-      pattern_loader = PatternLoader("", "", all_thresholds, df_full_data)
+      pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
       M, initial_partitions = pattern_loader.get_partition_local()
       print(M)
      
-
-      pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire vecchie thresholds
+      #Pattern dati originali
+      pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
       print(M_old)
-
 
       difference = compute_difference(M_old, M)
       print(difference)
 
    elif (not df_deletions.empty and df_insertions.empty):
-      #Solo cancellazioni
+      print(30 * "-")
+      print("Caso con solo cancellazioni")
+
+      lista_indici_cancellazioni = df_deletions['index'].tolist()
+
+      df_canc = df_zero.drop(lista_indici_cancellazioni)
+
+      df_canc_data = remove_columns_if_exist(df_canc, columns_to_remove)
+      df_canc_data.columns = range(len(df_canc_data.columns))
+
+      df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
+      df_zero_data.columns = range(len(df_zero_data.columns))
+
+      print("Dati originali: \n", df_zero_data)
+      print("Dati con cancellazioni: \n", df_canc_data)
+        
+      pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire  thresholds
+      M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
+      print(M_old)
+
+      M_old_2 = deep_copy_dict(M_old)
+
+      #Rimuove dalle partizioni originali le tuple cancellate
+      M = clean_partition(M_old_2, lista_indici_cancellazioni)
+
+      difference = compute_difference(M, M_old)
+      print(difference)
+
+
       pass
    else:
       #entrambi
