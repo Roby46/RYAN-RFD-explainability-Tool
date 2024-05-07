@@ -210,7 +210,7 @@ def get_rfds():
    # Dataset contenente solo le tuple cancellate
    df_deletions = df[df["operation"] < 0]
 
-   if (df_deletions.empty and not df_insertions.empty):
+   if (rfd_type == "specialization"):
       print(30 * "-")
       print("Caso con solo inserimenti")
       
@@ -232,17 +232,27 @@ def get_rfds():
       sys.setrecursionlimit(1500)
       pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
       M, initial_partitions = pattern_loader.get_partition_local()
-      print(M)
+      print("Partizioni con gli inserimenti\n", M)
      
       #Pattern dati originali
       pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-      print(M_old)
+      print("Partizioni originali\n", M_old)
 
       difference = compute_difference(M_old, M)
       print(difference)
 
-   elif (not df_deletions.empty and df_insertions.empty):
+
+      # Trova gli indici delle righe con valore maggiore di 0 nella colonna specificata
+      lista_indici_inserimenti = df[df["operation"] > 0].index.tolist()
+
+      for idx in lista_indici_inserimenti:
+         print("Controllo la tupla inserita:", idx)
+
+      #Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
+      #Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
+
+   elif (rfd_type == "generalization"):
       print(30 * "-")
       print("Caso con solo cancellazioni")
 
@@ -261,7 +271,7 @@ def get_rfds():
         
       pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire  thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-      print(M_old)
+      print("Partizioni originali\n", M_old)
 
       M_old_2 = deep_copy_dict(M_old)
 
@@ -269,14 +279,14 @@ def get_rfds():
       M = clean_partition(M_old_2, lista_indici_cancellazioni)
 
       difference = compute_difference(M, M_old)
-      print(difference)
+      print("Partizioni con cancellazioni\n", difference)
 
+      for idx in lista_indici_cancellazioni:
+         print("Controllo la tupla inserita:", idx)
 
-      pass
-   else:
-      #entrambi
-      pass
+      
 
+      
 
    return "json ricevuto con successo.",200
    response = render_template('LLM_Answer2.html', explaination = results)
