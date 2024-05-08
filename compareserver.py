@@ -188,6 +188,21 @@ def get_rfds():
 
    #Indice di posizione dell'rhs nel dataset fitrato
    index_rhs=df_data.columns.get_loc(rhs)
+
+   index_lhs=[]
+   if(rfd_type == "specialization"):
+      for attr in old_lhs_puliti:
+         index_lhs.append(df_data.columns.get_loc(attr))
+   elif(rfd_type == "generalization"):
+      for attr in lhs_puliti:
+         index_lhs.append(df_data.columns.get_loc(attr))
+   
+   print("Posizione RHS", index_rhs)
+   print("Array posizioni LHS: ", index_lhs)
+
+
+
+
    #Creazione di un array di treshold della nuova dipendenza, prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
    all_thresholds=lhs_thr.copy()
    all_thresholds.insert(index_rhs,rhs_thr)
@@ -233,11 +248,14 @@ def get_rfds():
       pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
       M, initial_partitions = pattern_loader.get_partition_local()
       print("Partizioni con gli inserimenti\n", M)
+      print("Pattern con inserimenti\n", initial_partitions)
+
      
       #Pattern dati originali
       pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
       print("Partizioni originali\n", M_old)
+      print("Pattern originali\n", initial_partitions_old)
 
       difference = compute_difference(M_old, M)
       print(difference)
@@ -282,7 +300,9 @@ def get_rfds():
       print("Partizioni con cancellazioni\n", difference)
 
       for idx in lista_indici_cancellazioni:
-         print("Controllo la tupla inserita:", idx)
+         print("Controllo la tupla cancellata:", idx)
+
+         #Valuto LHS
 
       
 

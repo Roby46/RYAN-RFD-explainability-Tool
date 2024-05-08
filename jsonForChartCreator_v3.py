@@ -1579,7 +1579,7 @@ def create_json(oracle, rfdsfile):
     }
 
 
-    with open("./jsonForChart_prova_canc.json", "w") as outfile:
+    with open("./jsonForChart_gianp.json", "w") as outfile:
         json.dump(RFDMap, outfile)
 
 
@@ -1876,10 +1876,10 @@ def create_json(oracle, rfdsfile):
     #print(str(RFDMap2))
 
 
-    with open("./percentuali_results_prova_canc.json", "w") as outfile:
+    with open("./percentuali_gianp.json", "w") as outfile:
         json.dump(RFDMap2, outfile)
 
-oracolo ="./prova_canc_oracolo.csv"
-nuovirisultati = "./prova_canc_nuove.csv"
+oracolo ="./gianp_oracolo.csv"
+nuovirisultati = "./gianp_risultati.csv"
 
 create_json(oracolo,nuovirisultati)
