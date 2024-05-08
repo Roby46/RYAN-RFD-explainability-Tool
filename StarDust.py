@@ -35,7 +35,7 @@ class PatternLoader:
         if df is None:
             df = self.df
 
-        df = df.drop_duplicates()
+        #df = df.drop_duplicates()
         df = df.reset_index(drop=True)
         self.row_number = len(df)
         self.columns_number = len(df.columns)

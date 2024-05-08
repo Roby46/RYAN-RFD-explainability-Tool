@@ -248,14 +248,12 @@ def get_rfds():
       pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
       M, initial_partitions = pattern_loader.get_partition_local()
       print("Partizioni con gli inserimenti\n", M)
-      print("Pattern con inserimenti\n", initial_partitions)
 
      
       #Pattern dati originali
       pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
       print("Partizioni originali\n", M_old)
-      print("Pattern originali\n", initial_partitions_old)
 
       difference = compute_difference(M_old, M)
       print(difference)
@@ -301,6 +299,8 @@ def get_rfds():
 
       for idx in lista_indici_cancellazioni:
          print("Controllo la tupla cancellata:", idx)
+
+
 
          #Valuto LHS
 
