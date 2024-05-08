@@ -300,6 +300,35 @@ def get_rfds():
       for idx in lista_indici_cancellazioni:
          print("Controllo la tupla cancellata:", idx)
 
+         lhs_valid=True
+         rhs_valid=True
+
+         for attribute in range(len(df_zero_data.columns)):
+            print(attribute)
+            if(attribute in index_lhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  lhs_valid = False
+                  break
+            elif(attribute == index_rhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  rhs_valid = False
+
+         if(lhs_valid and not rhs_valid):
+            print("VIOLAZIONE")      
+
+
 
 
          #Valuto LHS
