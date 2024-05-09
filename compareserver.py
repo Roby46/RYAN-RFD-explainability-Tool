@@ -59,7 +59,6 @@ def clean_partition(obj1, indexes):
     for attribute in obj1:
       for pattern_value in obj1[attribute]:
          obj1[attribute][pattern_value]= obj1[attribute][pattern_value] - set(indexes)       
-    print(obj1)
     return obj1
 
 def remove_columns_if_exist(df, columns):
@@ -240,7 +239,7 @@ def get_rfds():
       df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
       df_zero_data.columns = range(len(df_zero_data.columns))
 
-      print("Dati con inserimenti: \n", df_full_data)
+      print("Dati con inserimenti: \n", df_full_data, "\n\n")
       print("Dati originali: \n", df_zero_data)
 
       #Pattern dati aggiornati
@@ -256,7 +255,7 @@ def get_rfds():
       print("Partizioni originali\n", M_old)
 
       difference = compute_difference(M_old, M)
-      print(difference)
+      print("Differenza\n", difference)
 
 
       # Trova gli indici delle righe con valore maggiore di 0 nella colonna specificata
@@ -264,6 +263,47 @@ def get_rfds():
 
       for idx in lista_indici_inserimenti:
          print("Controllo la tupla inserita:", idx)
+
+         lhs_valid=True
+         rhs_valid=True
+
+         similarity_set=set()
+
+         for attribute in range(len(df_zero_data.columns)):
+            #print(attribute)
+            if(attribute in index_lhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     similarity_set.update(M[attribute][ptnv])
+                     #print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  lhs_valid = False
+                  break
+            elif(attribute == index_rhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  #print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  rhs_valid = False
+
+         if(lhs_valid and not rhs_valid):
+            print(80 * "=")
+            print("La tupla\n",  df_data.iloc[idx], "\nha portato ad una specializzazione.")      
+            similarity_set.remove(idx)
+            for i in similarity_set:
+               print(40 * "*")
+               print("---- Simile sull'lhs con la tupla", i , "ma diversa sull'rhs")
+               print(df_data.iloc[i])
+               print(40 * "*")
+            print(80 * "=")
+
+
 
       #Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
       #Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
@@ -282,7 +322,7 @@ def get_rfds():
       df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
       df_zero_data.columns = range(len(df_zero_data.columns))
 
-      print("Dati originali: \n", df_zero_data)
+      print("Dati originali: \n", df_zero_data, "\n\n")
       print("Dati con cancellazioni: \n", df_canc_data)
         
       pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire  thresholds
@@ -294,8 +334,11 @@ def get_rfds():
       #Rimuove dalle partizioni originali le tuple cancellate
       M = clean_partition(M_old_2, lista_indici_cancellazioni)
 
+      print("Partizioni con cancellazioni\n", M)
+
+
       difference = compute_difference(M, M_old)
-      print("Partizioni con cancellazioni\n", difference)
+      print("Differenza\n", difference)
 
       for idx in lista_indici_cancellazioni:
          print("Controllo la tupla cancellata:", idx)
@@ -303,14 +346,17 @@ def get_rfds():
          lhs_valid=True
          rhs_valid=True
 
+         similarity_set=set()
+
          for attribute in range(len(df_zero_data.columns)):
-            print(attribute)
+            #print(attribute)
             if(attribute in index_lhs):
                trovato = False
                for ptnv in difference[attribute]:
-                  print(ptnv)
+                  #print(ptnv)
                   if(idx in difference[attribute][ptnv]):
-                     print("Sono presente")
+                     similarity_set.update(M_old[attribute][ptnv])
+                     #print("Sono presente")
                      trovato=True
                if(not trovato):
                   lhs_valid = False
@@ -318,15 +364,24 @@ def get_rfds():
             elif(attribute == index_rhs):
                trovato = False
                for ptnv in difference[attribute]:
-                  print(ptnv)
+                  #print(ptnv)
                   if(idx in difference[attribute][ptnv]):
-                     print("Sono presente")
+                     #print("Sono presente")
                      trovato=True
                if(not trovato):
                   rhs_valid = False
 
          if(lhs_valid and not rhs_valid):
-            print("VIOLAZIONE")      
+            print(80 * "=")
+            print("La tupla\n", df_data.iloc[idx], "\nviolava una dipendenza, con la rimozione ha portato alla generalizzazione.")      
+            similarity_set.remove(idx)
+            for i in similarity_set:
+               print(40 * "*")
+               print("---- Era simile sull'lhs con la tupla", i , "ma differiva sull'rhs")
+               print(df_data.iloc[i])
+               print(40 * "*")
+            print(80 * "=")
+
 
 
 
