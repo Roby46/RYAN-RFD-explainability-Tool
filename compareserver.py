@@ -262,7 +262,7 @@ def get_rfds():
       lista_indici_inserimenti = df[df["operation"] > 0].index.tolist()
 
       for idx in lista_indici_inserimenti:
-         print("Controllo la tupla inserita:", idx)
+         print("\n\nControllo la tupla inserita:", idx)
 
          lhs_valid=True
          rhs_valid=True
@@ -293,12 +293,14 @@ def get_rfds():
                   rhs_valid = False
 
          if(lhs_valid and not rhs_valid):
+            column_names=df_data.columns.tolist()
+            selected_column_names = [column_names[index] for index in index_lhs]
             print(80 * "=")
             print("La tupla\n",  df_data.iloc[idx], "\nha portato ad una specializzazione.")      
             similarity_set.remove(idx)
             for i in similarity_set:
                print(40 * "*")
-               print("---- Simile sull'lhs con la tupla", i , "ma diversa sull'rhs")
+               print("---- Simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma diversa sull'rhs (attributo [", rhs ,"])")
                print(df_data.iloc[i])
                print(40 * "*")
             print(80 * "=")
@@ -307,6 +309,8 @@ def get_rfds():
 
       #Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
       #Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
+
+   #Fine if specializzazioni
 
    elif (rfd_type == "generalization"):
       print(30 * "-")
@@ -341,7 +345,7 @@ def get_rfds():
       print("Differenza\n", difference)
 
       for idx in lista_indici_cancellazioni:
-         print("Controllo la tupla cancellata:", idx)
+         print("\n\nControllo la tupla cancellata:", idx)
 
          lhs_valid=True
          rhs_valid=True
@@ -372,12 +376,14 @@ def get_rfds():
                   rhs_valid = False
 
          if(lhs_valid and not rhs_valid):
+            column_names=df_data.columns.tolist()
+            selected_column_names = [column_names[index] for index in index_lhs]
             print(80 * "=")
             print("La tupla\n", df_data.iloc[idx], "\nviolava una dipendenza, con la rimozione ha portato alla generalizzazione.")      
             similarity_set.remove(idx)
             for i in similarity_set:
                print(40 * "*")
-               print("---- Era simile sull'lhs con la tupla", i , "ma differiva sull'rhs")
+               print("---- Era simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma differiva sull'rhs (attributo", rhs ,")")
                print(df_data.iloc[i])
                print(40 * "*")
             print(80 * "=")
