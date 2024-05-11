@@ -3502,6 +3502,10 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 	})
 	.done(function(response){
 	    console.log("Response StatisticsComponent: ",response)
+
+        $("body" ).get( "http://127.0.0.1:5000/explain?response="+response['prompt'], function() {
+          alert( "Load was performed." );
+        });
 	})
 	.fail(function(xhr, textStatus, errorThrown){
 		console.log("ERROR: ",xhr.responseText)

@@ -148,7 +148,6 @@ body {
         <form id="paper" method="get" action="">
     
             <textarea placeholder="LLM Answer...." id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; ">
-				{{ llm_answer }}
 			</textarea>
             <br>
             
@@ -159,8 +158,28 @@ body {
     <script>
     $(document).ready(function(){
         $('#title').focus();
-          autosize($('#text'));
-      });
+        autosize($('#text'));
+	});
+
+     	$.ajax({
+			type:"GET",
+			contentType: "application/json",
+			xhrFields: { withCredentials: false },
+			crossDomain: true,
+			url:"http://127.0.0.1:5000/ask",
+		})
+		.done(function(response){
+			console.log("Response StatisticsComponent: ",response)
+			$('#text').html(response["LLMAnswer"]);
+		})
+		.fail(function(xhr, textStatus, errorThrown){
+			console.log("ERROR: ",xhr.responseText)
+			console.log(errorThrown)
+			console.log(textStatus)
+			return xhr.responseText;
+		}).then(function(value){
+
+		});
     </script>
 
 </body>

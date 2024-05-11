@@ -20,14 +20,23 @@ global dataset
 def root():
     return render_template('index.html')
 
-@app.route('/explain')
+@app.route('/explain', methods = ['GET'])
 def read_explanation():
+   json_data = request.form or request.get_json()
+   print("json_data read_explanation",json_data)
+   return render_template('LLM_Answer2.html')
+
+@app.route('/ask', methods = ['GET'])
+def ask_prompt():
+   json_data = request.form or request.get_json()
+   print("json_data ask_prompt",json_data)
+
    # ---------------- Interact with LLM
    prompt = "Give me the definition of relaxed functional dependencies"
-   output = llm.ask_llm(model, prompt, max_tokens=300, streaming=True)
+   output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
    print("llm", output)
    # ---------------- Interact with LLM
-   return render_template('LLM_Answer2.html', llm_answer=output)
+   return {"LLMAnswer": output}
 
 @app.route('/compare',methods = ['POST', 'GET'])
 def login():
@@ -401,7 +410,7 @@ def get_rfds():
          #Valuto LHS
 
    prompt = "Give me the definition of relaxed functional dependencies"
-   return {"prompt":prompt}
+   return {"prompt": prompt}
 
 if __name__ == '__main__':
    app.run(debug = True)
