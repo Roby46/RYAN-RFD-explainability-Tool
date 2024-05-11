@@ -1,6 +1,6 @@
 import requests
 import csv
-from flask import Flask, redirect, url_for, request, jsonify
+from flask import Flask, redirect, url_for, request, jsonify, render_template
 from flask_cors import CORS
 from io import BytesIO
 import pandas as pd
@@ -8,11 +8,26 @@ from StarDust import PatternLoader
 import sys
 import numpy as np
 import copy
+import llm_interaction as llm
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)
-
+model = llm.load_model()
+print("Large Language Model",model)
 global dataset
+
+@app.route('/')
+def root():
+    return render_template('index.html')
+
+@app.route('/explain')
+def read_explanation():
+   # ---------------- Interact with LLM
+   prompt = "Give me the definition of relaxed functional dependencies"
+   output = llm.ask_llm(model, prompt, max_tokens=300, streaming=True)
+   print("llm", output)
+   # ---------------- Interact with LLM
+   return render_template('LLM_Answer2.html', llm_answer=output)
 
 @app.route('/compare',methods = ['POST', 'GET'])
 def login():
@@ -35,7 +50,7 @@ def get_data():
    global dataset
    name = request.data.decode("utf-8")
    print("request data\n",name)
-   dataset = pd.read_csv("./datasets/"+name, delimiter=";")
+   dataset = pd.read_csv("./static/Datasets/"+name, delimiter=";")
    print(dataset)
    return 'File caricato con successo!', 200 
 
@@ -199,9 +214,6 @@ def get_rfds():
    print("Posizione RHS", index_rhs)
    print("Array posizioni LHS: ", index_lhs)
 
-
-
-
    #Creazione di un array di treshold della nuova dipendenza, prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
    all_thresholds=lhs_thr.copy()
    all_thresholds.insert(index_rhs,rhs_thr)
@@ -305,8 +317,6 @@ def get_rfds():
                print(40 * "*")
             print(80 * "=")
 
-
-
       #Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
       #Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
 
@@ -388,20 +398,10 @@ def get_rfds():
                print(40 * "*")
             print(80 * "=")
 
-
-
-
-
          #Valuto LHS
 
-      
-
-      
-
-   return "json ricevuto con successo.",200
-   response = render_template('LLM_Answer2.html', explaination = results)
-
-
+   prompt = "Give me the definition of relaxed functional dependencies"
+   return {"prompt":prompt}
 
 if __name__ == '__main__':
    app.run(debug = True)

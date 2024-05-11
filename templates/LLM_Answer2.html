@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="./static/styleLLM.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Answer</title>
+    <!-- Additional meta tags, CSS links, or JavaScript links can go here -->
+     <!-- Includi jQuery -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <!-- Includi autosize.js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+
+    <style>
+
+* {
+    outline:none;
+	border:none;
+	margin:0px;
+	padding:0px;
+	font-family:Courier, monospace;
+}
+body {
+	background:#ffffff;        
+}
+#paper {
+	color:#FFF;
+	font-size:20px;
+    display: flex;
+    width: 100%;
+}
+
+#text {
+    width: 90%;
+	overflow:hidden;
+	background-color:#FFF;
+	color:#222;
+	font-family:Courier, monospace;
+	font-weight:normal;
+	font-size:24px;
+	resize:none;
+	line-height:40px;
+	padding-left:100px;
+	padding-right:100px;
+	padding-top:45px;
+	padding-bottom:34px;
+	background-image:url(./static/Images/lines.png) , url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+	/*background-repeat:repeat-y, repeat;*/
+	-webkit-border-radius:12px;
+	border-radius:12px;
+	-webkit-box-shadow: 0px 2px 8px #727272;
+	box-shadow: 0px 2px 8px #727272;
+	border-top:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+}
+#title {
+	background-color:transparent;
+	border-bottom:3px solid #FFF;
+	color:#FFF;
+	font-size:20px;
+	font-family:Courier, monospace;
+	height:28px;
+	font-weight:bold;
+	width:220px;
+}
+#button {
+	cursor:pointer;
+	margin-top:20px;
+	float:right;
+	height:40px;
+	padding-left:24px;
+	padding-right:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:20px;
+	color:#FFF;
+	text-shadow: 0px -1px 0px #000000;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border-top:1px solid #FFF;
+	-webkit-box-shadow: 0px 2px 14px #000;
+	box-shadow: 0px 2px 14px #000;
+	background-color: #62add6;
+	background-image:url(https://static.tumblr.com/maopbtg/ZHLmgtok7/button.png);
+	background-repeat:repeat-x;
+}
+#button:active {
+	zoom: 1;
+	filter: alpha(opacity=80);
+	opacity: 0.8;
+}
+#button:focus {
+	zoom: 1;
+	filter: alpha(opacity=80);
+	opacity: 0.8;
+}
+#wrapper {
+	width:90%;
+	height:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:24px;
+	margin-bottom:100px;
+}
+
+    </style>
+</head>
+<body>
+
+	<div class="header">
+
+		<!--Content before waves-->
+		<div class="inner-header flex">
+		<!--Just the logo.. Don't mind this-->
+		  <img src="./static/Images/logo_dais_bianco.png" onclick="location.reload();" class="logo">
+		</div>
+	
+		
+		<!--Waves Container-->
+		<div>
+		<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+		viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+		<defs>
+		<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+		</defs>
+		<g class="parallax">
+		<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+		<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+		<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+		<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+		</g>
+		</svg>
+		</div>
+		<!--Waves end-->
+		
+		</div>
+		<!--Header ends-->
+		
+		<!--Content starts-->
+	
+		<!--Content ends-->
+		
+
+
+    <div id="wrapper">
+
+        <form id="paper" method="get" action="">
+    
+            <textarea placeholder="LLM Answer...." id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 160px; ">
+				{{ llm_answer }}
+			</textarea>
+            <br>
+            
+        </form>
+    
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        $('#title').focus();
+          autosize($('#text'));
+      });
+    </script>
+
+</body>
+</html>
+
+
+
+
