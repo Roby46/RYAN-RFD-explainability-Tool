@@ -14,55 +14,33 @@ app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)
 model = llm.load_model()
 print("Large Language Model",model)
-global dataset
+global dataset,prompt,rhs,lhs,old_lhs,old_rhs,rfd_type
 
 @app.route('/')
 def root():
     return render_template('index.html')
 
-@app.route('/explain', methods = ['GET'])
-def read_explanation():
-   json_data = request.form or request.get_json()
-   print("json_data read_explanation",json_data)
+@app.route('/explain')
+def explain():
+   global dataset,prompt,rhs,lhs,old_lhs,old_rhs,rfd_type
+
+   # Recupera i dati dalla query string
+   rhs = request.args.get('rhs')
+   lhs = request.args.get('lhs')
+   old_lhs = request.args.get('old_lhs')
+   old_rhs = request.args.get('old_rhs')
+   rfd_type = request.args.get('type')
+
+   # Usa i dati come desideri
+   print("Param1:", rhs)
+   print("Param2:", lhs)
+   print("Param3:", old_lhs)
+   print("Param4:", old_rhs)
+   print("Param5:", rfd_type)
+
+    
+    # Logica per generare la pagina HTML
    return render_template('LLM_Answer2.html')
-
-@app.route('/ask', methods = ['GET'])
-def ask_prompt():
-   json_data = request.form or request.get_json()
-   print("json_data ask_prompt",json_data)
-
-   # ---------------- Interact with LLM
-   prompt = "Give me the definition of relaxed functional dependencies"
-   output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
-   print("llm", output)
-   # ---------------- Interact with LLM
-   return {"LLMAnswer": output}
-
-@app.route('/compare',methods = ['POST', 'GET'])
-def login():
-   print("request\n",request)
-   json_data = request.form or request.get_json()
-   data = dict(json_data)
-   print("request data\n",data)
-   print("request json_data\n",json_data)
-   print("request request.form\n",request.form)
-
-   if request.method == 'POST':
-      return "Ciao Post"
-   else:
-      user = request.args.get('nm')
-      return "Ciao GET"
-
-
-@app.route('/upload',methods = ['POST'])
-def get_data():
-   global dataset
-   name = request.data.decode("utf-8")
-   print("request data\n",name)
-   dataset = pd.read_csv("./static/Datasets/"+name, delimiter=";")
-   print(dataset)
-   return 'File caricato con successo!', 200 
-
 
 # Funzione per calcolare la differenza tra partizioni
 def compute_difference(obj1, obj2):
@@ -79,6 +57,7 @@ def compute_difference(obj1, obj2):
     return diff_obj
 
    # Funzione per calcolare la differenza tra partizioni
+
 def clean_partition(obj1, indexes):
     for attribute in obj1:
       for pattern_value in obj1[attribute]:
@@ -95,21 +74,9 @@ def deep_copy_dict(d):
         new_dict[key] = copy.deepcopy(value)
     return new_dict
 
-
-@app.route('/getRFD',methods = ['POST'])
-def get_rfds():
-   global dataset
-   #print(dataset)
-   # Leggi il JSON inviato nel corpo della richiesta
-   json_data = request.get_json()
-   
-   # Estrai i valori dal JSON
-   rhs = json_data.get('rhs')
-   lhs = json_data.get('lhs')
-   old_lhs = json_data.get('old_lhs')
-   old_rhs = json_data.get('old_rhs')
-   rfd_type = json_data.get('type')
-
+@app.route('/ask', methods = ['GET'])
+def ask_prompt():
+   global dataset,prompt,rhs,lhs,old_lhs,old_rhs,rfd_type
    tmp = rhs.split("_")
    rhs = tmp[0]
    rhs_thr = tmp[1]
@@ -407,10 +374,62 @@ def get_rfds():
                print(40 * "*")
             print(80 * "=")
 
+   # ---------------- Interact with LLM
+   prompt = "Give me the definition of computer"
+   output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
+   print("llm", output)
+   # ---------------- Interact with LLM
+   return {"LLMAnswer": output}
+
+@app.route('/compare',methods = ['POST', 'GET'])
+def login():
+   print("request\n",request)
+   json_data = request.form or request.get_json()
+   data = dict(json_data)
+   print("request data\n",data)
+   print("request json_data\n",json_data)
+   print("request request.form\n",request.form)
+
+   if request.method == 'POST':
+      return "Ciao Post"
+   else:
+      user = request.args.get('nm')
+      return "Ciao GET"
+
+
+@app.route('/upload',methods = ['POST'])
+def get_data():
+   global dataset
+   name = request.data.decode("utf-8")
+   print("request data\n",name)
+   dataset = pd.read_csv("./static/Datasets/"+name, delimiter=";")
+   print(dataset)
+   return 'File caricato con successo!', 200 
+
+
+
+
+'''@app.route('/getRFD',methods = ['POST'])
+def get_rfds():
+   global dataset,prompt,rhs,lhs,old_lhs,old_rhs,rfd_type
+   #print(dataset)
+   # Leggi il JSON inviato nel corpo della richiesta
+   json_data = request.get_json()
+   
+   # Estrai i valori dal JSON
+   rhs = json_data.get('rhs')
+   lhs = json_data.get('lhs')
+   old_lhs = json_data.get('old_lhs')
+   old_rhs = json_data.get('old_rhs')
+   rfd_type = json_data.get('type')
+
+   
+
          #Valuto LHS
 
-   prompt = "Give me the definition of relaxed functional dependencies"
+   #prompt = "Give me the definition of relaxed functional dependencies"
    return {"prompt": prompt}
+'''
 
 if __name__ == '__main__':
    app.run(debug = True)
