@@ -14,57 +14,53 @@ import llm_interaction as llm
 model = llm.load_model()
 print("Large Language Model",model)
 
-prompt="Explain to me functional dependencies in the context of relational databases. Provide a practical example"
+context_spec='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y 
+   between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y.
+   X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is 
+   lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers.
+   
+   After the insertion of a new tuple, an existing RFD can be invalidated only if the new tuple has similar values on the LHS with respect other tuples but 
+   it has different values on the RHS.  In this case, a specialized RFD with additional attributes on the LHS may be valid on the dataset. 
+'''
+
+detail_spec='''
+   You will be provided with an RFD that gets invalidated after the insertion of a batch of tuples, and with the tuples that caused the violation and their values. 
+
+   The RFD = {LHS: ["Journal(threshold=1)"], RHS: ["Volume(threshold=5)"].} was invalidated and specialized by the new RFD {LHS:  ["Journal(threshold=1)", Citations(threshold=2)], RHS: ["Volume(threshold=5)"].}
+   This happened because:
+   - The insertion of Tuple 1 (Journal=Nature, Volume=4) caused a violation considering tuple 3 (Journal=Natures, Volume=16).
+   - The insertion of Tuple 2 (Journal=Science, Volume=10) caused a violation considering tuple 4 (Journal=Sciences, Volume=1).
+
+   Basing on this information, provide an extensive explanation of why the RFD was invalidated.
+   To do this, analyze the attribute values and consider the similarity thresholds. 
+'''
+
+context_gen='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y 
+   between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y.
+   X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is 
+   lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers.
+   
+   After the deletion of a tuple, an existing RFD can be no longer minimal if the deleted tuple had similar values on the LHS with respect other tuples but 
+   it had different values on the RHS. In this case, a generalized RFD with a subset of attributes on the LHS may be valid on the dataset. 
+'''
+
+
+detail_gen='''
+   You will be provided with an RFD that gets generalized after the deletion of a batch of tuples. 
+   You will be provided with the tuples that caused the generalization and their values. 
+
+   Generalized RFD = LHS: ["Journal(threshold=1)", "Author(threshold=3)"], RHS: ["Volume(threshold=2)"]. 
+
+   This happened because:
+   - Tuple 1 (Journal=Nature, Author=Cirillo, Volume=4), which caused a violation considering tuple 3 (Journal=Natures, Author=Cirillo, Volume=16), has been removed.
+   - Tuple 2 (Journal=Science,  Author=Caruccio, Volume=10), which caused a violation considering tuple 4 (Journal=Sciences, Author=Caruccio, Volume=1) has been removed.
+
+   Basing on this information, provide an extensive explanation of why the RFD was generalized.
+   To do this, analyze the attribute values and consider the similarity thresholds. 
+'''
+
+prompt= context_spec + detail_spec
 
 output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
 
 print(output)
-
-# Definisci i due oggetti
-#M = {0: {14: {0, 1, 4}, 15: {0, 1, 2, 4}, 16: {1, 2, 4}}, 
-#        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1}, 46: {0, 1}}, 
-#        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
-#        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
-#
-#M2 = {0: {14: {0, 1, 4, 5}, 15: {0, 1, 2, 4, 5}, 16: {1, 2, 4}, 18:{1, 2, 4}}, 
-#        1: {19: {2, 4}, 20: {2, 4}, 45: {0, 1, 5}, 46: {0, 1, 5}}, 
-#        2: {1: {0, 1}, 2: {0, 1}, 10: {2, 4}, 11: {2, 4}}, 
-#        3: {29: {2, 4}, 30: {2, 4}, 50: {0, 1}, 51: {0, 1}}}
-
-
-#from StarDust import PatternLoader
-#import sys
-#import numpy as np
-#import pandas as pd
-#
-#
-
-#sys.setrecursionlimit(1500)
-#pattern_loader = PatternLoader("Datasets/prova.csv", ",", [1, 1, 1, 1])
-#M, initial_partitions = pattern_loader.get_partition_local()
-#
-#pattern_loader2 = PatternLoader("Datasets/prova2.csv", ",", [1, 1, 1, 1])
-#M2, initial_partitions2 = pattern_loader2.get_partition_local()
-##
-##print(M, M2)
-#
-#
-## Funzione per calcolare la differenza
-#def compute_difference(obj1, obj2):
-#    diff_obj = {}
-#    for attribute in obj1:
-#        #print(attribute)
-#        diff_obj[attribute] = {}
-#        for pattern_value in obj2[attribute]:
-#            #print(pattern_value)
-#            if pattern_value in obj1.get(attribute, {}):
-#                diff_obj[attribute][pattern_value] = obj2[attribute][pattern_value] - obj1[attribute][pattern_value]
-#            else:
-#                diff_obj[attribute][pattern_value] = obj2[attribute][pattern_value]  # Aggiungi il valore dall'oggetto 2
-#    return diff_obj
-#
-## Calcola la differenza
-#difference = compute_difference(M, M2)
-#
-## Stampare la differenza
-#print(difference)
