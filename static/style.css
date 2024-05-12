@@ -314,6 +314,10 @@ div.dataTables_wrapper div.dataTables_length select {
   background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB) !important;
 }
 
+#load2{
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB) !important;
+}
+
 
 /*Bottone explainability*/
 

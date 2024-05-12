@@ -68,10 +68,10 @@
 
       <div class="col-lg-12" >
         <fieldset class="border p-2" id="load_dataset">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload dataset
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> STEP 1: Upload Dataset
         </legend>
         <div class="input-group">
-          <input  class="form-control form-control-lg" type="file" name="file2" id="file2" >
+          <input  class="form-control form-control-lg" type="file" name="file2" id="file2">
           <button class="btn btn-primary" type="button" id="load1" onclick="load_data()" >Upload</button>
         </div>
        </fieldset>
@@ -81,11 +81,11 @@
 
       <div class="col-lg-12" >
         <fieldset class="border p-2" id="load_json">
-        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> Upload results
+        <legend class="w-auto" style="font-size: 20px!important; margin-bottom: 0px;"> STEP 2: Upload results and Generate Plots
         </legend>
         <div class="input-group">
-          <input  class="form-control form-control-lg" type="file" name="file1" id="file1" >
-          <button class="btn btn-primary" type="button" id="load1" onclick="createchart()" >Upload</button>
+          <input  class="form-control form-control-lg" type="file" name="file1" id="file1"  disabled="true">
+          <button class="btn btn-primary" type="button" id="load2" onclick="createchart()" disabled="true">Upload</button>
         </div>
        </fieldset>
       </div>
@@ -116,9 +116,7 @@
           <th>Explanation</th>
       </tr>
       </thead>
-      <tbody id="bodyrisultati">
-
-      </tbody>
+      <tbody id="bodyrisultati"></tbody>
       <tfoot>
       </tfoot>
   </table>

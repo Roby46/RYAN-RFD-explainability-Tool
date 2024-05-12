@@ -159,27 +159,58 @@ body {
     $(document).ready(function(){
         $('#title').focus();
         autosize($('#text'));
+		$('#text').html('I am processing the explanation. Be patient for a few seconds...');
 	});
 
-     	$.ajax({
-			type:"GET",
-			contentType: "application/json",
-			xhrFields: { withCredentials: false },
-			crossDomain: true,
-			url:"http://127.0.0.1:5000/ask",
-		})
-		.done(function(response){
-			console.log("Response StatisticsComponent: ",response)
-			$('#text').html(response["LLMAnswer"]);
-		})
-		.fail(function(xhr, textStatus, errorThrown){
-			console.log("ERROR: ",xhr.responseText)
-			console.log(errorThrown)
-			console.log(textStatus)
-			return xhr.responseText;
-		}).then(function(value){
+	function getParams ()
+	{
+		var result = {};
+		var tmp = [];
 
-		});
+		location.search
+			.substr (1)
+			.split ("&")
+			.forEach (function (item)
+			{
+				tmp = item.split ("=");
+				result [tmp[0]] = decodeURIComponent (tmp[1]);
+			});
+
+		return result;
+	}
+	location.getParams = getParams;
+	var prompt_to_ask = location.getParams()["prompt"];
+	//console.log (location.getParams());
+	console.log (prompt_to_ask);
+
+
+	$.ajax({
+		type:"GET",
+		dataType:"text",
+		contentType: "application/text",
+		xhrFields: { withCredentials: false },
+		crossDomain: true,
+		// async: false, // async dovrebbe andare bene in quanto è una componente di output
+		data: {"prompt": prompt_to_ask},
+		url:"http://127.0.0.1:5000/askllm",
+	})
+	.done(function(response){
+	    getjson = $.parseJSON(response)
+		console.log("Response http://127.0.0.1:5000/askllm: ",response)
+		console.log("Response http://127.0.0.1:5000/askllm getjson: ",getjson)
+		//alert("Dataset Loaded Successfully!");
+        $('#text').html(getjson['LLMAnswer']);
+	})
+	.fail(function(xhr, textStatus, errorThrown){
+		console.log("ERROR http://127.0.0.1:5000/askllm: ",xhr.responseText)
+		//alert("Dataset upload error! "+errorThrown);
+		return xhr.responseText;
+
+	}).then(function(value){
+
+	})
+
+
     </script>
 
 </body>

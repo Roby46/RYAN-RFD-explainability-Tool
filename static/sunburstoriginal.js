@@ -3489,13 +3489,7 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 
 	console.log("jsonRFD");
 	console.log(jsonRFD);
-	
-	var queryParams = $.param(jsonRFD);
-	var url = 'http://127.0.0.1:5000/explain?' + queryParams;
 
-	// Esegui il reindirizzamento con l'URL contenente i dati come parametri
-	var popup = window.open(url, 'Popup', 'width=600,height=400');
-	/*
 	$.ajax({
 		type:"POST",
 		dataType:"json",
@@ -3522,7 +3516,6 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 	}).then(function(value){
 	   
 	})
-	*/
 
 }
 

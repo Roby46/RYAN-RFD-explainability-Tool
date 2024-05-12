@@ -3472,12 +3472,11 @@
 
 
 function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
-
-	alert(lhs)
-	alert(rhs)
-	alert(old_lhs)
-	alert(old_rhs)
-
+	//alert(lhs)
+	//alert(rhs)
+	//alert(old_lhs)
+	//alert(old_rhs)
+	//alert("Sono in sendRFD");
 
 	var jsonRFD = {
 		rhs: rhs,
@@ -3487,40 +3486,42 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 		type: type
 	  };
 
-	console.log("jsonRFD");
+	console.log("[sendRFD] jsonRFD");
 	console.log(jsonRFD);
 
-	$.ajax({
-		type:"POST",
-		dataType:"json",
-		contentType: "application/json",
+	var queryParams = $.param(jsonRFD);
+	console.log("[sendRFD] queryParams");
+	console.log(queryParams);
+
+    $.ajax({
+		type:"GET",
+		dataType:"text",
+		contentType: "application/text",
 		xhrFields: { withCredentials: false },
 		crossDomain: true,
 		// async: false, // async dovrebbe andare bene in quanto è una componente di output
-		data:JSON.stringify(jsonRFD),
-		url:"http://127.0.0.1:5000/getRFD",
+		data: jsonRFD,
+		url:"http://127.0.0.1:5000/ask",
 	})
 	.done(function(response){
-	    console.log("Response StatisticsComponent: ",response)
-
-        $("body" ).get( "http://127.0.0.1:5000/explain?response="+response['prompt'], function() {
-          alert( "Load was performed." );
-        });
+	    getjson = $.parseJSON(response)
+		console.log("Response http://127.0.0.1:5000/ask: ",response)
+		console.log("Response http://127.0.0.1:5000/ask getjson: ",getjson)
+		//alert("Dataset Loaded Successfully!");
+		var url = 'http://127.0.0.1:5000/LLM_Answer2.html?prompt=' + getjson['LLMQuery'];
+        // Esegui il reindirizzamento con l'URL contenente i dati come parametri
+        var popup = window.open(url, 'Popup', 'width=800,height=600');
 	})
 	.fail(function(xhr, textStatus, errorThrown){
-		console.log("ERROR: ",xhr.responseText)
-		console.log(errorThrown)
-		console.log(textStatus)
+		console.log("ERROR http://127.0.0.1:5000/ask: ",xhr.responseText)
+		//alert("Dataset upload error! "+errorThrown);
 		return xhr.responseText;
-	 
+
 	}).then(function(value){
-	   
+
 	})
 
 }
-
-
-
 
 
 function generateSunburst(filename){
@@ -3586,8 +3587,7 @@ function createchart(){
         if (element) {
             element.style.display = "block";
         }
-    
-    
+
     var par = document.getElementById('colltree');
     if(par != null){
         par.parentNode.removeChild(par);
@@ -3614,9 +3614,7 @@ function createchart(){
 
 	generateSunburst(b);
 
-	
     a = "./static/Json_chart/jsonForChart"+temp2[1];
-
 
 	jQuery.fn.d3Click = function()
 {
@@ -3628,8 +3626,7 @@ function createchart(){
 
 
 treeJSON = d3.json(a, function(error, treeData) {
-    
-   
+
     // Calculate total nodes, max label length
     var totalNodes = 0;
     var maxLabelLength = 0;
@@ -3657,10 +3654,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             return [d.y, d.x];
         });
 
-
-
     // A recursive helper function for performing some setup by walking through all nodes
-
     function visit(parent, visitFn, childrenFn) {
         if (!parent) return;
 
@@ -3684,9 +3678,7 @@ treeJSON = d3.json(a, function(error, treeData) {
         return d.children && d.children.length > 0 ? d.children : null;
     });
 
-
     // sort the tree according to the node names
-
     function sortTree() {
         tree.sort(function(a, b) {
             return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
@@ -3696,7 +3688,6 @@ treeJSON = d3.json(a, function(error, treeData) {
     sortTree();
 
     // TODO: Pan function, can be better implemented.
-
     function pan(domNode, direction) {
         var speed = panSpeed;
         if (panTimer) {
@@ -3727,7 +3718,6 @@ treeJSON = d3.json(a, function(error, treeData) {
     function zoom() {
         svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
-
 
     // define the zoomListener which calls the zoom function on the "zoom" event constrained within the scaleExtents
     var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 10]).on("zoom", zoom);
@@ -3783,10 +3773,7 @@ treeJSON = d3.json(a, function(error, treeData) {
         .attr("class", "overlay")
         .call(zoomListener);
 
-
-
     // Helper functions for collapsing and expanding nodes.
-
     function collapse(d) {
         if (d.children) {
             d._children = d.children;
@@ -3856,9 +3843,7 @@ treeJSON = d3.json(a, function(error, treeData) {
     }
 
     // Toggle children function
-
     function toggleChildren(d) {
-
         if (d.children) {
             d._children = d.children;
             d.children = null;
@@ -3870,9 +3855,7 @@ treeJSON = d3.json(a, function(error, treeData) {
     }
 
     // Toggle children on click.
-
     function click(d) {
-
 		//Qui stampa con il click sul collapsible tree
 		//console.log("Click");
 		//console.log(d);
@@ -3908,23 +3891,23 @@ treeJSON = d3.json(a, function(error, treeData) {
                             //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);     
 							var newRow = risultati.row.add([
 								"Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\',\'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();            
-                        }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\',\'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
+                        }
                     }
                     else{
                        lista[i]._children = lista[i].children;
                        lista[i].children = null;
                        var listalhs = lista[i]._children;
                         update(lista[i]);
-                        for (let j = 0; j<listalhs.length;j++) {                        
-                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);        
-							
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name]).draw(false);
+
 							var newRow = risultati.row.add([
 								"Not Available","Not Available","new RFD",""+listalhs[j].name, ""+lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' ,\'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();   
-                        }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' ,\'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
+                        }
                     }
                 }
             } else {
@@ -3943,7 +3926,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 			   }
 
                var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "new RFD";  
+                               return risultati.row(value).data()[2] == "new RFD";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -3951,23 +3934,23 @@ treeJSON = d3.json(a, function(error, treeData) {
                lista2 = d._children;
                for (let j = 0; j<lista2.length;j++) {
                    filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "new RFD: "+lista2[j].name+"  ";  
+                               return risultati.row(value).data()[2] == "new RFD: "+lista2[j].name+"  ";
                             } );
                         risultati.rows( filteredData )
                         .remove()
                         .draw();
                }
-            } 
-		//END NEW RFD	
+            }
+		//END NEW RFD
         } else if (d.name == "RFD found") {
             var  risultati = $('#risultati').DataTable();
             var lista = d._children;
             d = toggleChildren(d);
             update(d);
             centerNode(d);
-            if(lista != null){ 
-                //$("#RFD_found").d3Click(); 
-				
+            if(lista != null){
+                //$("#RFD_found").d3Click();
+
 				var element = document.getElementById('RFD found');
 				if (element) {
 					var event = new MouseEvent('click', {
@@ -3983,31 +3966,31 @@ treeJSON = d3.json(a, function(error, treeData) {
 
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
-                    
+
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {
-                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false); 
-							
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);
+
 							var newRow = risultati.row.add([
 								""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,,\'none\', \'none\', \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();   
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,,\'none\', \'none\', \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
 
-                        }    
+                        }
                     } else{
                         lista[i]._children = lista[i].children;
                         lista[i].children = null;
                         var listalhs = lista[i]._children;
                         update(lista[i]);
-                        for (let j = 0; j<listalhs.length;j++) {                        
-                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);         
-							
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name]).draw(false);
+
 							var newRow = risultati.row.add([
 								""+listalhs[j].name,""+lista[i].name,"RFD found",""+listalhs[j].name, ""+lista[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\' , \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();   
-                        }    
-                    }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\' , \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							  ]).draw(false).node();
+                        }
+                    }
                 }
             } else {
                 //$("#RFDs").d3Click();
@@ -4026,7 +4009,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 
 
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD found";  
+                               return risultati.row(value).data()[2] == "RFD found";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4034,23 +4017,23 @@ treeJSON = d3.json(a, function(error, treeData) {
                lista2 = d._children;
                for (let j = 0; j<lista2.length;j++) {
                    filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD found: "+lista2[j].name+"  ";  
+                               return risultati.row(value).data()[2] == "RFD found: "+lista2[j].name+"  ";
                             } );
                         risultati.rows( filteredData )
                         .remove()
                         .draw();
                }
-                
-            }  
+
+            }
         } else if (d.name == "RFD not found") {
-            
+
             var  risultati = $('#risultati').DataTable();
             var lista = d._children;
             d = toggleChildren(d);
             update(d);
             centerNode(d);
             if(lista != null){
-                //$("#RFD_not_found").d3Click();    
+                //$("#RFD_not_found").d3Click();
 				//DA TESTARE
 				var element = document.getElementById('RFD not found');
 				if (element) {
@@ -4068,27 +4051,27 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {
-                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);      
-							
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);
+
 							var newRow = risultati.row.add([
 								""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available",
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\' ,\'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();   
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\' ,\'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							  ]).draw(false).node();
                         }
                     } else {
                         lista[i]._children = lista[i].children;
                         lista[i].children = null;
                         var listalhs = lista[i]._children;
                         update(lista[i]);
-                        for (let j = 0; j<listalhs.length;j++) {                        
-                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);    
-							
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add([""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available"]).draw(false);
+
 							var newRow = risultati.row.add([
 								""+listalhs[j].name,""+lista[i].name,"RFD not found","Not Available","Not Available",
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\',\'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();   
-                        }  
-                    }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\',\'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							  ]).draw(false).node();
+                        }
+                    }
                 }
             } else {
                 //$("#RFDs").d3Click();
@@ -4107,7 +4090,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 
 
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD not found";  
+                               return risultati.row(value).data()[2] == "RFD not found";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4115,7 +4098,7 @@ treeJSON = d3.json(a, function(error, treeData) {
                lista2 = d._children;
                for (let j = 0; j<lista2.length;j++) {
                    filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD not found: "+lista2[j].name+"  ";  
+                               return risultati.row(value).data()[2] == "RFD not found: "+lista2[j].name+"  ";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4124,7 +4107,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             }
 
         } else if (d.name == "generalizations") {
-            
+
             var  risultati = $('#risultati').DataTable();
             var lista = d._children;
             d = toggleChildren(d);
@@ -4132,7 +4115,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             centerNode(d);
             if(lista != null){
                 if(lista.length!=0){
-                 //$("#generalizations").d3Click();    
+                 //$("#generalizations").d3Click();
 				 //DA TESTARE
 				 var element = document.getElementById('generalizations');
 				 if (element) {
@@ -4146,12 +4129,12 @@ treeJSON = d3.json(a, function(error, treeData) {
 					 //console.error("Element with ID '" + elementId + "' not found.");
 				 }
 
-                }         
+                }
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
                         for (let j = 0; j<listalhs.length;j++) {
-                            //risultati.row.add(["nd","nd","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false);       
+                            //risultati.row.add(["nd","nd","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false);
 							var newRow = risultati.row.add([
 								"Not Available",
 								"Not Available",
@@ -4159,16 +4142,16 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"" + listalhs[j].name,
 								"" + lista[i].name,
 								""
-								//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' , \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();         
+								//'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' , \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
                         }
                     } else {
                         lista[i]._children = lista[i].children;
                         lista[i].children = null;
                         var listalhs = lista[i]._children;
                         update(lista[i]);
-                        for (let j = 0; j<listalhs.length;j++) {                        
-                            //risultati.row.add(["Not Available","Not Available","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false); 
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add(["Not Available","Not Available","generalizations",""+listalhs[j].name, ""+lista[i].name]).draw(false);
 							var newRow = risultati.row.add([
 								"Not Available",
 								"Not Available",
@@ -4176,10 +4159,10 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"" + listalhs[j].name,
 								"" + lista[i].name,
 								""
-								//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\',\'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();                        
-                        }   
-                    }   
+								//'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\',\'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
+                        }
+                    }
                 }
             } else {
                 //$("#RFDs").d3Click();
@@ -4197,7 +4180,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 				}
 
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "generalizations";  
+                               return risultati.row(value).data()[2] == "generalizations";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4205,22 +4188,21 @@ treeJSON = d3.json(a, function(error, treeData) {
                lista2 = d._children;
                for (let j = 0; j<lista2.length;j++) {
                    filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "generalizations: "+lista2[j].name;  
+                               return risultati.row(value).data()[2] == "generalizations: "+lista2[j].name;
                             } );
                         risultati.rows( filteredData )
                         .remove()
                         .draw();
                }
-            }  
+            }
 
         } else if (d.name == "specializations") {
-            
             var  risultati = $('#risultati').DataTable();
             var lista = d._children;
             d = toggleChildren(d);
             update(d);
             centerNode(d);
-            if(lista != null){            
+            if(lista != null){
                 //$("#specializations").d3Click();
 
 				var element = document.getElementById('specializations');
@@ -4239,8 +4221,8 @@ treeJSON = d3.json(a, function(error, treeData) {
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
                     if(listalhs != null){
-                        for (let j = 0; j<listalhs.length;j++) { 
-                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);          
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);
 							var newRow = risultati.row.add([
 								"Not Available",
 								"Not Available",
@@ -4248,16 +4230,16 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"" + listalhs[j].name,
 								"" + lista[i].name,
 								""
-								//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();            
+								//'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							  ]).draw(false).node();
                         }
                     } else {
                       lista[i]._children = lista[i].children;
                         lista[i].children = null;
                         var listalhs = lista[i]._children;
                         update(lista[i]);
-                        for (let j = 0; j<listalhs.length;j++) {                        
-                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);   
+                        for (let j = 0; j<listalhs.length;j++) {
+                            //risultati.row.add(["Not Available","Not Available","specializations",""+listalhs[j].name, ""+lista[i].name]).draw(false);
 							var newRow = risultati.row.add([
 								"Not Available",
 								"Not Available",
@@ -4265,10 +4247,10 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"" + listalhs[j].name,
 								"" + lista[i].name,
 								""
-								//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' , \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							  ]).draw(false).node();           
-                        }  
-                    }    
+								//'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\' , \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							  ]).draw(false).node();
+                        }
+                    }
                 }
             } else {
                 //$("#RFDs").d3Click();
@@ -4286,7 +4268,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 				}
 
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "specializations";  
+                               return risultati.row(value).data()[2] == "specializations";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4294,19 +4276,19 @@ treeJSON = d3.json(a, function(error, treeData) {
                lista2 = d._children;
                for (let j = 0; j<lista2.length;j++) {
                    filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "specializations: "+lista2[j].name;  
+                               return risultati.row(value).data()[2] == "specializations: "+lista2[j].name;
                             } );
                         risultati.rows( filteredData )
                         .remove()
                         .draw();
                }
-            }  
-        } 
+            }
+        }
 		//Fette esterne
         else if (d.parent.name == "RFD found") {
             var  risultati = $('#risultati').DataTable();
             var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD found";  
+                               return risultati.row(value).data()[2] == "RFD found";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4316,7 +4298,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             var figli = parente.children;
             d = toggleChildren(d);
             update(d);
-            centerNode(d);            
+            centerNode(d);
             if(lista != null){
                 //var nomepath = "#RFD_found"+d.name;
                 //$(nomepath).d3Click();
@@ -4333,27 +4315,27 @@ treeJSON = d3.json(a, function(error, treeData) {
 				} else {
 					//console.error("Element with ID '" + elementId + "' not found.");
 				}
-            
+
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        //risultati.row.add([""+lista[i].name,""+word,"RFD found: "+word,""+lista[i].name, ""+word]).draw(false);    
-						
+                        //risultati.row.add([""+lista[i].name,""+word,"RFD found: "+word,""+lista[i].name, ""+word]).draw(false);
+
 						var newRow = risultati.row.add([
 							""+lista[i].name,
 							""+word,
 							"RFD found: "+word,
 							""+lista[i].name,
 							""+word,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\',\'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\',\'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();
 
-                    }    
+                    }
                 }
             } else {
                 //$("#RFD_found").d3Click();
@@ -4375,32 +4357,32 @@ treeJSON = d3.json(a, function(error, treeData) {
                 risultati = $('#risultati').DataTable();
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
                                 var confronto = "RFD found: "+ d.name+"  ";
-                               return risultati.row(value).data()[2] == confronto;  
+                               return risultati.row(value).data()[2] == confronto;
                             } );
                         risultati.rows( filteredData ).remove().draw();
                 if (!risultati.data().any() ) {
                     for(let i=0; i<figli.length; i++){
                     var listalhs = figli[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
-                            //risultati.row.add(["Not Available","Not Available","RFD found",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+                            //risultati.row.add(["Not Available","Not Available","RFD found",""+listalhs[j].name, ""+figli[i].name]).draw(false);
 
 							var newRow = risultati.row.add([
 								"Not Available",
 								"Not Available",
 								"RFD found",
-								""+listalhs[j].name, 
+								""+listalhs[j].name,
 								""+figli[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\', \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();  
-                    }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\', \'RFD Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
+                    }
                 }
-                }         
+                }
             }
         } else if (d.parent.name == "new RFDs") {
             var  risultati = $('#risultati').DataTable();
             var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "new RFD";  
+                               return risultati.row(value).data()[2] == "new RFD";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4429,28 +4411,28 @@ treeJSON = d3.json(a, function(error, treeData) {
 				} else {
 					//console.error("Element with ID '" + elementId + "' not found.");
 				}
-            
+
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        
-						//risultati.row.add(["Not Available","Not Available","new RFD: "+word,""+lista[i].name,""+word]).draw(false);      
-						
-						
+
+						//risultati.row.add(["Not Available","Not Available","new RFD: "+word,""+lista[i].name,""+word]).draw(false);
+
+
 						var newRow = risultati.row.add([
 							"Not Available",
 							"Not Available",
 							"new RFD: "+word,
 							""+lista[i].name,
 							""+word,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
-                    }    
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\', \'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						  ]).draw(false).node();
+                    }
                 }
             } else {
                 //$("#new_RFDs").d3Click();
@@ -4473,15 +4455,15 @@ treeJSON = d3.json(a, function(error, treeData) {
                 risultati = $('#risultati').DataTable();
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
                                 var confronto = "new RFD: "+ d.name+"  ";
-                               return risultati.row(value).data()[2] == confronto;  
+                               return risultati.row(value).data()[2] == confronto;
                             } );
                         risultati.rows( filteredData ).remove().draw();
                 if (!risultati.data().any() ) {
                     for(let i=0; i<figli.length; i++){
                     var listalhs = figli[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
-                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+figli[i].name]).draw(false);    
+                            //risultati.row.add(["Not Available","Not Available","new RFD",""+listalhs[j].name, ""+figli[i].name]).draw(false);
 
 
 							var newRow = risultati.row.add([
@@ -4489,18 +4471,18 @@ treeJSON = d3.json(a, function(error, treeData) {
 								"Not Available",
 								"Not Available",
 								"new RFD",
-								""+listalhs[j].name, 
+								""+listalhs[j].name,
 								""+figli[i].name,
-								'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\',\'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-							]).draw(false).node();  
-                    }    
+								'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent,\'none\', \'none\',\'new RFD\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							]).draw(false).node();
+                    }
                 }
                 }
             }
         } else if (d.parent.name == "RFD not found") {
             var  risultati = $('#risultati').DataTable();
             var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "RFD not found";  
+                               return risultati.row(value).data()[2] == "RFD not found";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4527,27 +4509,27 @@ treeJSON = d3.json(a, function(error, treeData) {
 				} else {
 					//console.error("Element with ID '" + elementId + "' not found.");
 				}
-            
+
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[0];
                         myArray=word.split("RHS: ");
                         word=myArray[1];
-                        //risultati.row.add([""+lista[i].name,""+word,"RFD not found: "+word,"Not Available","Not Available"]).draw(false);   
-						
-						
+                        //risultati.row.add([""+lista[i].name,""+word,"RFD not found: "+word,"Not Available","Not Available"]).draw(false);
+
+
 						var newRow = risultati.row.add([
 							""+lista[i].name,
 							""+word,
 							"RFD not found: "+word,
 							"Not Available",
 							"Not Available",
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\', \'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						]).draw(false).node();  
-                    }    
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\', \'none\', \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();
+                    }
                 }
             } else {
               //$("#RFD_not_found").d3Click();
@@ -4568,33 +4550,33 @@ treeJSON = d3.json(a, function(error, treeData) {
               risultati = $('#risultati').DataTable();
                 var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
                                 var confronto = "RFD not found: "+ d.name+"  ";
-                               return risultati.row(value).data()[2] == confronto;  
+                               return risultati.row(value).data()[2] == confronto;
                             } );
                         risultati.rows( filteredData ).remove().draw();
                 if (!risultati.data().any() ) {
                     for(let i=0; i<figli.length; i++){
                     var listalhs = figli[i]._children;
-                    
+
                     for (let j = 0; j<listalhs.length;j++) {
-                        //risultati.row.add([""+listalhs[j].name,figli[i].name,"RFD not found","Not Available","Not Available"]).draw(false);         
-						
+                        //risultati.row.add([""+listalhs[j].name,figli[i].name,"RFD not found","Not Available","Not Available"]).draw(false);
+
 						var newRow = risultati.row.add([
 							""+listalhs[j].name,
 							figli[i].name,
 							"RFD not found",
 							"Not Available",
 							"Not Available",
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\', \'none\',  \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						]).draw(false).node();  
-                    }    
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent,\'none\', \'none\',  \'RFD not Found\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();
+                    }
                 }
-                }  
+                }
             }
 
         }else if (d.parent.name == "specializations") {
             var  risultati = $('#risultati').DataTable();
             var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "specializations";  
+                               return risultati.row(value).data()[2] == "specializations";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4624,24 +4606,24 @@ treeJSON = d3.json(a, function(error, treeData) {
 
 
 
-                for(let i=0; i<lista.length; i++){                   
-                    var listalhs = lista[i]._children;   
+                for(let i=0; i<lista.length; i++){
+                    var listalhs = lista[i]._children;
                     for (let j = 0; j<listalhs.length;j++) {
 
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[1];
-                        //risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);           
-						
+                        //risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);
+
 						var newRow = risultati.row.add([
 							""+word,
 							""+d.name,
 							"specializations: "+d.name,
-							""+lista[i].name, 
+							""+lista[i].name,
 							""+d.name,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						  ]).draw(false).node();
 
-                    }    
+                    }
                 }
             } else {
                 //$("#specializations").d3Click();
@@ -4661,9 +4643,9 @@ treeJSON = d3.json(a, function(error, treeData) {
 
 
                 risultati = $('#risultati').DataTable();
-                var filteredData = risultati.rows().indexes().filter( function ( value, index ) {   
+                var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
                     var confronto = "specializations: "+ d.name;
-                    return risultati.row(value).data()[2] == confronto;  
+                    return risultati.row(value).data()[2] == confronto;
                 } );
                 risultati.rows( filteredData ).remove().draw();
                 for (let i = 0; i<figli.length;i++) {
@@ -4674,18 +4656,18 @@ treeJSON = d3.json(a, function(error, treeData) {
 							"Not Available",
 							"Not Available",
 							"specializations",
-							""+figlidifiglio[j].name, 
+							""+figlidifiglio[j].name,
 							""+figli[i].name,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\' , \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						  ]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\' , \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						  ]).draw(false).node();
 
                     }
-                }   
+                }
             }
         } else if (d.parent.name == "generalizations") {
              var  risultati = $('#risultati').DataTable();
             var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
-                               return risultati.row(value).data()[2] == "generalizations";  
+                               return risultati.row(value).data()[2] == "generalizations";
                             } );
                         risultati.rows( filteredData )
                         .remove()
@@ -4714,31 +4696,29 @@ treeJSON = d3.json(a, function(error, treeData) {
 				}
 
 
-                for(let i=0; i<lista.length; i++){                   
-                    var listalhs = lista[i]._children;   
+                for(let i=0; i<lista.length; i++){
+                    var listalhs = lista[i]._children;
                     for (let j = 0; j<listalhs.length;j++) {
 
                         var myArray = listalhs[j].name.split("LHS:");
                         var word = myArray[1];
-                        //risultati.row.add([""+word,""+d.name,"",""+lista[i].name, ""+d.name]).draw(false);      
-						
+                        //risultati.row.add([""+word,""+d.name,"",""+lista[i].name, ""+d.name]).draw(false);
+
 						var newRow = risultati.row.add([
 							""+word,
 							""+d.name,
 							"generalizations: "+d.name,
-							""+lista[i].name, 
+							""+lista[i].name,
 							""+d.name,
-							'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
-						]).draw(false).node();  
+							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+						]).draw(false).node();
 
-						  
-                    }    
+
+                    }
                 }
             } else {
 
                 //$("#generalizations").d3Click();
-
-
 				var element = document.getElementById("generalizations");
 				if (element) {
 					var event = new MouseEvent('click', {
@@ -4752,9 +4732,9 @@ treeJSON = d3.json(a, function(error, treeData) {
 				}
 
                 risultati = $('#risultati').DataTable();
-                var filteredData = risultati.rows().indexes().filter( function ( value, index ) {   
+                var filteredData = risultati.rows().indexes().filter( function ( value, index ) {
                     var confronto = "generalizations: "+ d.name;
-                    return risultati.row(value).data()[2] == confronto;  
+                    return risultati.row(value).data()[2] == confronto;
                 } );
                 risultati.rows( filteredData ).remove().draw();
                 for (let i = 0; i<figli.length;i++) {
@@ -4764,7 +4744,7 @@ treeJSON = d3.json(a, function(error, treeData) {
 
 						var newRow = risultati.row.add([
 							"Not Available","Not Available","generalizations",""+figlidifiglio[j].name, ""+figli[i].name,""
-							//'<center><button class="button-82-pushable" role="button" onclick="onclick=sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\', \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
+							//'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, \'none\', \'none\', \'generalization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node(); 
                     }
                 }   
