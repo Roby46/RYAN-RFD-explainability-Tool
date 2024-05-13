@@ -24,6 +24,7 @@
 body {
 	background:#ffffff;        
 }
+
 #paper {
 	color:#FFF;
 	font-size:20px;
@@ -33,6 +34,7 @@ body {
 
 #text {
     width: 90%;
+	height: 600px;
 	overflow:hidden;
 	background-color:#FFF;
 	color:#222;
@@ -160,6 +162,19 @@ body {
           autosize($('#text'));
       });
     </script>
+
+	<script>
+		$(document).ready(function(){
+		  $('#title').focus();
+		  autosize($('#text'));
+		
+		  // Trigger autosize when content of #text changes
+		  $('#text').on('input', function() {
+			autosize($(this));
+		  });
+		});
+	</script>
+  
 
 
 
