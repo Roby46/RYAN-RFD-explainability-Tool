@@ -3504,11 +3504,15 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 		url:"http://127.0.0.1:5000/ask",
 	})
 	.done(function(response){
-	    getjson = $.parseJSON(response)
+	    var jsonResponse = JSON.parse(response);
 		console.log("Response http://127.0.0.1:5000/ask: ",response)
-		console.log("Response http://127.0.0.1:5000/ask getjson: ",getjson)
+		//console.log("Response http://127.0.0.1:5000/ask getjson: ",getjson)
+		console.log("Response http://127.0.0.1:5000/ask parsed: ", jsonResponse);
+
+		var llmQuery = jsonResponse['LLMQuery'];
 		//alert("Dataset Loaded Successfully!");
-		var url = 'http://127.0.0.1:5000/LLM_Answer2.html?prompt=' + getjson['LLMQuery'];
+		var url = 'http://127.0.0.1:5000/LLM_Answer2.html?prompt=' + encodeURIComponent(llmQuery);
+
         // Esegui il reindirizzamento con l'URL contenente i dati come parametri
         var popup = window.open(url, 'Popup', 'width=800,height=600');
 	})

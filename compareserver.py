@@ -9,6 +9,7 @@ import sys
 import numpy as np
 import copy
 import llm_interaction as llm
+import json
 
 app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)
@@ -34,8 +35,17 @@ def ask_only_llm():
 
     # ---------------- Interact with LLM
     # prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the Austria"
-    print("prompt", prompt)
-    output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
+    #print("prompt", prompt)
+
+    # Carica il JSON
+    json_data = json.loads(prompt)
+
+    # Estrai il valore associato alla chiave 'message'
+    prompt = json_data.get('message')
+
+    print("PROMPT FINALE: ", prompt)
+
+    output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
     print("llm", output)
     # ---------------- Interact with LLM
     return {"LLMAnswer": output}
@@ -491,10 +501,18 @@ def ask_prompt():
     print("Param3:", old_lhs)
     print("Param4:", old_rhs)
     print("Param5:", rfd_type)
+    print("\n\n", prompt, "\n\n")
+
+    # Dati da inviare al client
+    data = {
+        "message": prompt
+    }
+    json_data = json.dumps(data)
+
 
     # Logica per generare la pagina HTML
     # return render_template('LLM_Answer2.html',prompt=prompt)
-    return {"LLMQuery": prompt}
+    return {"LLMQuery": json_data}
 
 
 @app.route('/compare', methods=['POST', 'GET'])
