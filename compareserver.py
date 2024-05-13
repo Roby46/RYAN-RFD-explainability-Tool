@@ -215,12 +215,12 @@ def ask_prompt():
     # Creazione di un array di treshold della nuova dipendenza, prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
     all_thresholds = lhs_thr.copy()
     all_thresholds.insert(index_rhs, rhs_thr)
-    all_thresholds = [int(x) for x in all_thresholds]
+    all_thresholds = [float(x) for x in all_thresholds]
 
     # Creazione di un array di treshold della dipendenza oracolo , prendendo quelle dell'lhs e inserendo quella dell'rhs nell'ordine giusto
     all_thresholds_old = old_lhs_thr.copy()
     all_thresholds_old.insert(index_rhs, old_rhs_thr)
-    all_thresholds_old = [int(x) for x in all_thresholds_old]
+    all_thresholds_old = [float(x) for x in all_thresholds_old]
 
     print("Thresholds ordinate nuova dipendenza: ", all_thresholds)
     print("Thresholds ordinate dipendenza oracolo: ", all_thresholds_old)
@@ -265,7 +265,7 @@ def ask_prompt():
       #print("Partizioni originali\n", M_old)
 
       difference = compute_difference(M_old, M)
-      #print("Differenza\n", difference)
+      print("Differenza\n", difference)
 
 
       # Trova gli indici delle righe con valore maggiore di 0 nella colonna specificata
@@ -300,27 +300,34 @@ def ask_prompt():
          similarity_set=set()
 
          for attribute in range(len(df_zero_data.columns)):
-            #print(attribute)
+            if(idx == 150):
+                print(attribute)
             if(attribute in index_lhs):
                trovato = False
                for ptnv in difference[attribute]:
-                  #print(ptnv)
+                  if(idx == 150):
+                     print(difference[attribute][ptnv])
                   if(idx in difference[attribute][ptnv]):
                      similarity_set.update(M[attribute][ptnv])
-                     #print("Sono presente")
+                     if(idx == 150):
+                        print("Sono presente")
                      trovato=True
                if(not trovato):
                   lhs_valid = False
+                  #print("Non sono presente")
                   break
             elif(attribute == index_rhs):
-               trovato = False
-               for ptnv in difference[attribute]:
-                  #print(ptnv)
-                  if(idx in difference[attribute][ptnv]):
-                     #print("Sono presente")
-                     trovato=True
-               if(not trovato):
-                  rhs_valid = False
+               #trovato = False
+               #for ptnv in difference[attribute]:
+               #   if(idx == 150):
+               #     print(difference[attribute][ptnv])
+               #   if(idx in difference[attribute][ptnv]):
+               #      trovato=True
+               #if(not trovato):
+               #   rhs_valid = False
+               #else:
+               #   print("Non mi interessa")
+
 
 
          
@@ -564,4 +571,4 @@ def get_rfds():
 '''
 
 if __name__ == '__main__':
-    app.run(threaded=False, processes=3)
+    app.run(debug=True)
