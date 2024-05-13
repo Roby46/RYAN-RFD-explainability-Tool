@@ -1,7 +1,9 @@
 from gpt4all import GPT4All
 
-def load_model(type_model="orca-mini-3b-gguf2-q4_0.gguf"):
-    model = GPT4All("orca-mini-3b-gguf2-q4_0.gguf")
+#orca-mini-3b-gguf2-q4_0.g
+
+def load_model(type_model="gpt4all-13b-snoozy-q4_0.gguf"):
+    model = GPT4All("gpt4all-13b-snoozy-q4_0.gguf")
     print("Modello Caricato!")
     return model
 

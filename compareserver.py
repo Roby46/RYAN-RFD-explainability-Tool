@@ -225,168 +225,261 @@ def ask_prompt():
     df_deletions = df[df["operation"] < 0]
 
     if (rfd_type == "specialization"):
-        print(30 * "-")
-        print("Caso con solo inserimenti")
+      #print(30 * "-")
+      #print("Caso con solo inserimenti")
+      
+      #DF con dati originali più inserimenti
+      merged_df = pd.concat([df_zero, df_insertions])
 
-        # DF con dati originali più inserimenti
-        merged_df = pd.concat([df_zero, df_insertions])
+      #DF con dati originali più inserimenti, togliendo le colonne aggiuntive e l'intestazione
+      df_full_data = remove_columns_if_exist(merged_df, columns_to_remove)
+      df_full_data.columns = range(len(df_full_data.columns))
 
-        # DF con dati originali più inserimenti, togliendo le colonne aggiuntive e l'intestazione
-        df_full_data = remove_columns_if_exist(merged_df, columns_to_remove)
-        df_full_data.columns = range(len(df_full_data.columns))
+      #DF con dati originali, togliendo le colonne aggiuntive e l'intestazione
+      df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
+      df_zero_data.columns = range(len(df_zero_data.columns))
 
-        # DF con dati originali, togliendo le colonne aggiuntive e l'intestazione
-        df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
-        df_zero_data.columns = range(len(df_zero_data.columns))
+      #print("Dati con inserimenti: \n", df_full_data, "\n\n")
+      #print("Dati originali: \n", df_zero_data)
 
-        print("Dati con inserimenti: \n", df_full_data, "\n\n")
-        print("Dati originali: \n", df_zero_data)
+      #Pattern dati aggiornati
+      sys.setrecursionlimit(1500)
+      pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
+      M, initial_partitions = pattern_loader.get_partition_local()
+      #print("Partizioni con gli inserimenti\n", M)
 
-        # Pattern dati aggiornati
-        sys.setrecursionlimit(1500)
-        pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
-        M, initial_partitions = pattern_loader.get_partition_local()
-        print("Partizioni con gli inserimenti\n", M)
+     
+      #Pattern dati originali
+      pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
+      M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
+      #print("Partizioni originali\n", M_old)
 
-        # Pattern dati originali
-        pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  # gestire vecchie thresholds
-        M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-        print("Partizioni originali\n", M_old)
+      difference = compute_difference(M_old, M)
+      #print("Differenza\n", difference)
 
-        difference = compute_difference(M_old, M)
-        print("Differenza\n", difference)
 
-        # Trova gli indici delle righe con valore maggiore di 0 nella colonna specificata
-        lista_indici_inserimenti = df[df["operation"] > 0].index.tolist()
+      # Trova gli indici delle righe con valore maggiore di 0 nella colonna specificata
+      lista_indici_inserimenti = df[df["operation"] > 0].index.tolist()
 
-        for idx in lista_indici_inserimenti:
-            print("\n\nControllo la tupla inserita:", idx)
+      data="The RFD {LHS: ["
+      for i in range(len(old_lhs_puliti)):
+         data=data+" " + old_lhs_puliti[i] + " ("
+         data=data+"threshold="+old_lhs_thr[i] + ")"
+         if(i < len(old_lhs_puliti)-1):
+            data=data+","
+      data=data+"], RHS: [" + old_rhs + "(threshold=" + old_rhs_thr + ")]} was invalidated and specialized by a new RFD {LHS: ["
 
-            lhs_valid = True
-            rhs_valid = True
+      for i in range(len(lhs_puliti)):
+         data=data+" " + lhs_puliti[i] + " ("
+         data=data+"threshold="+lhs_thr[i] + ")"
+         if(i < len(lhs_puliti)-1):
+            data=data+","
+      data=data+"], RHS: [" + rhs + "(threshold=" + rhs_thr + ")]}. "
+      data=data+"This happened because: \n"
 
-            similarity_set = set()
 
-            for attribute in range(len(df_zero_data.columns)):
-                # print(attribute)
-                if (attribute in index_lhs):
-                    trovato = False
-                    for ptnv in difference[attribute]:
-                        print(ptnv)
-                        if (idx in difference[attribute][ptnv]):
-                            similarity_set.update(M[attribute][ptnv])
-                            # print("Sono presente")
-                            trovato = True
-                    if (not trovato):
-                        lhs_valid = False
-                        break
-                elif (attribute == index_rhs):
-                    trovato = False
-                    for ptnv in difference[attribute]:
-                        # print(ptnv)
-                        if (idx in difference[attribute][ptnv]):
-                            print("Sono presente")
-                            trovato = True
-                    if (not trovato):
-                        rhs_valid = False
+      #all_old_attributes=old_lhs_puliti.copy()
+      #all_old_attributes.append(rhs)
+      
+      for idx in lista_indici_inserimenti:
+         print("\n\nControllo la tupla inserita:", idx)
 
-            if (lhs_valid and not rhs_valid):
-                column_names = df_data.columns.tolist()
-                selected_column_names = [column_names[index] for index in index_lhs]
-                print(80 * "=")
-                print("La tupla\n", df_data.iloc[idx], "\nha portato ad una specializzazione.")
-                similarity_set.remove(idx)
-                for i in similarity_set:
-                    print(40 * "*")
-                    print("---- Simile sull'lhs (attributi", selected_column_names, ") con la tupla", i,
-                          "ma diversa sull'rhs (attributo [", rhs, "])")
-                    print(df_data.iloc[i])
-                    print(40 * "*")
-                print(80 * "=")
+         lhs_valid=True
+         rhs_valid=True
 
-        # Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
-        # Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
+         similarity_set=set()
 
-    # Fine if specializzazioni
-    elif (rfd_type == "generalization"):
-        print(30 * "-")
-        print("Caso con solo cancellazioni")
+         for attribute in range(len(df_zero_data.columns)):
+            #print(attribute)
+            if(attribute in index_lhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  #print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     similarity_set.update(M[attribute][ptnv])
+                     #print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  lhs_valid = False
+                  break
+            elif(attribute == index_rhs):
+               trovato = False
+               for ptnv in difference[attribute]:
+                  #print(ptnv)
+                  if(idx in difference[attribute][ptnv]):
+                     #print("Sono presente")
+                     trovato=True
+               if(not trovato):
+                  rhs_valid = False
 
+
+         
+         if(lhs_valid and not rhs_valid):
+            column_names=df_data.columns.tolist()
+            selected_column_names = [column_names[index] for index in index_lhs]
+            print(80 * "=")
+            print("La tupla\n",  df_data.iloc[idx], "\nha portato ad una specializzazione.")   
+            data=data+"--The insertion of Tuple " + str(idx) + " ("   
+            
+            #Estrai il dizionario rappresentante la riga
+            riga_dict = df_data.iloc[idx].to_dict()
+            # Costruisci la stringa concatenando gli attributi e i valori
+            stringa_riga = ', '.join([f"{attr}={value}" for attr, value in riga_dict.items()])
+
+            data=data+stringa_riga+")"
+
+
+            similarity_set.remove(idx)
+            data=data+" caused a violation considering"
+            for i in similarity_set:
+               #print(40 * "*")
+               #print("---- Simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma diversa sull'rhs (attributo [", rhs ,"])")
+               #print(df_data.iloc[i])
+               data=data+" tuple " + str(i) + " ("
+               
+               #Estrai il dizionario rappresentante la riga
+               riga_dict = df_data.iloc[i].to_dict()
+               # Costruisci la stringa concatenando gli attributi e i valori
+               stringa_riga = ', '.join([f"{attr}={value}" for attr, value in riga_dict.items()])
+
+               data=data+stringa_riga+")"
+               #print(40 * "*")
+            #print(80 * "=")
+
+      #Se la specializzazione aggiunge due o più attributi, spiegare  perché quelle intermedie non valgono
+      #Iterare su tutte le tuple, valutando come hanno impattato sulle partizioni
+    #Fine if specializzazioni
+    elif(rfd_type == "generalization"):
+        #print(30 * "-")
+        #print("Caso con solo cancellazioni")
+  
         lista_indici_cancellazioni = df_deletions['index'].tolist()
-
+  
         df_canc = df_zero.drop(lista_indici_cancellazioni)
-
+  
         df_canc_data = remove_columns_if_exist(df_canc, columns_to_remove)
         df_canc_data.columns = range(len(df_canc_data.columns))
-
+  
         df_zero_data = remove_columns_if_exist(df_zero, columns_to_remove)
         df_zero_data.columns = range(len(df_zero_data.columns))
-
-        print("Dati originali: \n", df_zero_data, "\n\n")
-        print("Dati con cancellazioni: \n", df_canc_data)
-
-        pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  # gestire  thresholds
+  
+        #print("Dati originali: \n", df_zero_data, "\n\n")
+        #print("Dati con cancellazioni: \n", df_canc_data)
+          
+        pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire  thresholds
         M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-        print("Partizioni originali\n", M_old)
-
+        #print("Partizioni originali\n", M_old)
+  
         M_old_2 = deep_copy_dict(M_old)
-
-        # Rimuove dalle partizioni originali le tuple cancellate
+  
+        #Rimuove dalle partizioni originali le tuple cancellate
         M = clean_partition(M_old_2, lista_indici_cancellazioni)
-
+  
         print("Partizioni con cancellazioni\n", M)
-
+  
+  
         difference = compute_difference(M, M_old)
         print("Differenza\n", difference)
-
+  
+  
+        data="The RFD {LHS: ["
+        for i in range(len(old_lhs_puliti)):
+           data=data+" " + old_lhs_puliti[i] + " ("
+           data=data+"threshold="+old_lhs_thr[i] + ")"
+           if(i < len(old_lhs_puliti)-1):
+              data=data+","
+        data=data+"], RHS: [" + old_rhs + "(threshold=" + old_rhs_thr + ")]} was generalized by an RFD {LHS: ["
+  
+        for i in range(len(lhs_puliti)):
+           data=data+" " + lhs_puliti[i] + " ("
+           data=data+"threshold="+lhs_thr[i] + ")"
+           if(i < len(lhs_puliti)-1):
+              data=data+","
+        data=data+"], RHS: [" + rhs + "(threshold=" + rhs_thr + ")]}. "
+        data=data+"This happened because: \n"
+  
         for idx in lista_indici_cancellazioni:
-            print("\n\nControllo la tupla cancellata:", idx)
+           #print("\n\nControllo la tupla cancellata:", idx)
+  
+           lhs_valid=True
+           rhs_valid=True
+  
+           similarity_set=set()
+  
+           for attribute in range(len(df_zero_data.columns)):
+              #print(attribute)
+              if(attribute in index_lhs):
+                 trovato = False
+                 for ptnv in difference[attribute]:
+                    #print(ptnv)
+                    if(idx in difference[attribute][ptnv]):
+                       similarity_set.update(M_old[attribute][ptnv])
+                       #print("Sono presente")
+                       trovato=True
+                 if(not trovato):
+                    lhs_valid = False
+                    break
+              elif(attribute == index_rhs):
+                 trovato = False
+                 for ptnv in difference[attribute]:
+                    #print(ptnv)
+                    if(idx in difference[attribute][ptnv]):
+                       #print("Sono presente")
+                       trovato=True
+                 if(not trovato):
+                    rhs_valid = False
+  
+           if(lhs_valid and not rhs_valid):
+              column_names=df_data.columns.tolist()
+              selected_column_names = [column_names[index] for index in index_lhs]
+              print(80 * "=")
+              #print("La tupla\n", df_data.iloc[idx], "\nviolava una dipendenza, con la rimozione ha portato alla generalizzazione.")
+              data=data+"-Tuple " + str(idx) + " ("   
+                
+              #Estrai il dizionario rappresentante la riga
+              riga_dict = df_data.iloc[idx].to_dict()
+              # Costruisci la stringa concatenando gli attributi e i valori
+              stringa_riga = ', '.join([f"{attr}={value}" for attr, value in riga_dict.items()])
+  
+              data=data+stringa_riga+")"
+              data=data+", which caused a violation considering "
+  
+              similarity_set.remove(idx)
+              for i in similarity_set:
+                 #print(40 * "*")
+                 #print("---- Era simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma differiva sull'rhs (attributo", rhs ,")")
+                 #print(df_data.iloc[i])
+                 data=data+" tuple " + str(i) + " ("
+                 
+                 #Estrai il dizionario rappresentante la riga
+                 riga_dict = df_data.iloc[i].to_dict()
+                 # Costruisci la stringa concatenando gli attributi e i valori
+                 stringa_riga = ', '.join([f"{attr}={value}" for attr, value in riga_dict.items()])
+                 data=data+stringa_riga+")"
+                 #print(40 * "*")
+              #print(80 * "=")  
+              data=data+", has been removed."
+    # ---------------- Interact with LLM
+    context=""
+    task=""
+    prompt=""
 
-            lhs_valid = True
-            rhs_valid = True
+    if(rfd_type == "specialization"):
+        context='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y  between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y. X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is  lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. After the insertion of a new tuple, an existing RFD can be invalidated only if the new tuple has similar values on the LHS with respect other tuples but it has different values on the RHS.  In this case, a specialized RFD with additional attributes on the LHS may be valid on the dataset. '''
+        task="You will be provided with an RFD that gets invalidated after the insertion of a batch of tuples, and with the tuples that caused the violation and their values."
+        prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was invalidated. To do this, analyze the attribute values and consider the similarity thresholds."
 
-            similarity_set = set()
+    elif(rfd_type == "generalization"):
+        context='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y  between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y.  X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is  lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. After the deletion of a tuple, an existing RFD can be no longer minimal. Indeed,  a generalized RFD with a subset of attributes on the LHS may be valid on the datase  if the deleted tuple had similar values on the LHS with respect other tuples but it had different values on the RHS.  '''
+        task="You will be provided with an RFD that gets generalized after the deletion of a batch of tuples, and with the tuples that caused the generalization and their values. "
+        prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was generalized. To do this, analyze the attribute values and consider the similarity thresholds."
+   
+   
+    print(prompt)
 
-            for attribute in range(len(df_zero_data.columns)):
-                # print(attribute)
-                if (attribute in index_lhs):
-                    trovato = False
-                    for ptnv in difference[attribute]:
-                        # print(ptnv)
-                        if (idx in difference[attribute][ptnv]):
-                            similarity_set.update(M_old[attribute][ptnv])
-                            # print("Sono presente")
-                            trovato = True
-                    if (not trovato):
-                        lhs_valid = False
-                        break
-                elif (attribute == index_rhs):
-                    trovato = False
-                    for ptnv in difference[attribute]:
-                        # print(ptnv)
-                        if (idx in difference[attribute][ptnv]):
-                            # print("Sono presente")
-                            trovato = True
-                    if (not trovato):
-                        rhs_valid = False
-
-            if (lhs_valid and not rhs_valid):
-                column_names = df_data.columns.tolist()
-                selected_column_names = [column_names[index] for index in index_lhs]
-                print(80 * "=")
-                print("La tupla\n", df_data.iloc[idx],
-                      "\nviolava una dipendenza, con la rimozione ha portato alla generalizzazione.")
-                similarity_set.remove(idx)
-                for i in similarity_set:
-                    print(40 * "*")
-                    print("---- Era simile sull'lhs (attributi", selected_column_names, ") con la tupla", i,
-                          "ma differiva sull'rhs (attributo", rhs, ")")
-                    print(df_data.iloc[i])
-                    print(40 * "*")
-                print(80 * "=")
 
     # ---------------- Interact with LLM
-    prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the France"
+    #prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the France"
     # output = llm.ask_llm(model, prompt, max_tokens=300, streaming=False)
     # print("llm", output)
     # ---------------- Interact with LLM
