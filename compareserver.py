@@ -292,14 +292,14 @@ def ask_prompt():
       #all_old_attributes.append(rhs)
       
       for idx in lista_indici_inserimenti:
-         print("\n\nControllo la tupla inserita:", idx)
+        print("\n\nControllo la tupla inserita:", idx)
 
-         lhs_valid=True
-         rhs_valid=True
+        lhs_valid=True
+        rhs_valid=True
 
-         similarity_set=set()
+        similarity_set_lhs=set()
 
-         for attribute in range(len(df_zero_data.columns)):
+        for attribute in range(len(df_zero_data.columns)):
             if(idx == 150):
                 print(attribute)
             if(attribute in index_lhs):
@@ -308,7 +308,7 @@ def ask_prompt():
                   if(idx == 150):
                      print(difference[attribute][ptnv])
                   if(idx in difference[attribute][ptnv]):
-                     similarity_set.update(M[attribute][ptnv])
+                     similarity_set_lhs.update(M[attribute][ptnv])
                      if(idx == 150):
                         print("Sono presente")
                      trovato=True
@@ -317,10 +317,9 @@ def ask_prompt():
                   #print("Non sono presente")
                   break
             elif(attribute == index_rhs):
+               pass
                #trovato = False
                #for ptnv in difference[attribute]:
-               #   if(idx == 150):
-               #     print(difference[attribute][ptnv])
                #   if(idx in difference[attribute][ptnv]):
                #      trovato=True
                #if(not trovato):
@@ -328,10 +327,19 @@ def ask_prompt():
                #else:
                #   print("Non mi interessa")
 
+        print(len(similarity_set_lhs))       
 
+        dissimilarity_set_rhs=set()
+        for ptnv in difference[index_rhs]:
+            if(idx in difference[index_rhs][ptnv]):
+                pass
+            else:
+                dissimilarity_set_rhs.update(M[index_rhs][ptnv])
+           
 
+        violation_set = similarity_set_lhs.intersection(dissimilarity_set_rhs)
          
-         if(lhs_valid and not rhs_valid):
+        if(bool(violation_set)):
             column_names=df_data.columns.tolist()
             selected_column_names = [column_names[index] for index in index_lhs]
             print(80 * "=")
@@ -346,9 +354,9 @@ def ask_prompt():
             data=data+stringa_riga+")"
 
 
-            similarity_set.remove(idx)
+            #violation_set.remove(idx)
             data=data+" caused a violation considering"
-            for i in similarity_set:
+            for i in violation_set:
                #print(40 * "*")
                #print("---- Simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma diversa sull'rhs (attributo [", rhs ,"])")
                #print(df_data.iloc[i])
@@ -421,7 +429,7 @@ def ask_prompt():
            lhs_valid=True
            rhs_valid=True
   
-           similarity_set=set()
+           similarity_set_lhs=set()
   
            for attribute in range(len(df_zero_data.columns)):
               #print(attribute)
@@ -430,23 +438,35 @@ def ask_prompt():
                  for ptnv in difference[attribute]:
                     #print(ptnv)
                     if(idx in difference[attribute][ptnv]):
-                       similarity_set.update(M_old[attribute][ptnv])
+                       similarity_set_lhs.update(M_old[attribute][ptnv])
                        #print("Sono presente")
                        trovato=True
                  if(not trovato):
                     lhs_valid = False
                     break
               elif(attribute == index_rhs):
-                 trovato = False
-                 for ptnv in difference[attribute]:
-                    #print(ptnv)
-                    if(idx in difference[attribute][ptnv]):
-                       #print("Sono presente")
-                       trovato=True
-                 if(not trovato):
-                    rhs_valid = False
-  
-           if(lhs_valid and not rhs_valid):
+                pass
+                 #trovato = False
+                 #for ptnv in difference[attribute]:
+                 #   #print(ptnv)
+                 #   if(idx in difference[attribute][ptnv]):
+                 #      #print("Sono presente")
+                 #      trovato=True
+                 #if(not trovato):
+                 #   rhs_valid = False
+
+           print(len(similarity_set_lhs))       
+           dissimilarity_set_rhs=set()
+           for ptnv in difference[index_rhs]:
+                if(idx in difference[index_rhs][ptnv]):
+                    pass
+                else:
+                    dissimilarity_set_rhs.update(M_old[index_rhs][ptnv])
+   
+           violation_set = similarity_set_lhs.intersection(dissimilarity_set_rhs)
+ 
+    
+           if(bool(violation_set)):
               column_names=df_data.columns.tolist()
               selected_column_names = [column_names[index] for index in index_lhs]
               print(80 * "=")
@@ -461,8 +481,8 @@ def ask_prompt():
               data=data+stringa_riga+")"
               data=data+", which caused a violation considering "
   
-              similarity_set.remove(idx)
-              for i in similarity_set:
+              #similarity_set.remove(idx)
+              for i in violation_set:
                  #print(40 * "*")
                  #print("---- Era simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma differiva sull'rhs (attributo", rhs ,")")
                  #print(df_data.iloc[i])
