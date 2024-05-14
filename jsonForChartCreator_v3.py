@@ -3,6 +3,7 @@ import json
 import copy
 import numpy as np
 
+global nomedataset
 
 class RFD():
     def __init__(self, RHS, LHS, label_attributi, thres_attributi, stampaRHS, stampaLHS, found):
@@ -47,7 +48,7 @@ def readRFDcsv(path):
                                 stampaLHS.append(header.__getitem__(index) + "_" + str(item))
                                 index += 1
                             else:
-                                RHS = (RHS, str(item))
+                                RHS = (RHS, float(item))
                                 stampaRHS = RHS[0] + "_" + str(item)
                                 index += 1
                         else:
@@ -63,6 +64,7 @@ def readRFDcsv(path):
     return RFDs
 
 def create_json(oracle, rfdsfile):
+    global nomedataset
     # print("RFD calcolate su dataset completo:")
     RFDsfullDS = readRFDcsv(oracle)
     # print("\n\n RFD calcolate su dataset incompleto:")
@@ -123,12 +125,22 @@ def create_json(oracle, rfdsfile):
     # creazione dizionario per il file json
     for i in RFDsfullDS:
         for j in RFDstoTest:
+            print(j.RHS[0])
+            print(i.RHS[0])
             if j.RHS[0] == i.RHS[0]:
+                print("j: "+j.RHS[0])
+                print("i: "+i.RHS[0])
+                print("j: " + str(j.RHS[1]))
+                print("i: " + str(i.RHS[1]))
                 if j.RHS[1] == i.RHS[1]:
+                    print("j: "+str(j.RHS[1]))
+                    print("i: "+str(i.RHS[1]))
                     if j.label_attributi == i.label_attributi:
+                        print("j label: "+str(j.label_attributi))
+                        print("i label: "+str(i.label_attributi))
                         if np.array_equal(j.thres_attributi, i.thres_attributi):
                             print("trovata RFD Found")
-                            # print("ho trovato una RFD originale")
+                            print("ho trovato una RFD originale")
                             l2 = list(j.stampaLHS)
                             j.found = True
                             i.found = True
@@ -1579,7 +1591,7 @@ def create_json(oracle, rfdsfile):
     }
 
 
-    with open("./jsonForChart_gianp.json", "w") as outfile:
+    with open("./jsonForChart_"+nomedataset+".json", "w") as outfile:
         json.dump(RFDMap, outfile)
 
 
@@ -1876,10 +1888,11 @@ def create_json(oracle, rfdsfile):
     #print(str(RFDMap2))
 
 
-    with open("./percentuali_gianp.json", "w") as outfile:
+    with open("./percentuali_"+nomedataset+".json", "w") as outfile:
         json.dump(RFDMap2, outfile)
 
-oracolo ="./gianp_oracolo.csv"
-nuovirisultati = "./gianp_risultati.csv"
+nomedataset = "heart_failure_clinical_records"
+oracolo ="./"+nomedataset+"_t.csv"
+nuovirisultati = "./"+nomedataset+"_t1.csv"
 
 create_json(oracolo,nuovirisultati)
