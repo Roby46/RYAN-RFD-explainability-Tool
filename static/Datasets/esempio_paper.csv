@@ -1,0 +1,11 @@
+operation;index;Author;Title;Year;Citations;Journal;MeSHTerms
+0;0;John Smith;Immunotherapy Resistance Mechanisms in Cell Lung Cancer;2018;60;Cancer research;Cancer, Tumor
+0;0;Wang Lei;Technologies for Continuous Glucose Monitoring;2019;30;Diabetes Care;Diabetes, Glucose
+0;0;Maria Lopez;Impact of Environmental Toxins on Neurodevelopment;2023;20;Environmental Health;Air Pollution, Health
+0;0;Sarah Ross;Advances in Neurosurgical Techniques for Brain Tumors;2015;90;Neurosurgery;Neuroscience
+0;0;J Smith;Oncology: Approaches to Treating Pancreatic Cancer;2017;58;Cancer res. Cancer;Pancreas
+0;0;Kim Sung; Sleep Disorders in Neurodegenerative Diseases: A Review;2019;110;Sleep Medicine Reviews;Sleep Deprivation
+0;0;John Smith;Unraveling the Molecular Landscape of Melanoma;2023;10;Cancer research;Cancer, Tumors
+0;0;W. Lei;Artificial Intelligence Applications in Predicting Diabetes;2020;28;Diabetes Care; Diabetes, Glucose
+1;0;S. Ross;Recent Developments in Minimally Invasive Neurosurgery;2016;30;Neurological Research;Neurology
+-1;6;John Smith;Unraveling the Molecular Landscape of Melanoma;2023;10;Cancer research;Cancer, Tumors

@@ -256,13 +256,13 @@ def ask_prompt():
       sys.setrecursionlimit(1500)
       pattern_loader = PatternLoader("", "", all_thresholds_old, df_full_data)
       M, initial_partitions = pattern_loader.get_partition_local()
-      #print("Partizioni con gli inserimenti\n", M)
+      print("Partizioni con gli inserimenti\n", M)
 
      
       #Pattern dati originali
       pattern_loader_old = PatternLoader("", "", all_thresholds_old, df_zero_data)  #gestire vecchie thresholds
       M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-      #print("Partizioni originali\n", M_old)
+      print("Partizioni originali\n", M_old)
 
       difference = compute_difference(M_old, M)
       print("Differenza\n", difference)
@@ -298,46 +298,36 @@ def ask_prompt():
         rhs_valid=True
 
         similarity_set_lhs=set()
-
+        init=True
         for attribute in range(len(df_zero_data.columns)):
-            if(idx == 150):
-                print(attribute)
+            similarity_set_lhs_attribute=set()
             if(attribute in index_lhs):
                trovato = False
                for ptnv in difference[attribute]:
-                  if(idx == 150):
-                     print(difference[attribute][ptnv])
                   if(idx in difference[attribute][ptnv]):
-                     similarity_set_lhs.update(M[attribute][ptnv])
-                     if(idx == 150):
-                        print("Sono presente")
+                     similarity_set_lhs_attribute.update(M[attribute][ptnv])
                      trovato=True
                if(not trovato):
                   lhs_valid = False
-                  #print("Non sono presente")
                   break
             elif(attribute == index_rhs):
                pass
-               #trovato = False
-               #for ptnv in difference[attribute]:
-               #   if(idx in difference[attribute][ptnv]):
-               #      trovato=True
-               #if(not trovato):
-               #   rhs_valid = False
-               #else:
-               #   print("Non mi interessa")
+            if(init or attribute == index_rhs):
+                similarity_set_lhs=similarity_set_lhs.union(similarity_set_lhs_attribute)
+                init=False
+                if(attribute == index_rhs and index_rhs == 0):
+                    init=True
+            else:
+                similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
 
-        print(len(similarity_set_lhs))       
+        print(similarity_set_lhs)       
 
         dissimilarity_set_rhs=set()
         for ptnv in difference[index_rhs]:
-            if(idx in difference[index_rhs][ptnv]):
-                pass
-            else:
+            if(idx not in difference[index_rhs][ptnv]):
                 dissimilarity_set_rhs.update(M[index_rhs][ptnv])
            
-
-        violation_set = similarity_set_lhs.intersection(dissimilarity_set_rhs)
+        violation_set = similarity_set_lhs.difference(dissimilarity_set_rhs)
          
         if(bool(violation_set)):
             column_names=df_data.columns.tolist()
@@ -354,7 +344,7 @@ def ask_prompt():
             data=data+stringa_riga+")"
 
 
-            #violation_set.remove(idx)
+            violation_set.remove(idx)
             data=data+" caused a violation considering"
             for i in violation_set:
                #print(40 * "*")
@@ -393,7 +383,7 @@ def ask_prompt():
           
         pattern_loader_old = PatternLoader("", "", all_thresholds, df_zero_data)  #gestire  thresholds
         M_old, initial_partitions_old = pattern_loader_old.get_partition_local()
-        #print("Partizioni originali\n", M_old)
+        print("Partizioni originali\n", M_old)
   
         M_old_2 = deep_copy_dict(M_old)
   
@@ -428,44 +418,45 @@ def ask_prompt():
   
            lhs_valid=True
            rhs_valid=True
-  
+
+           
+           #------------------------------------------------------------------------------------------------------------------------------------------------
            similarity_set_lhs=set()
-  
+           init=True
            for attribute in range(len(df_zero_data.columns)):
-              #print(attribute)
+              similarity_set_lhs_attribute=set()
+              print(attribute)
               if(attribute in index_lhs):
                  trovato = False
-                 for ptnv in difference[attribute]:
-                    #print(ptnv)
-                    if(idx in difference[attribute][ptnv]):
-                       similarity_set_lhs.update(M_old[attribute][ptnv])
-                       #print("Sono presente")
+                 for ptnv in M_old[attribute]:
+                    if(idx in M_old[attribute][ptnv]):
+                       similarity_set_lhs_attribute.update(M_old[attribute][ptnv])
+                       print("Sono presente")
                        trovato=True
                  if(not trovato):
                     lhs_valid = False
                     break
               elif(attribute == index_rhs):
                 pass
-                 #trovato = False
-                 #for ptnv in difference[attribute]:
-                 #   #print(ptnv)
-                 #   if(idx in difference[attribute][ptnv]):
-                 #      #print("Sono presente")
-                 #      trovato=True
-                 #if(not trovato):
-                 #   rhs_valid = False
+              if(init or attribute == index_rhs):
+                similarity_set_lhs=similarity_set_lhs.union(similarity_set_lhs_attribute)
+                #print("Unito: ", similarity_set_lhs)
+                init=False
+                if(attribute == index_rhs and index_rhs == 0):
+                    init=True
+              else:
+                similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
 
-           print(len(similarity_set_lhs))       
+           print(similarity_set_lhs)
            dissimilarity_set_rhs=set()
-           for ptnv in difference[index_rhs]:
-                if(idx in difference[index_rhs][ptnv]):
-                    pass
-                else:
+           for ptnv in M_old[index_rhs]:
+                if(idx not in M_old[index_rhs][ptnv]):
                     dissimilarity_set_rhs.update(M_old[index_rhs][ptnv])
    
+           print(dissimilarity_set_rhs)
            violation_set = similarity_set_lhs.intersection(dissimilarity_set_rhs)
- 
-    
+           #----------------------------------------------------------------------------------------------------------------------------
+
            if(bool(violation_set)):
               column_names=df_data.columns.tolist()
               selected_column_names = [column_names[index] for index in index_lhs]
@@ -480,8 +471,8 @@ def ask_prompt():
   
               data=data+stringa_riga+")"
               data=data+", which caused a violation considering "
-  
-              #similarity_set.remove(idx)
+              print(violation_set)
+              #violation_set.remove(idx)
               for i in violation_set:
                  #print(40 * "*")
                  #print("---- Era simile sull'lhs (attributi", selected_column_names, ") con la tupla", i , "ma differiva sull'rhs (attributo", rhs ,")")
