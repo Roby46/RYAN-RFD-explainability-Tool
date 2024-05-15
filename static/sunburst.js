@@ -3549,7 +3549,7 @@ function generateSunburst(filename){
 	// Define a color scale using d3.scale.category10()
     const color = d3.scale.category20();
 
-	filename="./static/Json_percentuali/"+ filename;
+	filename="./static/Json_percentages/"+ filename;
 	console.log(filename);
 
     fetch(filename).then(res => res.json()).then(data => {
@@ -3606,7 +3606,7 @@ function createchart(){
     
     var a = document.getElementById('file1').value;
     var temp2 = a.split("jsonForChart");
-    var b = "percentuali"+temp2[1];
+    var b = "percentages"+temp2[1];
 
 	
 	var element = document.getElementById("load_dataset");
@@ -3668,7 +3668,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             var count = children.length;
             for (var i = 0; i < count; i++) {
                 visit(children[i], visitFn, childrenFn);
-				
+
             }
         }
     }

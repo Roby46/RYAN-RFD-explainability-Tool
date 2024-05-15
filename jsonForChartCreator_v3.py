@@ -1591,7 +1591,7 @@ def create_json(oracle, rfdsfile):
     }
 
 
-    with open("./jsonForChart_"+nomedataset+".json", "w") as outfile:
+    with open("./static/Json_chart/jsonForChart_"+nomedataset+".json", "w") as outfile:
         json.dump(RFDMap, outfile)
 
 
@@ -1888,7 +1888,7 @@ def create_json(oracle, rfdsfile):
     #print(str(RFDMap2))
 
 
-    with open("./percentuali_"+nomedataset+".json", "w") as outfile:
+    with open("./static/Json_percentages/percentages_"+nomedataset+".json", "w") as outfile:
         json.dump(RFDMap2, outfile)
 
 nomedataset = "prova_paper"
