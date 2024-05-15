@@ -3558,7 +3558,7 @@ function generateSunburst(filename){
         .label('name')
         .size('size')
         .color((d, parent) => color(parent ? parent.data.name : null)) //colore delle fette 
-        .tooltipContent((d, node) => `Size: <i>${node.value}</i>`)
+        .tooltipContent((d, node) => ``) //Size: <i>${node.value}</i>
         (document.getElementById('sunburst'));
     })
 }
@@ -3566,14 +3566,13 @@ function generateSunburst(filename){
 
 function createchart(){
 
-		// Select all elements with the class 'example-class'
-		const elementsToDelete = document.querySelectorAll('.waves');
-
-		// Iterate over the selected elements
-		elementsToDelete.forEach(function(element) {
-   		 // Remove each element
-    	element.remove();
-		});
+	// Select all elements with the class 'example-class'
+	const elementsToDelete = document.querySelectorAll('.waves')	
+	// Iterate over the selected elements
+	elementsToDelete.forEach(function(element) {
+	 // Remove each element
+	element.remove();
+	});
 
 
 	// Select all elements with the class 'logo'
@@ -3669,6 +3668,7 @@ treeJSON = d3.json(a, function(error, treeData) {
             var count = children.length;
             for (var i = 0; i < count; i++) {
                 visit(children[i], visitFn, childrenFn);
+				
             }
         }
     }
