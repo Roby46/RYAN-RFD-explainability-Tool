@@ -1891,7 +1891,7 @@ def create_json(oracle, rfdsfile):
     with open("./static/Json_percentages/percentages_"+nomedataset+".json", "w") as outfile:
         json.dump(RFDMap2, outfile)
 
-nomedataset = "prova_paper"
+nomedataset = "test_ridotto"
 oracolo ="./"+nomedataset+"_t.csv"
 nuovirisultati = "./"+nomedataset+"_t1.csv"
 

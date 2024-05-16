@@ -74,6 +74,14 @@ def clean_partition(obj1, indexes):
             obj1[attribute][pattern_value] = obj1[attribute][pattern_value] - set(indexes)
     return obj1
 
+def string_distance(x, y, t):
+    print(Levenshtein.distance(x, y, score_cutoff=t) <= t)
+    return Levenshtein.distance(x, y, score_cutoff=t) <= t
+
+
+def numeric_abs_function(x, y, t):
+    return round(abs(np.float64(x) - np.float64(y)), 10) <= t
+
 
 def remove_columns_if_exist(df, columns):
     existing_columns = [col for col in columns if col in df.columns]
@@ -300,34 +308,74 @@ def ask_prompt():
         similarity_set_lhs=set()
         init=True
         for attribute in range(len(df_zero_data.columns)):
+            print(attribute)
             similarity_set_lhs_attribute=set()
             if(attribute in index_lhs):
                trovato = False
                for ptnv in difference[attribute]:
+                  print(ptnv)  
                   if(idx in difference[attribute][ptnv]):
                      similarity_set_lhs_attribute.update(M[attribute][ptnv])
                      trovato=True
+                     print("Trovato")
+                     print(M[attribute][ptnv])
                if(not trovato):
                   lhs_valid = False
+                  print("Non trovato - esco")
+                  similarity_set_lhs=set()
                   break
             elif(attribute == index_rhs):
                pass
-            if(init or attribute == index_rhs):
+
+
+            if(init):
                 similarity_set_lhs=similarity_set_lhs.union(similarity_set_lhs_attribute)
                 init=False
                 if(attribute == index_rhs and index_rhs == 0):
                     init=True
             else:
-                similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
+                if(attribute != index_rhs):
+                    similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
+            print("Similarity Attuale: ", similarity_set_lhs)
 
-        print(similarity_set_lhs)       
+        print("Similarity LHS", similarity_set_lhs)   
+
+        #Filtering
+        index_to_remove=set()
+        for element in similarity_set_lhs:
+            similar=True
+            for attr in range(len(df_zero_data.columns)):
+                if(attr == index_rhs):
+                    pass
+                else:
+                    tuple_value=df_full_data.iloc[idx, attr]
+                    print(tuple_value)
+                    other_tuple_value=df_full_data.iloc[element, attr]
+                    print(other_tuple_value)
+                    if(df_full_data[attr].dtype == "float64" or df_full_data[attr].dtype == "int64"):
+                        if(not numeric_abs_function(tuple_value, other_tuple_value, all_thresholds_old[attr])):
+                            similar=False
+                            index_to_remove.add(element)
+                            break
+                    else:
+                        if(not string_distance(tuple_value, other_tuple_value, all_thresholds_old[attr])):
+                            similar=False
+                            index_to_remove.add(element)
+                            break 
+
+        similarity_set_lhs=similarity_set_lhs.difference(index_to_remove)
 
         dissimilarity_set_rhs=set()
         for ptnv in difference[index_rhs]:
+            #print("Controllo diff rhs: ", difference[index_rhs])
             if(idx not in difference[index_rhs][ptnv]):
+                print(difference[index_rhs][ptnv])
                 dissimilarity_set_rhs.update(M[index_rhs][ptnv])
            
-        violation_set = similarity_set_lhs.difference(dissimilarity_set_rhs)
+        violation_set = similarity_set_lhs.intersection(dissimilarity_set_rhs)
+        if(idx in violation_set):
+            violation_set.remove(idx)
+        print("Violation set", violation_set)
          
         if(bool(violation_set)):
             column_names=df_data.columns.tolist()
@@ -344,7 +392,6 @@ def ask_prompt():
             data=data+stringa_riga+")"
 
 
-            violation_set.remove(idx)
             data=data+" caused a violation considering"
             for i in violation_set:
                #print(40 * "*")
@@ -435,6 +482,7 @@ def ask_prompt():
                        trovato=True
                  if(not trovato):
                     lhs_valid = False
+                    similarity_set_lhs=set()
                     break
               elif(attribute == index_rhs):
                 pass
@@ -445,9 +493,36 @@ def ask_prompt():
                 if(attribute == index_rhs and index_rhs == 0):
                     init=True
               else:
-                similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
+                 if(attribute != index_rhs):
+                    similarity_set_lhs=similarity_set_lhs.intersection(similarity_set_lhs_attribute)
 
            print(similarity_set_lhs)
+           #Filtering
+           index_to_remove=set()
+           for element in similarity_set_lhs:
+               similar=True
+               for attr in range(len(df_zero_data.columns)):
+                   if(attr == index_rhs):
+                       pass
+                   else:
+                       tuple_value=df_zero_data.iloc[idx, attr]
+                       print(tuple_value)
+                       other_tuple_value=df_zero_data.iloc[element, attr]
+                       print(other_tuple_value)
+                       if(df_zero_data[attr].dtype == "float64" or df_zero_data[attr].dtype == "int64"):
+                           if(not numeric_abs_function(tuple_value, other_tuple_value, all_thresholds[attr])):
+                               similar=False
+                               index_to_remove.add(element)
+                               break
+                       else:
+                           if(not string_distance(tuple_value, other_tuple_value, all_thresholds[attr])):
+                               similar=False
+                               index_to_remove.add(element)
+                               break 
+           
+           similarity_set_lhs=similarity_set_lhs.difference(index_to_remove)
+           
+           
            dissimilarity_set_rhs=set()
            for ptnv in M_old[index_rhs]:
                 if(idx not in M_old[index_rhs][ptnv]):

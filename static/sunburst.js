@@ -2396,19 +2396,19 @@
 					this.setAttribute(t, n.call(this, e))
           
         //AGGIUNTA ID ALL'AVVIO  
-        var gianp = document.querySelectorAll(".main-arc");
-        //console.log(gianp)
-		for(i=0; i<gianp.length; i++){
-			var text = gianp[i].nextSibling.nextSibling.firstChild.innerHTML;
+        var sunb_slice = document.querySelectorAll(".main-arc");
+        //console.log(sunb_slice)
+		for(i=0; i<sunb_slice.length; i++){
+			var text = sunb_slice[i].nextSibling.nextSibling.firstChild.innerHTML;
 			
 			//console.log("----");
-			//console.log(gianp[i].__data__);
+			//console.log(sunb_slice[i].__data__);
 			//console.log("Parent");
-			//console.log(gianp[i].__data__.parent);	
+			//console.log(sunb_slice[i].__data__.parent);	
 
-			if(gianp[i].__data__.parent != null){
+			if(sunb_slice[i].__data__.parent != null){
 				
-				var parentName = gianp[i].__data__.parent.data.name;
+				var parentName = sunb_slice[i].__data__.parent.data.name;
 				var parts_parent = parentName.split(':');
 				var part_parent = parts_parent[0].trim(); 
 				if(part_parent=="specializations" || part_parent == "generalizations" || part_parent=="RFD found" || part_parent == "new RFDs" || part_parent == "RFD not found"){
@@ -2417,13 +2417,13 @@
 					var part = parts[0].trim(); 
 
 					var fullID=part_parent.concat(part);
-					gianp[i].id=fullID;
+					sunb_slice[i].id=fullID;
 
 				}else{
 					var parts = text.split(':');
 					var part = parts[0].trim(); 
 		
-					gianp[i].id=part;
+					sunb_slice[i].id=part;
 				}
 			}	
 		  }
@@ -3269,18 +3269,18 @@
 					var p = o.exit().transition(c).remove();
 					p.select("path.main-arc").attrTween("d", (function(t) {
 					//AGGIUNTA ID ALL'UPDATE  
-					var gianp = document.querySelectorAll(".main-arc");
-					//console.log(gianp)
-					for(i=0; i<gianp.length; i++){
-						var text = gianp[i].nextSibling.nextSibling.firstChild.innerHTML;
+					var sunb_slice = document.querySelectorAll(".main-arc");
+					//console.log(sunb_slice)
+					for(i=0; i<sunb_slice.length; i++){
+						var text = sunb_slice[i].nextSibling.nextSibling.firstChild.innerHTML;
 
 						//console.log("----");
-						//console.log(gianp[i].__data__);
+						//console.log(sunb_slice[i].__data__);
 						//console.log("Parent");
-						//console.log(gianp[i].__data__.parent);	
-						if(gianp[i].__data__.parent != null){
+						//console.log(sunb_slice[i].__data__.parent);	
+						if(sunb_slice[i].__data__.parent != null){
 
-							var parentName = gianp[i].__data__.parent.data.name;
+							var parentName = sunb_slice[i].__data__.parent.data.name;
 							var parts_parent = parentName.split(':');
 							var part_parent = parts_parent[0].trim(); 
 							if(part_parent=="specializations" || part_parent == "generalizations" || part_parent=="RFD found" || part_parent == "new RFDs" || part_parent == "RFD not found"){
@@ -3289,13 +3289,13 @@
 								var part = parts[0].trim(); 
 							
 								var fullID=part_parent.concat(part);
-								gianp[i].id=fullID;
+								sunb_slice[i].id=fullID;
 							
 							}else{
 								var parts = text.split(':');
 								var part = parts[0].trim(); 
 							
-								gianp[i].id=part;
+								sunb_slice[i].id=part;
 							}
 						}	
 					  }
