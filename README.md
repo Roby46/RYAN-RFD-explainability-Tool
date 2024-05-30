@@ -118,3 +118,5 @@ To view the explanation of one of the analyzed RFDs, the user must navigate the 
 Pressing this button opens the pop-up window where the Large Language Model will show the interpretation of the RFD based on the prompt constructed by the server. It is important to note that, while waiting for the LLM's response, the interface will display a small waiting message.
 
 Note: if the "Read explanation" button is not displayed in the datatable, then the user will have to explore the RFDs tree more deeply, expanding at least one RHS node.
+
+An example of the usage can be found here: https://youtu.be/qdjJeCQwthM?si=RHtU0LhWI3ASsd1R
