@@ -111,8 +111,6 @@ In case the diagrams are not shown, check the correctness of the constructed JSO
 
 ### How to view the explanation of RFDs
 
-How to view the explanation of RFDs
-
 To view the explanation of one of the analyzed RFDs, the user must navigate the RFDs tree in such a way as to view both the RHS and the LHS of the dependencies. By expanding the nodes of the tree, the datatable is updated accordingly, showing all the information relating to the RFD of interest. The explainability function can be activated through the "Read explanation" button present in the last column of the datatable (called "Explanation").
 
 Pressing this button opens the pop-up window where the Large Language Model will show the interpretation of the RFD based on the prompt constructed by the server. It is important to note that, while waiting for the LLM's response, the interface will display a small waiting message.
