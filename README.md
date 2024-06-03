@@ -1,7 +1,7 @@
 
-# RFD Explainability Insight Navigator (REIN)
+# RFD explainabilitY & ANalysis tool (RYAN)
 
-The RFD Explainability Insight Navigator (REIN) tool is one of the first AI-based tools that analyzes how RFDs discovered on a dataset evolve as the data changes. REIN can combine interactive visual components and emergent Large Language Models (LLMs) to provide explanations for expert and non-expert users about the meaningfulness of discovered RFDs before and after data changes.
+The RFD explainabilitY & ANalysis tool (RYAN) is one of the first AI-based tools that analyzes how RFDs discovered on a dataset evolve as the data changes. RYAN can combine interactive visual components and emergent Large Language Models (LLMs) to provide explanations for expert and non-expert users about the meaningfulness of discovered RFDs before and after data changes.
 
 
 
@@ -24,7 +24,7 @@ In a Python environment, install the following libraries:
     
 ## Data pre-processing
  
-Before the REIN tool can be used to analyze the RFDs, it is necessary to construct the .json files containing all the information from the comparison of the RFDs sets discovered. These files are constructed via the Python script 'jsonForChartCreator_v3'.
+Before the RYAN tool can be used to analyze the RFDs, it is necessary to construct the .json files containing all the information from the comparison of the RFDs sets discovered. These files are constructed via the Python script 'jsonForChartCreator_v3'.
 
 #### Input of the "jsonForChartCreator_v3.py" script
 
@@ -85,7 +85,7 @@ In the repository, you can find an example file in the Dataset folder.
 
 ### server start-up
 
-The REIN tool interface can be started by running the Python script 'compareserver.py'. The server can be started via the instruction:
+The RYAN tool interface can be started by running the Python script 'compareserver.py'. The server can be started via the instruction:
 
 ```bash
     python compareserver.py
@@ -105,7 +105,7 @@ On the tool's home page, you can find two forms. The first form allows you to up
 
 Once the files have been uploaded, the interface shows the RFDs tree, the RFDs Sunburst, and the datatable built based on the uploaded JSON files.
 
-At this point, the user can start using the REIN features and interacting with the diagrams and the datatable.
+At this point, the user can start using the RYAN features and interacting with the diagrams and the datatable.
 
 In case the diagrams are not shown, check the correctness of the constructed JSON.
 
