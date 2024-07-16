@@ -4785,10 +4785,22 @@ treeJSON = d3.json(a, function(error, treeData) {
             links = tree.links(nodes);
 
         // Set widths between levels based on maxLabelLength.
+        //nodes.forEach(function(d) {
+        //    var tmp = 3;
+        //    if(d.depth == 3)
+        //        tmp = 4
+        //    d.y = (d.depth * (maxLabelLength * tmp)); //maxLabelLength * 10px
+        //    // alternatively to keep a fixed scale one can set a fixed depth per level
+        //    // Normalize for fixed-depth by commenting out below line
+        //    // d.y = (d.depth * 500); //500px per level.
+        //});
+
+		
+        // Set widths between levels based on maxLabelLength.
         nodes.forEach(function(d) {
-            var tmp = 3;
+            var tmp = 2;
             if(d.depth == 3)
-                tmp = 4
+                tmp = 2
             d.y = (d.depth * (maxLabelLength * tmp)); //maxLabelLength * 10px
             // alternatively to keep a fixed scale one can set a fixed depth per level
             // Normalize for fixed-depth by commenting out below line
