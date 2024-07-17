@@ -10,6 +10,7 @@ import numpy as np
 import copy
 import llm_interaction as llm
 import json
+import Levenshtein
 
 app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)

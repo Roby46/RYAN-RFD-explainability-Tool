@@ -3527,6 +3527,21 @@ function sendRFD(lhs, rhs, old_lhs, old_rhs, type){
 
 }
 
+// Funzione per convertire una stringa in un Set
+function stringToSet(inputString) {
+	return new Set(
+	  inputString
+		.replace(/[\[\]']+/g, '') // Rimuove le parentesi quadre e le virgolette
+		.split(', ') // Divide la stringa in base alla virgola e allo spazio
+	);
+  }
+   
+  // Funzione per calcolare la differenza tra due Set
+  function difference(setA, setB) {
+	return new Set([...setA].filter(x => !setB.has(x)));
+  }
+   
+
 
 function generateSunburst(filename){
 
@@ -4614,15 +4629,39 @@ treeJSON = d3.json(a, function(error, treeData) {
                     var listalhs = lista[i]._children;
                     for (let j = 0; j<listalhs.length;j++) {
 
-                        var myArray = listalhs[j].name.split("LHS:");
+                        var myArray = listalhs[j].name.split("LHS: ");
                         var word = myArray[1];
                         //risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);
+						console.log(lista[i].name);
+						//Rimuove i caratteri non necessari e divide la stringa in un array
+						var arrayspec = lista[i].name.replace(/[\[\]']+/g, '').split(', ') // Divide la stringa in base alla virgola e allo spazio
+						// Stampa l'array risultante
+						console.log(arrayspec);
+						//Rimuove i caratteri non necessari e divide la stringa in un array
+						var arrayoriginal = word.replace(/[\[\]']+/g, '').split(', ') // Divide la stringa in base alla virgola e allo spazio
+						// Stampa l'array risultante
+						console.log(arrayoriginal);
+						// Converti le stringhe in Set
+						const set_specializzazione = stringToSet(lista[i].name);
+						const set_originale = stringToSet(word);
+						// Calcola la differenza tra i due Set
+						const differenceSet = difference(set_specializzazione, set_originale);
+						// Stampa i Set e la loro differenza
+						console.log('Set 1:', set_specializzazione);
+						console.log('Set 2:', set_originale);
+						console.log('Differenza (Set 1 - Set 2):', differenceSet);
+						var set_common = set_specializzazione;
+						set_common = difference(set_common, differenceSet);
+						console.log(set_common);
+						colored_row= '[' + Array.from(set_common).map(element => `'${element}'`).join(', ');
+						colored_row= colored_row + ', <span style="color: #2CD200;"><strong>' + Array.from(differenceSet).map(element => `'${element}'`).join(', ') + "</strong></span>]";
+						console.log(colored_row);
 
 						var newRow = risultati.row.add([
 							""+word,
 							""+d.name,
-							"specializations: "+d.name,
-							""+lista[i].name,
+							"specializations: "+ d.name,
+							""+colored_row,
 							""+d.name,
 							'<center><button class="button-82-pushable" role="button" onclick="sendRFD(this.parentNode.parentNode.previousElementSibling.previousElementSibling.textContent,this.parentNode.parentNode.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, this.parentNode.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent, \'specialization\' );"> <span class="button-82-shadow"></span> <span class="button-82-edge"></span> <span class="button-82-front text"> Read explanation </span></button></center>'
 						  ]).draw(false).node();
@@ -4655,7 +4694,7 @@ treeJSON = d3.json(a, function(error, treeData) {
                 for (let i = 0; i<figli.length;i++) {
                     var figlidifiglio = figli[i]._children;
                     for(let j = 0; j<figlidifiglio.length; j++){
-                        //risultati.row.add(["Not Available","Not Available","specializations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
+ù                        //risultati.row.add(["Not Available","Not Available","specializations",""+figlidifiglio[j].name, ""+figli[i].name]).draw(false);
 						var newRow = risultati.row.add([
 							"Not Available",
 							"Not Available",
@@ -4703,13 +4742,40 @@ treeJSON = d3.json(a, function(error, treeData) {
                 for(let i=0; i<lista.length; i++){
                     var listalhs = lista[i]._children;
                     for (let j = 0; j<listalhs.length;j++) {
-
-                        var myArray = listalhs[j].name.split("LHS:");
+	
+                        var myArray = listalhs[j].name.split("LHS: ");
                         var word = myArray[1];
-                        //risultati.row.add([""+word,""+d.name,"",""+lista[i].name, ""+d.name]).draw(false);
+                        //risultati.row.add([""+word,""+d.name,"specializations: "+d.name,""+lista[i].name, ""+d.name]).draw(false);
+						console.log(lista[i].name);
+						//Rimuove i caratteri non necessari e divide la stringa in un array
+						var arrayspec = lista[i].name.replace(/[\[\]']+/g, '').split(', ') // Divide la stringa in base alla virgola e allo spazio
+						// Stampa l'array risultante
+						console.log(arrayspec);
+						//Rimuove i caratteri non necessari e divide la stringa in un array
+						var arrayoriginal = word.replace(/[\[\]']+/g, '').split(', ') // Divide la stringa in base alla virgola e allo spazio
+						// Stampa l'array risultante
+						console.log(arrayoriginal);
+						// Converti le stringhe in Set
+						const set_generalizzazione = stringToSet(lista[i].name);
+						const set_originale = stringToSet(word);
+						// Calcola la differenza tra i due Set
+						const differenceSet = difference(set_originale, set_generalizzazione);
+						// Stampa i Set e la loro differenza
+						console.log('Set 1:', set_originale);
+						console.log('Set 2:', set_generalizzazione);
+						console.log('Differenza (Set 1 - Set 2):', differenceSet);
+
+						var set_common = set_originale;
+						set_common = difference(set_common, differenceSet);
+						console.log(set_common);
+
+						colored_row= '[' + Array.from(set_common).map(element => `'${element}'`).join(', ');
+						colored_row= colored_row + ', <span style="color: red;"><strong>' + Array.from(differenceSet).map(element => `'${element}'`).join(', ') + "</strong></span>]";
+						console.log(colored_row);
+
 
 						var newRow = risultati.row.add([
-							""+word,
+							""+colored_row,
 							""+d.name,
 							"generalizations: "+d.name,
 							""+lista[i].name,
