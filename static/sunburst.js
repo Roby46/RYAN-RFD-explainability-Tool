@@ -33,7 +33,7 @@
 				i = document.createElement("style");
 			i.type = "text/css", "top" === e && r.firstChild ? r.insertBefore(i, r.firstChild) : r.appendChild(i), i.styleSheet ? i.styleSheet.cssText = t : i.appendChild(document.createTextNode(t))
 		}
-	}(".sunburst-viz .slice path {\n  cursor: pointer;\n}\n\n.sunburst-viz text {\n  dominant-baseline: middle;\n  text-anchor: middle;\n  pointer-events: none;\n  fill: #222;\n}\n\n.sunburst-viz .text-contour {\n  fill: none;\n  stroke: white;\n  stroke-linejoin: 'round';\n}\n\n.sunburst-viz .main-arc {\n  stroke-width: 1px;\n  transition: opacity .4s;\n}\n\n.sunburst-viz .main-arc:hover {\n  opacity: 0.85;\n  transition: opacity .05s;\n}\n\n.sunburst-viz .hidden-arc {\n  fill: none;\n}\n\n.sunburst-viz .tooltip {\n  max-width: 320px;\n  white-space: nowrap;\n}\n\n.sunburst-viz .tooltip-title {\n  font-weight: bold;\n  text-align: center;\n  margin-bottom: 5px;\n}\n\n.sunburst-viz {\n  position: relative;\n}\n");
+	}(".sunburst-viz .slice path {\n  cursor: pointer;\n}\n\n.sunburst-viz text {\n  dominant-baseline: middle;\n  text-anchor: middle;\n  pointer-events: none;\n  fill: #222;\n}\n\n.sunburst-viz .text-contour {\n  fill: none;\n  stroke: white;\n  stroke-linejoin: 'round';\n}\n\n.sunburst-viz .main-arc {\n  stroke-width: 1px;\n  transition: opacity .4s;\n}\n\n.sunburst-viz .main-arc:hover {\n  opacity: 0.85;\n  transition: opacity .05s;\n}\n\n.sunburst-viz .hidden-arc {\n  fill: none;\n}\n\n.sunburst-viz .tooltip {\n  max-width: 620px;\n  white-space: normal;\n}\n\n.sunburst-viz .tooltip-title {\n  font-weight: bold;\n  text-align: center;\n  margin-bottom: 5px;\n}\n\n.sunburst-viz {\n  position: relative;\n}\n");
 	var e = "http://www.w3.org/1999/xhtml",
 		r = {
 			svg: "http://www.w3.org/2000/svg",
