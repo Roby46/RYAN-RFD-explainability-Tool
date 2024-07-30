@@ -1,8 +1,5 @@
-import requests
-import csv
-from flask import Flask, redirect, url_for, request, jsonify, render_template
+from flask import Flask, request, render_template
 from flask_cors import CORS
-from io import BytesIO
 import pandas as pd
 from StarDust import PatternLoader
 import sys
@@ -27,6 +24,10 @@ def root():
 @app.route('/LLM_Answer2.html')
 def main_page_explanation():
     return render_template('LLM_Answer2.html')
+
+@app.route('/LLM_Chat.html')
+def main_page_interaction():
+    return render_template('LLM_Chat.html')
 
 
 @app.route('/askllm', methods=['GET'])
@@ -633,6 +634,7 @@ def get_data():
     dataset = pd.read_csv("./static/Datasets/" + name, delimiter=";")
     print(dataset)
     return 'File caricato con successo!', 200
+
 
 
 '''@app.route('/getRFD',methods = ['POST'])
