@@ -173,6 +173,38 @@ body {
 				></textarea>
 			</form>
 		</div>
+
+
+		<div id="wrapper">
+			<form id="paper">
+				<textarea 
+					placeholder="LLM Answer..."  
+					spellcheck="false" 
+					rows="4" 
+					style="
+						width: 100%;
+						height: auto; /* Altezza automatica */
+						min-height: 150px; /* Altezza minima */
+						border: 2px solid #000;
+						box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+						border-radius: 10px;
+						padding: 15px;
+						font-size: 1.5em;
+						line-height: 1.5;
+						color: #333;
+						background-color: #fff;
+						resize: none;
+						visibility: hidden;
+						transition: box-shadow 0.3s ease-in-out;
+						font-family: 'Arial', sans-serif;
+						overflow: hidden; /* Nasconde la scrollbar */
+					"
+					onfocus="this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.2)';"
+					onblur="this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
+					oninput="adjustHeight(this)"
+				></textarea>
+			</form>
+		</div>
 		
 		<script>
 			function adjustHeight(textarea) {
