@@ -37,7 +37,7 @@ def ask_only_llm():
 
     # ---------------- Interact with LLM
     # prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the Austria"
-    #print("prompt", prompt)
+    print("prompt", prompt)
 
     # Carica il JSON
     json_data = json.loads(prompt)
@@ -46,6 +46,21 @@ def ask_only_llm():
     prompt = json_data.get('message')
 
     print("PROMPT FINALE: ", prompt)
+
+    output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
+    print("llm", output)
+    # ---------------- Interact with LLM
+    return {"LLMAnswer": output}
+
+
+@app.route('/askllminteract', methods=['GET'])
+def ask_llm_interact():
+    # Recupera i dati dalla query string
+    prompt = request.args.get('prompt')
+
+    # ---------------- Interact with LLM
+    # prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the Austria"
+    print("prompt", prompt)
 
     output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
     print("llm", output)

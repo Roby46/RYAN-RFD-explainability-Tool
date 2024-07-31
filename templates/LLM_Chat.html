@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Answer</title>
+    <title>LLM Chat</title>
     <!-- Additional meta tags, CSS links, or JavaScript links can go here -->
      <!-- Includi jQuery -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -145,7 +145,7 @@ body {
 		<div id="wrapper">
 			<form id="paper" method="get" action="">
 				<textarea 
-					placeholder="LLM Answer..." 
+					placeholder="LLM Answer..."
 					id="text" 
 					name="text" 
 					spellcheck="false" 
@@ -170,10 +170,47 @@ body {
 					onfocus="this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.2)';"
 					onblur="this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
 					oninput="adjustHeight(this)"
+
 				></textarea>
 			</form>
 		</div>
-		
+		<button onclick="send_modified_prompt()">Send Text</button>
+
+
+		<div id="wrapper2">
+			<form id="paper2" method="get" action="">
+				<textarea
+					placeholder="LLM Answer..."
+					id="text2"
+					name="text2"
+					spellcheck="false"
+					rows="4"
+					style="
+						width: 100%;
+						height: auto; /* Altezza automatica */
+						min-height: 150px; /* Altezza minima */
+						border: 2px solid #000;
+						box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+						border-radius: 10px;
+						padding: 15px;
+						font-size: 1.5em;
+						line-height: 1.5;
+						color: #333;
+						background-color: #fff;
+						resize: none;
+						transition: box-shadow 0.3s ease-in-out;
+						font-family: 'Arial', sans-serif;
+						overflow: hidden; /* Nasconde la scrollbar */
+						display: none;
+					"
+					onfocus="this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.2)';"
+					onblur="this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
+					oninput="adjustHeight(this)"
+
+				></textarea>
+			</form>
+		</div>
+
 		<script>
 			function adjustHeight(textarea) {
 				textarea.style.height = 'auto';
@@ -189,9 +226,16 @@ body {
 		
     <script>
     $(document).ready(function(){
+		location.getParams = getParams;
+		var prompt_to_ask = location.getParams()["prompt"];
+		//console.log (location.getParams());
+		//console.log ("prompt to ask   "  +prompt_to_ask);
+		var pulito = prompt_to_ask.split("{\"message\": \"")
+		pulito = pulito[1].split("\"}")
         $('#title').focus();
         autosize($('#text'));
-		$('#text').html('I am processing the explanation. Be patient for a few seconds...');
+        final_string = pulito[0].replace(/\n/g, "<br>");
+		$('#text').html(pulito[0]);
 	});
 
 	function getParams ()
@@ -210,41 +254,42 @@ body {
 
 		return result;
 	}
-	location.getParams = getParams;
-	var prompt_to_ask = location.getParams()["prompt"];
-	//console.log (location.getParams());
-	console.log (prompt_to_ask);
-
-
-	$.ajax({
-		type:"GET",
-		dataType:"text",
-		contentType: "application/text",
-		xhrFields: { withCredentials: false },
-		crossDomain: true,
-		// async: false, // async dovrebbe andare bene in quanto è una componente di output
-		data: {"prompt": prompt_to_ask},
-		url:"http://127.0.0.1:5000/askllm",
-	})
-	.done(function(response){
-	    getjson = $.parseJSON(response)
-		console.log("Response http://127.0.0.1:5000/askllm: ",response)
-		console.log("Response http://127.0.0.1:5000/askllm getjson: ",getjson)
-		//alert("Dataset Loaded Successfully!");
-        $('#text').html(getjson['LLMAnswer']);
-		adjustHeight(document.getElementById('text')); // Richiama adjustHeight dopo aver impostato il contenuto
-	})
-	.fail(function(xhr, textStatus, errorThrown){
-		console.log("ERROR http://127.0.0.1:5000/askllm: ",xhr.responseText)
-		//alert("Dataset upload error! "+errorThrown);
-		return xhr.responseText;
-
-	}).then(function(value){
-
-	})
-
-
     </script>
+
+	<script>
+		function send_modified_prompt(){
+			var prompt = $("#text").val();
+			if (prompt == "") {
+				alert("Error, the prompt is empty");
+			} else {
+				console.log("prompt da mandare: ", prompt)
+				$("#text2").show();
+				$.ajax({
+					type:"GET",
+					dataType:"text",
+					contentType: "application/text",
+					xhrFields: { withCredentials: false },
+					crossDomain: true,
+					// async: false, // async dovrebbe andare bene in quanto è una componente di output
+					data: {"prompt": prompt},
+					url:"http://127.0.0.1:5000/askllminteract",
+				})
+				.done(function(response){
+	    			getjson = $.parseJSON(response)
+					console.log("Response http://127.0.0.1:5000/askllminteract: ",response)
+					console.log("Response http://127.0.0.1:5000/askllminteract getjson: ",getjson)
+        			$('#text2').html(getjson['LLMAnswer']);
+					adjustHeight(document.getElementById('text2')); // Richiama adjustHeight dopo aver impostato il contenuto
+				})
+				.fail(function(xhr, textStatus, errorThrown){
+					console.log("ERROR http://127.0.0.1:5000/askllminteract: ",xhr.responseText)
+					//alert("Dataset upload error! "+errorThrown);
+					return xhr.responseText;
+				}).then(function(value){
+				})
+			}
+		}
+	</script>
 
 </body>
 </html>
