@@ -3,23 +3,44 @@ import sseclient
 import json
 
 url = 'https://duckduckgo.com/duckchat/v1/chat'
+#headers = {
+#    'accept': 'text/event-stream',
+#    'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7,de-DE;q=0.6,de;q=0.5,es;q=0.4,pl;q=0.3',
+#    'content-type': 'application/json',
+#    'cookie': 'dcm=3; ae=-1',
+#    'origin': 'https://duckduckgo.com',
+#    'priority': 'u=1, i',
+#    'referer': 'https://duckduckgo.com/',
+#    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+#    'sec-ch-ua-mobile': '?0',
+#    'sec-ch-ua-platform': '"macOS"',
+#    'sec-fetch-dest': 'empty',
+#    'sec-fetch-mode': 'cors',
+#    'sec-fetch-site': 'same-origin',
+#    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+#    'x-vqd-4': '4-211122308202828671676848603708400720389'
+#}
+
 headers = {
     'accept': 'text/event-stream',
-    'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7,de-DE;q=0.6,de;q=0.5,es;q=0.4,pl;q=0.3',
+    'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',
+    'cache-control': 'no-cache',
     'content-type': 'application/json',
-    'cookie': 'dcm=3; ae=-1',
+    # 'cookie': 'dcm=1',
     'origin': 'https://duckduckgo.com',
+    'pragma': 'no-cache',
     'priority': 'u=1, i',
     'referer': 'https://duckduckgo.com/',
-    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+    'sec-ch-ua': '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
     'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"macOS"',
+    'sec-ch-ua-platform': '"Windows"',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    'x-vqd-4': '4-211122308202828671676848603708400720389'
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    'x-vqd-4': '4-64989446206168759335115125981870622892',
 }
+
 data = {
     "model": "gpt-3.5-turbo-0125",
     "messages": [{
