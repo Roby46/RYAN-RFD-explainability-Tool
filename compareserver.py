@@ -47,8 +47,9 @@ def ask_only_llm():
 
     print("PROMPT FINALE: ", prompt)
 
-    output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
-    print("llm", output)
+    #output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
+    output = llm.ask_ddgo_llm(prompt)
+    #print("llm", output)
     # ---------------- Interact with LLM
     return {"LLMAnswer": output}
 

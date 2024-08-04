@@ -64,13 +64,16 @@ data = {
 response = requests.post(url, headers=headers, json=data, stream=True)
 client = sseclient.SSEClient(response)
 
+
 print("Waiting for answers...\n\n")
+print(client)
 
 # Lista per raccogliere tutti i messaggi
 messages = []
 
 # Itera sugli eventi nello stream e aggiungi i dati alla lista
 for event in client.events():
+    print("sono")
     try:
         if len(event.data) >0:
             d = json.loads(event.data)
@@ -84,4 +87,4 @@ for event in client.events():
 complete_message = ''.join(messages)
 
 # Stampa il messaggio completo
-print(complete_message)
+print("Messaggio: ", complete_message)

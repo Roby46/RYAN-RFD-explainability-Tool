@@ -1,30 +1,7 @@
-from gpt4all import GPT4All
 import requests
 import sseclient
 import json
 import time
-
-#orca-mini-3b-gguf2-q4_0.g  gpt4all-13b-snoozy-q4_0.gguf
-
-def load_model(type_model="orca-mini-3b-gguf2-q4_0.gguf"):
-    model = GPT4All("orca-mini-3b-gguf2-q4_0.gguf")
-    #model = ""
-    print("Modello Caricato!")
-    return model
-
-def ask_llm(model, prompt, max_tokens=100, streaming=False):
-    #output = model.generate("What is a relaxed functional dependency? ", max_tokens=100)
-    output = model.generate(prompt+" ", max_tokens=max_tokens, streaming=streaming)
-    print("[ask_llm]",output)
-    return output
-
-def ask_ddgo_llm(prompt):
-    session_code = get_status_code()
-    output=get_llm_answer(session_code, prompt)
-    return output
-
-
-
 
 def get_status_code():
 	cookies = {
@@ -53,7 +30,7 @@ def get_status_code():
 	print("Status Response:",response,session_code)
 	return session_code
 
-def get_llm_answer(session_code, prompt):
+def get_llm_answer(session_code):
 	url = 'https://duckduckgo.com/duckchat/v1/chat'
 	headers = {
 	    'accept': 'text/event-stream',
@@ -78,8 +55,20 @@ def get_llm_answer(session_code, prompt):
 	    'model': 'gpt-4o-mini',
 	    "messages": [{
 	        "role": "user",
-	        "content":  prompt
-        }]
+	        "content": ("In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint "
+	                    "X -> Y between two sets of attributes X and Y, meaning that if two tuples have similar value on X, "
+	                    "then they must have similar values on Y. X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). "
+	                    "Two values of an attribute are similar if their distance is lower than the similarity threshold defined on that attribute. "
+	                    "The function to assess similarity is edit distance for strings and difference for numbers. After the insertion of a new tuple, "
+	                    "an existing RFD can be invalidated only if the new tuple has similar values on the LHS with respect other tuples but it has "
+	                    "different values on the RHS. In this case, a specialized RFD with additional attributes on the LHS may be valid on the dataset. "
+	                    "You will be provided with an RFD that gets invalidated after the insertion of a batch of tuples, and with the tuples that caused "
+	                    "the violation and their values. The RFD {LHS: [ age (threshold=6), platelets (threshold=244)], RHS: [serum-creatinine(threshold=1.0)]} "
+	                    "was invalidated and specialized by a new RFD {LHS: [ age (threshold=6.0), platelets (threshold=244.0), serum-sodium (threshold=2.0)], "
+	                    "RHS: [serum-creatinine(threshold=1.0)]}. This happened because: --The insertion of Tuple 52 (age=60.0, platelets=263358.03, serum-creatinine=6.8) "
+	                    "caused a violation considering tuple 8 (age=65.0, platelets=263358.03, serum-creatinine=1.5) tuple 1 (age=55.0, platelets=263358.03, serum-creatinine=1.1) "
+	                    "Basing on this information, provide an extensive explanation of why the RFD was invalidated. To do this, analyze the attribute values and consider the similarity thresholds.")
+	    }]
 	}
 
 	response = requests.post(url, headers=headers, json=data, stream=True)
@@ -105,6 +94,7 @@ def get_llm_answer(session_code, prompt):
 	    except:
 	        break
 
+	#print(messages)
 	# Unisci tutti i messaggi in una singola stringa
 	complete_message = ''.join(messages)
 
@@ -112,3 +102,12 @@ def get_llm_answer(session_code, prompt):
 	#print(complete_message)
 
 	return complete_message
+
+
+if __name__ == '__main__':
+	session_code = get_status_code()
+	#time.sleep(1)
+	get_llm_answer(session_code)
+
+
+
