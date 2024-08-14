@@ -424,4 +424,96 @@ div.dataTables_wrapper div.dataTables_length select {
   outline: none;
 }
 
+/* Stile per il tasto del tutorial */
+#tutorial-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000; /* Assicurati che sia sopra tutto il resto */
+}
 
+#tutorial-button img {
+  width: 50px; /* Puoi regolare la dimensione dell'icona */
+  height: 50px;
+  border-radius: 15px;
+}
+
+/* Stile per l'overlay del tutorial */
+#tutorial-overlay {
+  display: none; /* Inizialmente nascosto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Colore di sfondo trasparente scuro */
+  z-index: 999; /* Appena sotto il pulsante tutorial */
+}
+
+#tutorial-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  width: 90%;
+  border-radius: 10px;
+  text-align: justify; /* Giustifica il testo */
+  border: 1px solid #000; /* Bordo nero sottile */
+  font-size: 3em !important;
+  overflow: auto; /* Aggiunge la scrollbar */
+  max-height: 80vh; /* Limita l'altezza del div */
+
+}
+
+/* Stile per l'immagine di chiusura */
+#close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1000; /* Assicura che il bottone sia sopra gli altri elementi */
+}
+
+#tutorial-instructions{
+  font-size: 0.5em;
+}
+
+b#strong-text-green {
+  font-weight: 2000; /* Grassetto molto marcato */
+  color: #2CD200;
+}
+
+b#strong-text-red {
+  font-weight: 900; /* Grassetto molto marcato */
+  color: red;
+}
+#objective-text{
+  font-size: 0.5em;
+}
+
+#rfd-example-table td {
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#rfd-example-table th {
+  text-align: center;
+  padding: 8px;
+  background-color: #1590bf;
+  font-weight: bold;
+  color: white;
+}
+
+#rfd-example-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#rfd-example-table tr:hover {
+  background-color: #e9e9e9;
+}

@@ -11,8 +11,8 @@ import Levenshtein
 
 app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)
-model = llm.load_model()
-print("Large Language Model", model)
+#model = llm.load_model()
+#print("Large Language Model", model)
 global dataset, prompt, rhs, lhs, old_lhs, old_rhs, rfd_type
 
 
@@ -63,7 +63,9 @@ def ask_llm_interact():
     # prompt = "Fill the slot by answering to the following question: [SLOT] is the capital of the Austria"
     print("prompt", prompt)
 
-    output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
+    #output = llm.ask_llm(model, prompt, max_tokens=500, streaming=False)
+    output = llm.ask_ddgo_llm(prompt)
+
     print("llm", output)
     # ---------------- Interact with LLM
     return {"LLMAnswer": output}

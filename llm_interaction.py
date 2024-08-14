@@ -24,8 +24,6 @@ def ask_ddgo_llm(prompt):
     return output
 
 
-
-
 def get_status_code():
 	cookies = {
 	    'dcm': '3',
