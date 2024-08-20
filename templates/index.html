@@ -108,7 +108,9 @@
         <div id="tutorial-content">
            <img id="close-btn" src="/static/Images/close.png" alt="Chiudi" />
            <center><h2>Tutorial</h2></center>
-            <p id="tutorial-instructions">In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y  between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y. X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is  lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. </p> 
+            <p id="tutorial-instructions">This Tutorial will provide you with 1) the definition of Relaxed Functional Dependency (RFD) 2) An introduction to the Ryan Tool, and  3) The description of the task you have to perform for our experiment.</p>
+            <h3>Relaxed Functional Dependencies</h3>
+            <p id="tutorial-instructions">In relational databases, a <b>Relaxed Functional Dependency (RFD) </b> is an integrity constraint X -> Y  between two <b>sets of attributes X and Y</b>, meaning that if <b>two tuples have similar value on X, then they must have similar values on Y</b>. X is named <b>Left Hand Side (LHS)</b>, while Y is the <b>Right Hand Side (RHS)</b>. Two values of an attribute are similar if their distance is  lower than the <b>similarity threshold</b> defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. </p> 
             <p id="tutorial-instructions">For example, consider the following dataset: </p>
             <!-- Esempio Tabellare -->
             <table id="rfd-example-table" class="table table-striped table-bordered" style="width:100%; border-collapse: collapse;">
@@ -142,10 +144,57 @@
                   </tr>
                 </tbody>
             </table>
-            <p id="tutorial-instructions">The RFD <b>Model<sub>4</sub>, Year<sub>1</sub> -> Price<sub>500</sub></b> holds on this dataset, since similar models with similar years have a similar price <b>(4, 1,and 500 are the similarity thresholds).</b> </p>
+            <p id="tutorial-instructions">The RFD <b>Model<sub>4</sub>, Year<sub>1</sub> -> Price<sub>500</sub></b> holds on this dataset, since similar models with similar years have a similar price <b>(4, 1,and 500 are the similarity thresholds).</b> In fact, the first and the third tuple (rows) have similar values for the attributes <b>Model</b> and <b>Year</b> and they also have values for the attribute <b>Price</b> that differ for less than the similarity threshold.</p>
             <p id="tutorial-instructions">After the <b id="strong-text-green">insertion</b> of a new tuple, an existing RFD can be invalidated only if the new tuple has similar values on the LHS with respect other tuples but it has different values on the RHS.  In this case, a <b id="strong-text-green">specialized RFD with additional attributes on the LHS </b> may be valid on the dataset.</p>
             <p id="tutorial-instructions">Intead, after the <b id="strong-text-red">deletion</b> of a tuple, a <b id="strong-text-red">generalized RFD with a subset of attributes on the LHS </b> may be valid on the dataset if the deleted tuple had similar values on the LHS with respect other tuples but it had different values on the RHS. </p>
-            <p id="tutorial-instructions"></p>
+            <h3>The Ryan Tool</h3>
+            <p id="tutorial-instructions">The RYAN tool allows to compare RFD results from discovery processes performed
+              at different time instants, allowing interactive analysis through visual components. One of the most
+              important features that distinguishes RYAN from is the integration of LLMs to obtain a textual explanation of how and why a
+              particular RFD has evolved over time</p>
+
+
+            <!-- Slideshow container -->
+<div class="slideshow-container">
+
+  <!-- Slides -->
+  <div class="mySlides fade">
+      <img src="/static/Images/Home.png" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+      <img src="/static/Images/MainPage.png" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+      <img src="/static/Images/Navigation.png" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+      <img src="/static/Images/Navigation2.png" style="width:100%">
+  </div>
+
+  <!-- Previous and next buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- Caption container -->
+<div class="caption-container">
+  <div class="caption">This is the first screenshot showing the main interface of the Ryan Tool.</div>
+</div>
+
+<!-- Dots/circles navigation -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide(4)"></span> 
+</div>
+
+
+            <h3>Task Description</h3>
+
             <p id="objective-text"></p> <!-- Questa è la parte variabile -->
       </div>
     </div>
@@ -187,10 +236,9 @@
 
     // Array di obiettivi
     const objectives = [
-        "Obiettivo 1: Navigate the tree.",
-        "Obiettivo 2: Completa il quiz sulla sicurezza.",
-        "Obiettivo 3: Esplora la sezione delle FAQ.",
-        "Obiettivo 4: Guarda il video introduttivo."
+        "Task 1: Load",
+        "Task 2: ",
+        "Task 3:"
     ];
 
     // Genera un numero casuale all'interno del range dell'array
@@ -208,6 +256,56 @@
     closeBtn.addEventListener('click', () => {
         tutorialOverlay.style.display = 'none';
     });
+</script>
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("dot");
+    let captions = [
+        "This is the first screenshot showing the main interface of the Ryan Tool.",
+        "This screenshot demonstrates how to load data into the Ryan Tool.",
+        "Here we see the comparison view of the old and new RFD results.",
+        "Here we see the comparison view of the old and new RFD results."
+    ];
+
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    
+    // Nascondi tutte le slide
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+    }
+    
+    // Rimuovi la classe "active" da tutti i dots
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    
+    // Mostra la slide attuale
+    slides[slideIndex-1].style.display = "block";  
+    
+    // Aggiungi la classe "active" al dot corrispondente
+    dots[slideIndex-1].className += " active";
+    
+    // Aggiorna la caption
+    document.querySelector(".caption").innerText = captions[slideIndex-1];
+}
+
 </script>
 
 

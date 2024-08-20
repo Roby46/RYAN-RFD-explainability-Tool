@@ -377,6 +377,10 @@ body {
 	<script>
 		function send_modified_prompt(){
 			var prompt = $("#text").val();
+			$('#text2').html("");
+			var textarea = document.getElementById('text2');
+			adjustHeight(textarea);
+			
 			if (prompt == "") {
 				alert("Error, the prompt is empty");
 			} else {
