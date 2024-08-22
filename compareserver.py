@@ -313,8 +313,8 @@ def ask_prompt():
          if(i < len(lhs_puliti)-1):
             data=data+","
       data=data+"], RHS: [" + rhs + "(threshold=" + rhs_thr + ")]}. "
-      data=data+"This happened because: \n"
-
+      #data=data+"This happened because: \n"
+      data=data+"This happened because: "
 
       #all_old_attributes=old_lhs_puliti.copy()
       #all_old_attributes.append(rhs)
@@ -478,7 +478,9 @@ def ask_prompt():
            if(i < len(lhs_puliti)-1):
               data=data+","
         data=data+"], RHS: [" + rhs + "(threshold=" + rhs_thr + ")]}. "
-        data=data+"This happened because: \n"
+        #data=data+"This happened because: \n"
+        data=data+"This happened because: "
+
   
         for idx in lista_indici_cancellazioni:
            #print("\n\nControllo la tupla cancellata:", idx)
@@ -590,13 +592,15 @@ def ask_prompt():
     if(rfd_type == "specialization"):
         context='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y  between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y. X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is  lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. After the insertion of a new tuple, an existing RFD can be invalidated only if the new tuple has similar values on the LHS with respect other tuples but it has different values on the RHS.  In this case, a specialized RFD with additional attributes on the LHS may be valid on the dataset. '''
         task="You will be provided with an RFD that gets invalidated after the insertion of a batch of tuples, and with the tuples that caused the violation and their values."
-        prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was invalidated. To do this, analyze the attribute values and consider the similarity thresholds."
+        #prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was invalidated. To do this, analyze the attribute values and consider the similarity thresholds."
+        prompt=context + " " + task + " " + data + "Basing on this information, provide an extensive explanation of why the RFD was invalidated. To do this, analyze the attribute values and consider the similarity thresholds."
 
     elif(rfd_type == "generalization"):
         context='''In relational databases, a Relaxed Functional Dependency (RFD) is an integrity constraint X -> Y  between two sets of attributes X and Y, meaning that if two tuples have similar value on X, then they must have similar values on Y.  X is named Left Hand Side (LHS), while Y is the Right Hand Side (RHS). Two values of an attribute are similar if their distance is  lower than the similarity threshold defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. After the deletion of a tuple, an existing RFD can be no longer minimal. Indeed,  a generalized RFD with a subset of attributes on the LHS may be valid on the datase  if the deleted tuple had similar values on the LHS with respect other tuples but it had different values on the RHS.  '''
         task="You will be provided with an RFD that gets generalized after the deletion of a batch of tuples, and with the tuples that caused the generalization and their values. "
-        prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was generalized. To do this, analyze the attribute values and consider the similarity thresholds."
-   
+        #prompt=context + "\n" + task + "\n" + data + "\nBasing on this information, provide an extensive explanation of why the RFD was generalized. To do this, analyze the attribute values and consider the similarity thresholds."
+        prompt=context + " " + task + " " + data + "Basing on this information, provide an extensive explanation of why the RFD was generalized. To do this, analyze the attribute values and consider the similarity thresholds."
+
    
     print(prompt)
 

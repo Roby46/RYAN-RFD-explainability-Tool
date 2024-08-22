@@ -209,7 +209,7 @@
   </tr>
   </tbody>
 </table>
-<p id="tutorial-instructions">The RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> does not hold anymore, since tuple 5 has a similar model and a similar year with respect to tuple 1 and 3, but has a differnt price.</p>
+<p id="tutorial-instructions">The RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> does not hold anymore, since tuple 5 has a similar model and a similar year with respect to tuple 1 and 3, but has a different price.</p>
 <p id="tutorial-instructions">However, the invalidated RFD can be specialized by the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>,  <b id="strong-text-green">#Owners<sub>&le;0</sub> </b>-> Price<sub>&le;500</sub></b> which is valid on the updated dataset. In fact, only tuple 1 and tuple 3 satisfy the constraints on the left-hand side, and they have similar values for the attribute on the right-hand side. </p>
 
 <p id="tutorial-instructions">Intead, after the <b id="strong-text-red">deletion</b> of a tuple, a <b id="strong-text-red">generalized RFD with a subset of attributes on the LHS </b> may be valid on the dataset if the deleted tuple had similar values on the reduced LHS with respect other tuples but it had different values on the RHS. In this case, the previously holding RFD is no longer minimal, and replaced by the generalized RFD.</p>
@@ -272,13 +272,13 @@
    no longer minimal, since the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> is valid and has a subset of its attributes on the LHS. </p>
 
 <h3>The Ryan Tool</h3>
-<p id="tutorial-instructions">The RFD explainabilitY & ANalysis tool (RYAN)
-  tool is one of the first AI-based tools that analyzes
+<p id="tutorial-instructions">The <b>RFD explainabilitY & ANalysis tool (RYAN)
+  tool </b> is one of the first AI-based tools that analyzes
   how rfds discovered on a dataset evolve as the
-  data changes. RYAN is able to combine interactive
-  visual components and emergent LLMs to provide
-  explanations about the evolution of discovered
-  RFDs after data changes (insertions, deletions and updates).</p>
+  data changes. RYAN is able to combine <b>interactive
+  visual components</b> and emergent <b>LLMs</b> to provide
+  <b> explanations about the evolution of discovered
+  RFDs after data changes </b> (insertions, deletions and updates).</p>
 
 
  <!-- Slideshow container -->
@@ -342,7 +342,7 @@
 <p id="tutorial-instructions">After loading the results of two RFD discovery processes performed at different time steps, Ryan provides different visual components to analyze them:
   <ul style="  font-size: 0.5em;   font-family: 'Lato', sans-serif;">
     <li>
-      The first visual component is the RFD tree (Figure 2). This tree introduces a collapsible representation of all rfds discovered on the updated data, i.e., at time 𝜏 + 1, and their relation with those discovered at time 𝜏.   
+      The first visual component is the <b>RFD tree (Figure 2)</b>. This tree introduces a collapsible representation of all <b>RFDs discovered on the updated data</b>, i.e., at time <b>𝜏 + 1</b>, and their relation with those discovered at time 𝜏.   
        The RFD tree divides the discovered RFDs into five main categories:
     Generalizations, Specializations, RFDs found, RFDs
     not found, and New RFDs. The rfd tree is composed of a root node, labeled “RFDs”, linked to
@@ -389,7 +389,7 @@
 <!-- Content after the slideshow -->
 <div style="margin-top: 20px;">
   <h3>Task Description</h3>
-  <p id="tutorial-instructions">In this experiment, you will be asked to upload a dataset and a file of RFD discovery results, and then identify a particular RFD belonging to the ‘Specialised’ or ‘Generalised’ category. You will then need to expand the RFD by selecting the correct category, the RHD of interest. At this point, in the comparative datatable, search for the target dependency and click on the Explain button to get an explanation of why that dependency evolved. </p>
+  <p id="tutorial-instructions">In this experiment, you will be asked to upload a dataset and a file of RFD discovery results, and then identify a particular RFD belonging to the ‘Specialised’ or ‘Generalised’ category. You will then need to expand the RFD tree by selecting the correct category, and then the RHS of interest. At this point, in the comparative datatable, search for the target dependency and click on the Explain button to get an explanation of why that dependency evolved. </p>
   <p id="objective-text"></p>
 </div>
 
