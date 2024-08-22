@@ -521,7 +521,7 @@ b#strong-text-red {
 /* Slideshow container */
 .slideshow-container {
   position: relative;
-  max-width: 60%; /* Riduce la dimensione massima del contenitore a 60% della larghezza della pagina */
+  max-width: 75%; /* Riduce la dimensione massima del contenitore a 60% della larghezza della pagina */
   margin: auto;
   overflow: hidden;
 }
@@ -542,17 +542,19 @@ b#strong-text-red {
   width: auto;
   padding: 16px;
   margin-top: -22px;
-  color: white;
+  color: rgba(255, 255, 255, 0.7); /* Colore bianco con trasparenza */
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
+  border-radius: 3px;
   user-select: none;
   z-index: 1;
 }
-
+.prev{
+  left: 0px;
+}
 .next {
-  right: 0;
+  right: 0px;
   border-radius: 3px 0 0 3px;
 }
 
