@@ -534,30 +534,6 @@ b#strong-text-red {
   margin-right: auto;
 }
 
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: rgba(255, 255, 255, 0.7); /* Colore bianco con trasparenza */
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 3px;
-  user-select: none;
-  z-index: 1;
-}
-.prev{
-  left: 0px;
-}
-.next {
-  right: 0px;
-  border-radius: 3px 0 0 3px;
-}
-
 /* Caption text */
 .caption-container {
   text-align: center;
@@ -565,10 +541,10 @@ b#strong-text-red {
 }
 
 .caption {
-  color: #000;
+  color: #ffffff;
   font-size: 15px;
   padding: 8px 12px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color:#19a4c0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
