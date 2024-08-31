@@ -3646,9 +3646,11 @@ function createchart(){
 	element.remove();
 	});
 
-	const tutorialButton = document.getElementById('tutorial-button');
-    tutorialButton.style.display = 'none'; // Nasconde il pulsante
-
+	const tutorialButton = document.getElementById('tutorial-buttonID');
+	tutorialButton.className ='tutorial-button-up'
+    //tutorialButton.style.display = 'none'; // Nasconde il pulsante
+	//tutorialButton.classList.remove('tutorial-button');
+	//tutorialButton.classList.add('tutorial-button-up');
 
 	// Select all elements with the class 'logo'
 	const logos = document.querySelectorAll('.logo');

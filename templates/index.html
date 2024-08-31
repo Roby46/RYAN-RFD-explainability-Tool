@@ -99,7 +99,7 @@
       </div>
 
     <!-- Icona del tutorial -->
-    <div id="tutorial-button">
+    <div id="tutorial-buttonID" class="tutorial-button">
         <img src="/static/Images/info.gif" alt="Tutorial Icon">
     </div>
 
@@ -108,7 +108,13 @@
         <div id="tutorial-content">
            <img id="close-btn" src="/static/Images/close.png" alt="Chiudi" />
            <center><h2>Tutorial</h2></center>
-            <p id="tutorial-instructions">This Tutorial will provide you with 1) the definition of Relaxed Functional Dependency (RFD) 2) An introduction to the Ryan Tool, and  3) The description of the task you have to perform for our experiment.</p>
+            <p id="tutorial-instructions">Thank you for agreeing to participate in this user study. This tutorial page will provide you with the necessary information regarding the completion of the experiment. In particular, this page will provide:
+              <ol  style="  font-size: 0.5em;   font-family: 'Lato', sans-serif;">
+                <li> the definition of Relaxed Functional Dependency (RFD)</li>
+                <li> An introduction to the functionalities of the Ryan Tool</li>
+                <li> The description of the task you have to perform for our experiment</li>
+              </ol> 
+            </p>
             <h3>Relaxed Functional Dependencies</h3>
             <p id="tutorial-instructions">In relational databases, a <b>Relaxed Functional Dependency (RFD) </b> is an integrity constraint X -> Y  between two <b>sets of attributes X and Y</b>, meaning that if <b>two tuples have similar value on X, then they must have similar values on Y</b>. X is named <b>Left Hand Side (LHS)</b>, while Y is the <b>Right Hand Side (RHS)</b>. Two values of an attribute are similar if their distance is  lower than the <b>similarity threshold</b> defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. </p> 
             <p id="tutorial-instructions">For example, consider the following dataset: </p>
@@ -269,12 +275,14 @@
   dependency with the specialized RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>,  #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b>. </p>
 <p id="tutorial-instructions"> Thus, the deleted tuple had similar values for the original LHS (Model,Year)
    but a different price. After the deletion, the specialized RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>,  #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b> is 
-   no longer minimal, since the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> is valid and has a subset of its attributes on the LHS. </p>
+   no longer minimal, since the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> is valid and has a subset of its attributes on the LHS. 
+  <br><br><b>In what follows, we will consider only RFDs with a single RHS attribute.</b>  
+</p>
 
 <h3>The Ryan Tool</h3>
 <p id="tutorial-instructions">The <b>RFD explainabilitY & ANalysis tool (RYAN)
   tool </b> is one of the first AI-based tools that analyzes
-  how rfds discovered on a dataset evolve as the
+  how RFDs discovered on a dataset evolve as the
   data changes. RYAN is able to combine <b>interactive
   visual components</b> and emergent <b>LLMs</b> to provide
   <b> explanations about the evolution of discovered
@@ -300,22 +308,21 @@
     <li>
       The first visual component is the <b>RFD tree (Figure 2)</b>. This tree introduces a collapsible representation of all <b>RFDs discovered on the updated data</b>, i.e., at time <b>𝜏 + 1</b>, and their relation with those discovered at time 𝜏.   
        The RFD tree divides the discovered RFDs into five main categories:
-    Generalizations, Specializations, RFDs found, RFDs
-    not found, and New RFDs. The rfd tree is composed of a root node, labeled “RFDs”, linked to
+    <b>Generalizations, Specializations, RFDs found, RFDs
+    not found, and New RFDs</b>. The RFD tree is composed of a root node, labeled “RFDs”, linked to
     five child nodes, one for each of the categories described above. The Generalizations/Specializations
-    represent all the rfds discovered at time 𝜏 + 1 that
-    generalize/specialize at least one rfds discovered
-    at time 𝜏 . The rfds found nodes are all valid rfds
-    both at time 𝜏 and 𝜏 + 1, whereas the rfds not
-    found nodes are all rfds that were discovered at
-    time 𝜏 but were not discovered in any forma at time 𝜏 + 1. The New rfds node represents
-    all rfds discovered at the time 𝜏 + 1 that were not
-    discovered at the time 𝜏 . By clicking on one of these
-    nodes, the tree can show new nodes, each labeled
-    with an RHS attribute (<b>Figure 3</b>). By clicking further on one
+    represent all the RFDs discovered at time 𝜏 + 1 that
+    generalize/specialize <b>at least one RFD discovered
+    at time 𝜏 </b>. The RFD found node contains all valid RFD
+    both at time 𝜏 and 𝜏 <b>+ 1</b>, whereas the RFD not
+    found node contains all RFDs that were discovered at
+    time 𝜏 but were not discovered in any forma at time 𝜏 + 1. The New RFDs node represents
+    all RFDs discovered at the time 𝜏 <b>+ 1</b> that were not
+    discovered at the time 𝜏. By clicking on one of these
+    nodes, the tree can show new nodes, representing the RHS attribute of the RFDs in the selected class (<b>Figure 3</b>). By clicking further on one
     of these nodes (<b>Figure 4</b>), the tree shows its children, which
     are labeled with the LHS attributes associated with
-    the chosen RHS, thus showing all rfds. </li>
+    the chosen RHS, thus showing all RFDs. </li>
      <!-- Slideshow container -->
     </ul>
 
@@ -359,22 +366,23 @@
     <br>
     
     <ul style="  font-size: 0.5em;   font-family: 'Lato', sans-serif;">
-    <li>The second visual component is the Sunburst chart (<b>right side of Figures 2, 3, 4</b>). Similar to the rfds tree, the Sunburst
+    <li>The second visual component is the <b>Sunburst</b> chart (<b>right side of Figures 2, 3, 4</b>). Similar to the RFDs tree, the Sunburst
       component provides a hierarchical representation
-      of rfds, considering a higher level of abstraction
-      to provide users with statistics about the five categories of rfds. The innermost ring of the rfds
+      of RFDs, considering a <b>higher level of abstraction</b>
+      to provide users with <b>statistics</b>> about the five categories of RFDs. The innermost ring of the RFDs
       Sunburst, labeled “RFDs”, is the root of the chart.
       The second ring contains the segments representing
-      the categories of rfds. Finally, the third and fourth
-      rings contain the segments of the RHS and respective LHS of the rfds discovered upon data changes,
-      respectively.</li>
-    <li>The third visual component is the Comparative Datatable (<b>Figure 5</b>). It provides a more detailed representation of
-      rfds and allows users to get a precise explanation of
-      the impact that data changes have had on the holding rfds. It is composed of five different columns:
+      the categories of RFDs. Finally, the third and fourth
+      rings contain the segments of the RHS and respective LHS of the RFDs discovered upon data changes,
+      respectively. By <b>hovering</b> the pointer on the slices, it is possible to visualize the complete path from the innermost ring to the selected slice.</li>
+    <li>The third visual component is the <b>Comparative Datatable</b> (<b>Figure 5</b>). It provides a more detailed representation of
+      RFDs and allows users to get a precise explanation of
+      the impact that data changes have had on the holding RFDs. The Datatable is updated after fully expanding a path in the RFD tree.      
+      It is composed of five different columns:
       the first two represent the LHS and the RHS of
-      an rfd 𝜙 valid at time 𝜏 ; the third is the motivation with which the rfd discovered at the time
+      an <b>RFD 𝜙 valid at time 𝜏</b>; the third is the motivation with which the RFD discovered at the time
       <b>𝜏 + 1</b> is related to 𝜙, while the last two contains
-      the attributes on the LHS and the RHS of an rfd
+      the <b>attributes on the LHS and the RHS</b> of an RFD
       validated at time <b>𝜏 + 1</b>. When displaying a specialized dependency, the additional attributes are highlighted in green, whereas when displayng 
       a generalized dependency, the removed attributes are highlighted in red (<b>Figure 6</b>). As regards the notation, each attribute and the corresponding threshold are written as follows: <b>AttributeName_threshold</b>, were the _ indicates the &le; constraint.       </li>
   </ul>
@@ -418,7 +426,7 @@
   </div>
   </div>
   <br>
-  <p id="tutorial-instructions">In addition, the datatable provides also the <b>INTERACT feature</b>. By clicking on the associated button, a new window containing the compiled prompt will be displayed. Here, the user 
+  <p id="tutorial-instructions">In addition, the datatable provides also the <b>INTERACT feature</b>. By clicking on the associated button, a new window containing the compiled prompt will be displayed (<b>see Figure 8</b>). Here, the user 
     can customize the prompt, or ask for additional questions. Once the customized prompt is ready, the user can click on the <b>Ask</b> button and wait for the answer. 
   </p>
   <div class="slideshow-container">
@@ -440,6 +448,7 @@
   <h3>Task Description</h3>
   <p id="tutorial-instructions">In this experiment, you will be asked to upload a dataset and a file of RFD discovery results, and then identify a particular RFD belonging to the ‘Specialized’ or ‘Generalized’ category. You will then need to expand the RFD tree by selecting the correct category, and then the RHS of interest. At this point, in the comparative datatable, search for the target dependency and click on the Explain button to get an explanation of why that dependency evolved. </p>
   <p id="objective-text"></p>
+  <p id="tutorial-instructions">This tutorial will remain available during the test if you need.</p>
   <p id="tutorial-instructions">If you are ready, you can click on the button below to start the experiment. Otherwise, you can ask for additional details! </p>
 </div>
 <center><button id="start-button" role="button" style="font-size: 0.7em; background-color: #2cd200; color: white;"><span>Start!</span></button></center>
@@ -476,7 +485,7 @@
 
 <script>
     // Seleziona l'elemento del pulsante del tutorial e l'overlay
-    const tutorialButton = document.getElementById('tutorial-button');
+    const tutorialButton = document.getElementById('tutorial-buttonID');
     const tutorialOverlay = document.getElementById('tutorial-overlay');
     const closeBtn = document.getElementById('close-btn');
     const closeBtn2 = document.getElementById('start-button');
@@ -485,9 +494,9 @@
 
     // Array di obiettivi
     const objectives = [
-        "Task 1: Upload the dataset 'test.csv' and the discovery results 'jsonForChart_test.csv'. Navigate the RFD tree by expanding the 'Specializations node'. Then, expand the node that contains all the RFDs with RHS 'serum-creatinine'. In the datatable, locate the RFD with LHS 'age,platelets,serum-sodium'. You have to understand why this specialized RFD has been discovered instead of the original one. Thus, click on the explain button and wait for the model's answer. Once ready, read carefully the explanation. ",
-        "Task 2: ['platelets_244.0']	DEATH-EVENT_0.5",
-        "Task 3: altra generalizzazione"
+        "Task 5: Upload the dataset 'test.csv' and the discovery results 'jsonForChart_test.csv'. Navigate the RFD tree by expanding the 'Specializations' node. Then, expand the node that contains all the RFDs with RHS 'serum-creatinine'. In the datatable, locate the RFD with LHS 'age,platelets,serum-sodium'. You have to understand why this specialized RFD has been discovered instead of the original one. Thus, click on the explain button and wait for the model's answer. Once ready, read carefully the explanation. Lastly, close the explanation window and click the Interact button on the same row. Read the compiled prompt carefully, as the final questionnaire will ask you to compare the prompt with the model explanation. ",
+        "Task 22: Upload the dataset 'test.csv' and the discovery results 'jsonForChart_test.csv'. Navigate the RFD tree by expanding the 'Genralizations' node. Then, expand the node that contains all the RFDs with RHS 'DEATH-EVENT'. In the datatable, locate the RFD with LHS 'platelets', which is a generalization of an old RFD with LHS 'platelets,age'. You have to understand why this generalized RFD has been discovered instead of the original one. Thus, click on the explain button and wait for the model's answer. Once ready, read carefully the explanation. Lastly, close the explanation window and click the Interact button on the same row. Read the compiled prompt carefully, as the final questionnaire will ask you to compare the prompt with the model explanation.",
+        "Task 13: Upload the dataset 'test.csv' and the discovery results 'jsonForChart_test.csv'. Navigate the RFD tree by expanding the 'Genralizations' node. Then, expand the node that contains all the RFDs with RHS 'DEATH-EVENT'. In the datatable, locate the RFD with LHS 'platelets', which is a generalization of an old RFD with LHS 'platelets,ejection-fraction'. You have to understand why this generalized RFD has been discovered instead of the original one. Thus, click on the explain button and wait for the model's answer. Once ready, read carefully the explanation. Lastly, close the explanation window and click the Interact button on the same row. Read the compiled prompt carefully, as the final questionnaire will ask you to compare the prompt with the model explanation."
     ];
 
     // Genera un numero casuale all'interno del range dell'array

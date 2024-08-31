@@ -425,7 +425,7 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 /* Stile per il tasto del tutorial */
-#tutorial-button {
+.tutorial-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -433,12 +433,24 @@ div.dataTables_wrapper div.dataTables_length select {
   z-index: 1000; /* Assicurati che sia sopra tutto il resto */
 }
 
-#tutorial-button img {
+.tutorial-button-up {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000; /* Assicurati che sia sopra tutto il resto */
+}
+
+.tutorial-button img {
   width: 50px; /* Puoi regolare la dimensione dell'icona */
   height: 50px;
   border-radius: 15px;
 }
-
+.tutorial-button-up img {
+  width: 50px; /* Puoi regolare la dimensione dell'icona */
+  height: 50px;
+  border-radius: 15px;
+}
 /* Stile per l'overlay del tutorial */
 #tutorial-overlay {
   display: none; /* Inizialmente nascosto */
