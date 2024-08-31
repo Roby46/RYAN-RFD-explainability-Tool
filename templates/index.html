@@ -376,10 +376,7 @@
       <b>𝜏 + 1</b> is related to 𝜙, while the last two contains
       the attributes on the LHS and the RHS of an rfd
       validated at time <b>𝜏 + 1</b>. When displaying a specialized dependency, the additional attributes are highlighted in green, whereas when displayng 
-      a generalized dependency, the removed attributes are highlighted in red (<b>Figure 6</b>).
-      Each row of the table is also associated with a button "Explain" that allows users to read
-      the explanation related to the rfds under analysis, and with a button "Interact" that allows to manually modify a pre-compiled prompt to interact with an LLM.  
-    </li>
+      a generalized dependency, the removed attributes are highlighted in red (<b>Figure 6</b>). As regards the notation, each attribute and the corresponding threshold are written as follows: <b>AttributeName_threshold</b>, were the _ indicates the &le; constraint.       </li>
   </ul>
   <div class="slideshow-container">
     <!-- Slides -->
@@ -389,7 +386,7 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 5: RFD tree navigation (2). By clicking on one of the RHS, RYAN will display the LHS of all the dependencies that have the selected RHS in the selected category.
+    <div class="caption"> Figure 5: Comparative Datatable. After fully expanding a node in the RFD tree, the datatable will display the dependencies belonging to that node. If the selected dependency is a specialization or a generalization of a previous RFD discovered before data updates, the table will display the original dependency on the same row.
     </div>
   </div>
   <br>
@@ -401,10 +398,40 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 6: RFD tree navigation (2). By clicking on one of the RHS, RYAN will display the LHS of all the dependencies that have the selected RHS in the selected category.
-    </div>
+    <div class="caption"> Figure 6: The comparative datatable for generalized RFDs.
+  </div>
   </div>
   <br>
+  <p id="tutorial-instructions">In case of an RFD that is a specialization or a generalization of an RFD discovered before data updates, the user can 
+    click on the EXPLAIN button displayed in the associated row of the datatable. This function allows to provide an explanation of why the RFD evolved by analyzing the data updates occurred.
+    RYAN will compile a prompt containing the relevat information necessary to explain the evolution and will provide it to an LLM. Once ready, the answer will be shown to the user in a new window (<b>see Figure 7</b>).
+  </p>
+  <div class="slideshow-container">
+    <!-- Slides -->
+    <div class="mySlides">
+        <img src="/static/Images/Explain.PNG" style="width:100%">
+    </div>
+  </div>
+  <!-- Caption container -->
+  <div class="caption-container">
+    <div class="caption"> Figure 7: The Explain feature of RYAN.
+  </div>
+  </div>
+  <br>
+  <p id="tutorial-instructions">In addition, the datatable provides also the <b>INTERACT feature</b>. By clicking on the associated button, a new window containing the compiled prompt will be displayed. Here, the user 
+    can customize the prompt, or ask for additional questions. Once the customized prompt is ready, the user can click on the <b>Ask</b> button and wait for the answer. 
+  </p>
+  <div class="slideshow-container">
+    <!-- Slides -->
+    <div class="mySlides">
+        <img src="/static/Images/Interact.PNG" style="width:100%">
+    </div>
+  </div>
+  <!-- Caption container -->
+  <div class="caption-container">
+    <div class="caption"> Figure 8: The Interact feature of RYAN.
+  </div>
+  </div>
   </p>
 
 
@@ -413,11 +440,12 @@
   <h3>Task Description</h3>
   <p id="tutorial-instructions">In this experiment, you will be asked to upload a dataset and a file of RFD discovery results, and then identify a particular RFD belonging to the ‘Specialized’ or ‘Generalized’ category. You will then need to expand the RFD tree by selecting the correct category, and then the RHS of interest. At this point, in the comparative datatable, search for the target dependency and click on the Explain button to get an explanation of why that dependency evolved. </p>
   <p id="objective-text"></p>
+  <p id="tutorial-instructions">If you are ready, you can click on the button below to start the experiment. Otherwise, you can ask for additional details! </p>
 </div>
-
-</div>
-
 <center><button id="start-button" role="button" style="font-size: 0.7em; background-color: #2cd200; color: white;"><span>Start!</span></button></center>
+
+</div>
+
 
 </div>
 </div>
@@ -428,11 +456,11 @@
   <table id="risultati" class="table table-striped table-bordered" style="width:100%">
       <thead>
       <tr>
-          <th>LHS of t1</th>
-          <th>RHS of t1</th>
+          <th>LHS of 𝜏 </th>
+          <th>RHS of 𝜏</th>
           <th>Type</th>
-          <th>LHS of t2</th>
-          <th>RHS of t2</th>
+          <th>LHS of 𝜏 + 1</th>
+          <th>RHS of 𝜏 + 1</th>
           <th>Explain</th>
           <th>Interact</th>
 
@@ -451,15 +479,15 @@
     const tutorialButton = document.getElementById('tutorial-button');
     const tutorialOverlay = document.getElementById('tutorial-overlay');
     const closeBtn = document.getElementById('close-btn');
-    const closeBtn2 = document.getElementById('start.button');
+    const closeBtn2 = document.getElementById('start-button');
     const objectiveText = document.getElementById('objective-text');
 
 
     // Array di obiettivi
     const objectives = [
         "Task 1: Upload the dataset 'test.csv' and the discovery results 'jsonForChart_test.csv'. Navigate the RFD tree by expanding the 'Specializations node'. Then, expand the node that contains all the RFDs with RHS 'serum-creatinine'. In the datatable, locate the RFD with LHS 'age,platelets,serum-sodium'. You have to understand why this specialized RFD has been discovered instead of the original one. Thus, click on the explain button and wait for the model's answer. Once ready, read carefully the explanation. ",
-        "Task 2: ",
-        "Task 3:"
+        "Task 2: ['platelets_244.0']	DEATH-EVENT_0.5",
+        "Task 3: altra generalizzazione"
     ];
 
     // Genera un numero casuale all'interno del range dell'array

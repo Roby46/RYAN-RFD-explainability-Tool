@@ -538,6 +538,7 @@ b#strong-text-red {
 .caption-container {
   text-align: center;
   margin-top: 10px;  /* Spazio tra immagine e caption */
+  font-weight: bolder;
 }
 
 .caption {
