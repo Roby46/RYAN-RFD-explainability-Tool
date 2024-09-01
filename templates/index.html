@@ -108,16 +108,17 @@
         <div id="tutorial-content">
            <img id="close-btn" src="/static/Images/close.png" alt="Chiudi" />
            <center><h2>Tutorial</h2></center>
-           <p id="tutorial-instructions">Thank you for agreeing to participate in this user study. This tutorial page will provide you with the necessary information regarding the completion of the experiment. In particular, this page will provide:
-            <ol  style="  font-size: 0.5em;   font-family: 'Lato', sans-serif;">
-              <li> the definition of Relaxed Functional Dependency (RFD)</li>
-              <li> An introduction to the functionalities of the Ryan Tool</li>
-              <li> The description of the task you have to perform for our experiment</li>
+           <p id="tutorial-instructions">Grazie per aver accettato di partecipare a questo user study. Questa pagina di tutorial ti fornirà le informazioni necessarie per completare l'esperimento. In particolare, questa pagina tratterà:
+            <ol style="font-size: 0.5em; font-family: 'Lato', sans-serif;">
+                <li>La definizione di Relaxed Functional Dependency (RFD)</li>
+                <li>Un'introduzione alle funzionalità del tool RYAN</li>
+                <li>Una descrizione del task che devi svolgere per il nostro esperimento</li>
             </ol> 
-          </p>
-          <h3>Relaxed Functional Dependencies</h3>
-          <p id="tutorial-instructions">In relational databases, a <b>Relaxed Functional Dependency (RFD) </b> is an integrity constraint X -> Y  between two <b>sets of attributes X and Y</b>, meaning that if <b>two tuples have similar value on X, then they must have similar values on Y</b>. X is named <b>Left Hand Side (LHS)</b>, while Y is the <b>Right Hand Side (RHS)</b>. Two values of an attribute are similar if their distance is  lower than the <b>similarity threshold</b> defined on that attribute. The function to assess similarity is edit distance for strings and difference for numbers. </p> 
-          <p id="tutorial-instructions">For example, consider the following dataset: </p>
+        </p>
+        <h3>Dipendenze Funzionali Rilassate</h3>
+        <p id="tutorial-instructions">Nei database relazionali, una <b>Relaxed Functional Dependency (RFD)</b> è un vincolo di integrità X -> Y tra due <b>insiemi di attributi X e Y</b>, che indica che se <b>due tuple hanno valori simili sugli attributi in X, allora devono avere valori simili su quelli in Y</b>. X è chiamato <b>Left Hand Side (LHS)</b>, mentre Y è il <b>Right Hand Side (RHS)</b>. Due valori di un attributo sono considerati simili se la loro distanza è inferiore alla <b>soglia di similarità</b> definita per quell'attributo. La funzione per valutare la similarità è la distanza di edit per le stringhe e la differenza per i numeri.</p>
+        <p id="tutorial-instructions">Ad esempio, considera il seguente dataset:</p>
+        
 <!-- Esempio Tabellare -->
 <table id="rfd-example-table" class="table table-striped table-bordered" style="width:100%; border-collapse: collapse;">
   <thead>
@@ -162,9 +163,9 @@
     </tr>
   </tbody>
 </table>
-<p id="tutorial-instructions">The RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> holds on this dataset, since similar models with similar years have a similar price <b>(4, 1, and 500 are the similarity thresholds).</b> In fact, the first and third tuples (rows) have similar values for the attributes <b>Model</b> and <b>Year</b>, and they also have values for the attribute <b>Price</b> that differ by less than the similarity threshold.</p>
-<p id="tutorial-instructions">After the <b id="strong-text-green">insertion</b> of a new tuple, an existing RFD can be invalidated only if <b>the new tuple has similar values on the LHS compared to other tuples but different values on the RHS</b>. In this case, a <b id="strong-text-green">specialized RFD with additional attributes on the LHS</b> may be valid on the dataset.</p>
-<p id="tutorial-instructions">For example, suppose that we add tuple 5 to the previous dataset:</p>
+<p id="tutorial-instructions">L'RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> è valida su questo dataset, poiché modelli simili con anni di produzione simili hanno un prezzo simile <b>(4, 1 e 500 sono le soglie di similarità).</b> Infatti, la prima e la terza tupla (righe) hanno valori simili per gli attributi <b>Model</b> e <b>Year</b>, e hanno anche valori per l'attributo <b>Price</b> che differiscono di meno rispetto alla soglia di similarità.</p>
+<p id="tutorial-instructions">Dopo l'<b id="strong-text-green">inserimento</b> di una nuova tupla, una RFD esistente può essere invalidata solo se <b>la nuova tupla ha valori simili sull'LHS rispetto ad altre tuple ma valori diversi sull'RHS</b>. In questo caso, una <b id="strong-text-green">RFD specializzata con attributi aggiuntivi sull'LHS</b> potrebbe essere valida sul dataset.</p>
+<p id="tutorial-instructions">Ad esempio, supponiamo di aggiungere la tupla 5 al dataset precedente:</p>
 <table id="rfd-example-table" class="table table-striped table-bordered" style="width:100%; border-collapse: collapse;">
   <thead>
       <tr>
@@ -215,11 +216,11 @@
   </tr>
   </tbody>
 </table>
-<p id="tutorial-instructions">The RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> no longer holds, since tuple 5 has a similar model and a similar year compared to tuples 1 and 3, but has a different price.</p>
-<p id="tutorial-instructions">However, the invalidated RFD can be specialized by the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, <b id="strong-text-green">#Owners<sub>&le;0</sub></b> -> Price<sub>&le;500</sub></b>, which is valid on the updated dataset. In fact, only tuples 1 and 3 satisfy the constraints on the left-hand side, and they have similar values for the attribute on the right-hand side.</p>
+<p id="tutorial-instructions">L'RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> non è più valido, poiché la tupla 5 ha un modello simile e un anno simile rispetto alle tuple 1 e 3, ma ha un prezzo diverso.</p>
+<p id="tutorial-instructions">Tuttavia, l'RFD invalidata può essere specializzato dall'RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, <b id="strong-text-green">#Owners<sub>&le;0</sub></b> -> Price<sub>&le;500</sub></b>, che è valida sul dataset aggiornato. Infatti, solo le tuple 1 e 3 soddisfano i vincoli sul lato sinistro e hanno valori simili per l'attributo sul lato destro.</p>
 
-<p id="tutorial-instructions">Instead, after the <b id="strong-text-red">deletion</b> of a tuple, a <b id="strong-text-red">generalized RFD with a subset of attributes on the LHS</b> may be valid on the dataset if the deleted tuple had similar values on the reduced LHS compared to other tuples but had different values on the RHS. In this case, the previously valid RFD is no longer minimal and is replaced by the generalized RFD.</p>
-<p id="tutorial-instructions">For example, suppose that we delete the tuple we added in the previous example:</p>
+<p id="tutorial-instructions">Invece, dopo la <b id="strong-text-red">cancellazione</b> di una tupla, una <b id="strong-text-red">RFD generalizzata con un sottoinsieme di attributi sull'LHS</b> potrebbe essere valida sul dataset se la tupla eliminata aveva valori simili sull'LHS ridotto rispetto ad altre tuple, ma aveva valori diversi sull'RHS. In questo caso, l'RFD precedentemente valida non è più minimale e viene sostituita dall'RFD generalizzato.</p>
+<p id="tutorial-instructions">Ad esempio, supponiamo di cancellare la tupla che abbiamo aggiunto nell'esempio precedente:</p>
 
 <table id="rfd-example-table" class="table table-striped table-bordered" style="width:100%; border-collapse: collapse;">
   <thead>
@@ -271,14 +272,14 @@
   </tr>
   </tbody>
 </table>
-<p id="tutorial-instructions">As discussed, tuple 5 was invalidating the original RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b>, leading to the evolution of this dependency with the specialized RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b>.</p>
-<p id="tutorial-instructions">Thus, the deleted tuple had similar values for the original LHS (Model, Year) but a different price. After the deletion, the specialized RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b> is no longer minimal, since the RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> is valid and has a subset of its attributes on the LHS. 
-  <br><br><b>In what follows, we will consider only RFDs with a single RHS attribute.</b>  
+<p id="tutorial-instructions">Come detto, la tupla 5 invalidava l'RFD originale <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b>, portando all'evoluzione di questa dipendenza con l'RFD specializzata <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b>.</p>
+<p id="tutorial-instructions">Quindi, la tupla eliminata aveva valori simili per l'LHS originale (Model, Year) ma un prezzo diverso. Dopo la cancellazione, l'RFD specializzata <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub>, #Owners<sub>&le;0</sub> -> Price<sub>&le;500</sub></b> non è più minimale, poiché l'RFD <b>Model<sub>&le;4</sub>, Year<sub>&le;1</sub> -> Price<sub>&le;500</sub></b> è di nuovo valida e ha un sottoinsieme dei suoi attributi nell'LHS.
+  <br><br><b>In quanto segue, considereremo solo RFD con un singolo attributo sull'RHS.</b>  
 </p>
 
 
-<h3>The Ryan Tool</h3>
-<p id="tutorial-instructions">The <b>RFD explainability & ANalysis tool (RYAN) tool</b> is one of the first AI-based tools that analyzes how RFDs discovered in a dataset evolve as the data changes. RYAN is able to combine <b>interactive visual components</b> and emergent <b>LLMs</b> to provide <b>explanations about the evolution of discovered RFDs after data changes</b> (insertions, deletions, and updates).</p>
+<h3>Il tool Ryan</h3>
+<p id="tutorial-instructions"><b>RFD explainability & ANalysis tool (RYAN) tool</b> è uno dei primi strumenti basati sull'intelligenza artificiale che analizza come le RFD scoperte in un dataset evolvono con il cambiamento dei dati. RYAN è in grado di combinare <b>componenti visivi interattivi</b> e <b>LLM emergenti</b> per fornire <b>spiegazioni sull'evoluzione delle RFD scoperte dopo le modifiche ai dati</b> (inserimenti, cancellazioni e aggiornamenti).</p>
 
  <!-- Slideshow container -->
 <div class="slideshow-container">
@@ -289,16 +290,16 @@
 </div>
 <!-- Caption container -->
 <div class="caption-container">
-  <div class="caption"> Figure 1: Homepage. From here, the user can load the dataset (in CSV format) and the discovery results (in JSON format).</div>
+  <div class="caption"> Figura 1:  Homepage. Da qui, l'utente può caricare il dataset (in formato CSV) e i risultati del discovey di RFD (in formato JSON).</div>
 </div>
 <br>
 
 
-<p id="tutorial-instructions">After loading (<b>see Figure 1</b>) the dataset and the results of two RFD discovery processes performed at different time steps, Ryan provides different visual components to analyze them:
+<p id="tutorial-instructions">Dopo aver caricato (<b>vedi Figura 1</b>) il dataset e i risultati di due processi di RFD discovery fatti prima e dopo delle operazioni di inserimento e cancellazione, Ryan fornisce diverse componenti visuali per analizzarle:
   <ul style="font-size: 0.5em; font-family: 'Lato', sans-serif;">
     <li>
-      The first visual component is the <b>RFD tree (Figure 2)</b>. This tree introduces a collapsible representation of all <b>RFDs discovered on the updated data</b>, i.e., at time <b>𝜏 + 1</b>, and their relation with those discovered at time 𝜏. The RFD tree divides the discovered RFDs into five main categories: 
-      <b>Generalizations, Specializations, RFDs found, RFDs not found, and New RFDs</b>. The RFD tree is composed of a root node, labeled “RFDs”, linked to five child nodes, one for each of the categories described above. The Generalizations/Specializations represent all the RFDs discovered at time 𝜏 + 1 that generalize/specialize <b>at least one RFD discovered at time 𝜏</b>. The RFD found node contains all valid RFDs both at time 𝜏 and 𝜏 <b>+ 1</b>, whereas the RFD not found node contains all RFDs that were discovered at time 𝜏 but were not discovered in any form at time 𝜏 + 1. The New RFDs node represents all RFDs discovered at time 𝜏 <b>+ 1</b> that were not discovered at time 𝜏. By clicking on one of these nodes, the tree can show new nodes representing the RHS attributes of the RFDs in the selected class (<b>Figure 3</b>). By clicking further on one of these nodes (<b>Figure 4</b>), the tree shows its children, which are labeled with the LHS attributes associated with the chosen RHS, thus showing all RFDs.
+      Il primo componente visivo è l'<b>RFD tree (Figura 2)</b>. Questo albero introduce una rappresentazione a scomparsa di tutte le <b>RFD scoperte sui dati aggiornati</b>, cioè al tempo <b>𝜏 + 1</b>, e la loro relazione con quelle scoperte al tempo 𝜏. L'albero RFD divide le RFD scoperte in cinque categorie principali: 
+      <b>Generalizzazioni, Specializzazioni, RFD trovate, RFD non trovate e Nuove RFD</b>. L'albero RFD è composto da un nodo radice, etichettato “RFDs”, collegato a cinque nodi figli, uno per ciascuna delle categorie descritte sopra. Le Generalizzazioni/Specializzazioni rappresentano tutte le RFD scoperte al tempo 𝜏 + 1 che generalizzano/specializzano <b>almeno una RFD scoperta al tempo 𝜏</b>. Il nodo RFD trovate contiene tutte le RFD valide sia al tempo 𝜏 che al tempo 𝜏 <b>+ 1</b>, mentre il nodo RFD non trovate contiene tutte le RFD che sono state scoperte al tempo 𝜏 ma non sono state scoperte in alcuna forma al tempo 𝜏 + 1. Il nodo Nuove RFD rappresenta tutte le RFD scoperte al tempo 𝜏 <b>+ 1</b> che non erano state scoperte al tempo 𝜏. Cliccando su uno di questi nodi, l'albero può mostrare nuovi nodi che rappresentano gli attributi RHS delle RFD nella classe selezionata (<b>Figura 3</b>). Cliccando ulteriormente su uno di questi nodi (<b>Figura 4</b>), l'albero mostra i suoi figli, etichettati con gli attributi LHS associati al RHS scelto, mostrando così tutte le RFD.
     </li>
   </ul>
   
@@ -311,7 +312,7 @@
     </div>
     <!-- Caption container -->
     <div class="caption-container">
-      <div class="caption"> Figure 2: RFD tree and Sunburst. After uploading the files, RYAN displays two visual components: an RFD tree (left) and a sunburst chart (right).
+      <div class="caption"> Figura 2: RFD tree e Sunburst. Dopo il caricamento dei file, RYAN visualizza due componenti visuali: un RFD tree (a sinistra) e un sunburst chart(a destra).
     </div>
     </div>
     <br>
@@ -324,8 +325,7 @@
     </div>
     <!-- Caption container -->
     <div class="caption-container">
-      <div class="caption"> Figure 3: RFD tree navigation. In this case, the user selects the specialized RFDs, and the tree displays the different RHS of all the RFDs in this category.
-    </div>
+      <div class="caption"> Figura 3: Navigazione dell'RFD tree. In questo caso, l'utente seleziona le RFD specializzate e l'albero mostra i diversi RHS di tutte le RFD in questa categoria. </div>
     </div>
     <br>
 
@@ -337,14 +337,13 @@
     </div>
     <!-- Caption container -->
     <div class="caption-container">
-      <div class="caption"> Figure 4: RFD tree navigation (2). By clicking on one of the RHS, RYAN will display the LHS of all the dependencies that have the selected RHS in the selected category.
-    </div>
+      <div class="caption"> Figura 4: Navigazione dell'RFD tree (2). Cliccando su uno degli RHS, RYAN mostrerà l'LHS di tutte le dipendenze che hanno l'RHS selezionato nella categoria selezionata. </div>
     </div>
     <br>
     
     <ul style="font-size: 0.5em; font-family: 'Lato', sans-serif;">
-      <li>The second visual component is the <b>Sunburst</b> chart (<b>right side of Figures 2, 3, 4</b>). Similar to the RFD tree, the Sunburst component provides a hierarchical representation of RFDs, considering a <b>higher level of abstraction</b> to provide users with <b>statistics</b> about the five categories of RFDs. The innermost ring of the RFD Sunburst, labeled “RFDs”, is the root of the chart. The second ring contains the segments representing the categories of RFDs. Finally, the third and fourth rings contain the segments of the RHS and respective LHS of the RFDs discovered upon data changes, respectively. By <b>hovering</b> the pointer over the slices, it is possible to visualize the complete path from the innermost ring to the selected slice.</li>
-      <li>The third visual component is the <b>Comparative Datatable</b> (<b>Figure 5</b>). It provides a more detailed representation of RFDs and allows users to get a precise explanation of the impact that data changes have had on the holding RFDs. The Datatable is updated after fully expanding a path in the RFD tree. It is composed of five different columns: the first two represent the LHS and the RHS of an <b>RFD 𝜙 valid at time 𝜏</b>; the third is the motivation with which the RFD discovered at time <b>𝜏 + 1</b> is related to 𝜙, while the last two contain the <b>attributes on the LHS and the RHS</b> of an RFD validated at time <b>𝜏 + 1</b>. When displaying a specialized dependency, the additional attributes are highlighted in green, whereas when displaying a generalized dependency, the removed attributes are highlighted in red (<b>Figure 6</b>). As for the notation, each attribute and the corresponding threshold are written as follows: <b>AttributeName_threshold</b>, where the _ indicates the &le; constraint.</li>
+      <li>Il secondo componente visivo è il grafico <b>Sunburst</b> (<b>a destra delle Figure 2, 3, 4</b>). Simile all'RFD tree, il Sunburst fornisce una rappresentazione gerarchica delle RFD, considerando un <b>livello più alto di astrazione</b> per fornire agli utenti <b>statistiche</b> sulle cinque categorie di RFD. L'anello più interno del Sunburst, etichettato “RFDs”, è la radice del grafico. Il secondo anello contiene i segmenti che rappresentano le categorie di RFD. Infine, il terzo e il quarto anello contengono i segmenti degli RHS e dei rispettivi LHS delle RFD scoperte con le modifiche ai dati, rispettivamente. Passando il puntatore sui segmenti, è possibile visualizzare il percorso completo dall'anello più interno alla fetta selezionata.</li>
+      <li>Il terzo componente visivo è la <b>Comparative Datatable</b> (<b>Figura 5</b>). Fornisce una rappresentazione più dettagliata delle RFD e consente agli utenti di ottenere una spiegazione precisa dell'impatto che le modifiche ai dati hanno avuto sulle RFD in corso. La Tabella viene aggiornata dopo aver espanso completamente un percorso nell'albero RFD. È composta da cinque colonne diverse: le prime due rappresentano l'LHS e l'RHS di una <b>RFD 𝜙 valida al tempo 𝜏</b>; la terza è la motivazione con cui l'RFD scoperta al tempo <b>𝜏 + 1</b> è correlata a 𝜙, mentre le ultime due contengono gli <b>attributi sull'LHS e sull'RHS</b> di una RFD validata al tempo <b>𝜏 + 1</b>. Quando si visualizza una dipendenza specializzata, gli attributi aggiuntivi sono evidenziati in verde, mentre quando si visualizza una dipendenza generalizzata, gli attributi rimossi sono evidenziati in rosso (<b>Figura 6</b>). Per quanto riguarda la notazione, ogni attributo e la soglia corrispondente sono scritti come segue: <b>AttributeName_threshold</b>, dove il _ indica il vincolo &le;.</li>
     </ul>
     
   <div class="slideshow-container">
@@ -355,7 +354,7 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 5: Comparative Datatable. After fully expanding a node in the RFD tree, the datatable will display the dependencies belonging to that node. If the selected dependency is a specialization or a generalization of a previous RFD discovered before data updates, the table will display the original dependency on the same row.
+    <div class="caption"> Figura 5: Comparative Datatable. Dopo aver espanso completamente un nodo nell'RFD tree, la tabella visualizzerà le dipendenze appartenenti a quel nodo. Se la dipendenza selezionata è una specializzazione o una generalizzazione di una precedente RFD scoperta prima degli aggiornamenti dei dati, la tabella mostrerà la dipendenza originale nella stessa riga.
   </div>
   </div>
   <br>
@@ -367,10 +366,10 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 6: The comparative datatable for generalized RFDs.</div>
+    <div class="caption"> Figura 6: Comparative Datatable per le RFD generalizzate.</div>
   </div>
   <br>
-  <p id="tutorial-instructions">In the case of an RFD that is a specialization or a generalization of an RFD discovered before data updates, the user can click on the EXPLAIN button displayed in the associated row of the datatable. This function allows for providing an explanation of why the RFD evolved by analyzing the data updates that occurred. RYAN will compile a prompt containing the relevant information necessary to explain the evolution and will provide it to an LLM. Once ready, the answer will be shown to the user in a new window (<b>see Figure 7</b>).</p>
+  <p id="tutorial-instructions">Nel caso di una RFD che è una specializzazione o una generalizzazione di una RFD scoperta prima degli aggiornamenti dei dati, l'utente può cliccare sul pulsante EXPLAIN visualizzato nella riga associata della tabella. Questa funzione permette di fornire una spiegazione del perché la RFD è evoluta analizzando gli aggiornamenti dei dati avvenuti. RYAN compilerà un prompt contenente le informazioni rilevanti necessarie per spiegare l'evoluzione e lo fornirà a un LLM. Una volta pronto, la risposta sarà mostrata all'utente in una nuova finestra (<b>vedi Figura 7</b>).</p>
   
   <div class="slideshow-container">
     <!-- Slides -->
@@ -380,11 +379,11 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 7: The Explain feature of RYAN.
+    <div class="caption"> Figura 7: The Explain feature of RYAN.
   </div>
   </div>
   <br>
-  <p id="tutorial-instructions">In addition, the datatable also provides the <b>INTERACT feature</b>. By clicking on the associated button, a new window containing the compiled prompt will be displayed (<b>see Figure 8</b>). Here, the user can customize the prompt or ask additional questions. Once the customized prompt is ready, the user can click on the <b>Ask</b> button and wait for the answer.</p>
+  <p id="tutorial-instructions">Inoltre, la tabella fornisce anche la <b>funzione INTERACT</b>. Cliccando sul pulsante associato, verrà visualizzata una nuova finestra contenente il prompt compilato (<b>vedi Figura 8</b>). Qui, l'utente può personalizzare il prompt o fare ulteriori domande. Una volta che il prompt personalizzato è pronto, l'utente può cliccare sul pulsante <b>Ask</b> e attendere la risposta.</p>
 
   <div class="slideshow-container">
     <!-- Slides -->
@@ -394,7 +393,7 @@
   </div>
   <!-- Caption container -->
   <div class="caption-container">
-    <div class="caption"> Figure 8: The Interact feature of RYAN.
+    <div class="caption"> Figura 8: La funzionalità INTERACT di RYAN.
   </div>
   </div>
   </p>
@@ -402,11 +401,11 @@
 
 <!-- Content after the slideshow -->
 <div style="margin-top: 20px;">
-  <h3>Task Description</h3>
-  <p id="tutorial-instructions">In this experiment, you will be asked to upload a dataset and a file of RFD discovery results, and then identify a particular RFD belonging to the ‘Specialized’ or ‘Generalized’ category. You will then need to expand the RFD tree by selecting the correct category, and then the RHS of interest. At this point, in the comparative datatable, search for the target dependency and click on the Explain button to get an explanation of why that dependency evolved.</p>
+  <h3>Descrizione del Task</h3>
+  <p id="tutorial-instructions">In questo esperimento, ti verrà chiesto di caricare un dataset e un file con i risultati di due discovery di RFD fatti prima e dopo delle operazioni di inserimento e cancellazione. Ti verrà assegnata una RFD target scoperta sui dati aggiornati e appartenente alla categoria ‘Specializzata’ o ‘Generalizzata’. Dovrai poi espandere l'albero RFD selezionando la categoria corretta e poi l' RHS di interesse. A questo punto, nella tabella comparativa, cerca la dipendenza target e sfrutta le funzionalità Explain e Interact offerte da RYAN. Lo scopo è capire il motivo per cui l'RFD si è evoluta. Al termine del task ti verrà fornito un breve questionario da compilare. </p>
   <p id="objective-text"></p>
-  <p id="tutorial-instructions">This tutorial will remain available during the test if you need it.</p>
-  <p id="tutorial-instructions">If you are ready, you can click on the button below to start the experiment. Otherwise, you can ask for additional details!</p>
+  <p id="tutorial-instructions">Questo tutorial rimarrà disponibile durante il test se ne hai bisogno.</p>
+  <p id="tutorial-instructions">Se sei pronto, puoi cliccare sul pulsante qui sotto per iniziare l'esperimento. Altrimenti, puoi chiedere ulteriori dettagli!</p>
   </div>
 <center><button id="start-button" role="button" style="font-size: 0.7em; background-color: #2cd200; color: white;"><span>Start!</span></button></center>
 
