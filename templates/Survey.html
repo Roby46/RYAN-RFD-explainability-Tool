@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Questionario</title>
+    <style>
+        body{
+            margin: 1%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+            /* Allinea al centro i contenuti delle celle */
+        td {
+            text-align: center; /* Allinea il testo al centro */
+        }
+        /* Allinea a sinistra le celle che contengono le domande (prima colonna) */
+        td:first-child {
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            display: none;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+
+<center><h2>Questionario</h2></center>
+
+<br>
+
+<h3>Grazie per aver partecipato all'esperimento. Per completare il test, compila il seguente questionario. Tutte le risposte sono obbligatorie. </h3>
+
+<form id="questionario">
+    <table class="table table-striped table-bordered">
+        <!-- Intestazione tabella Likert -->
+        <tr>
+            <th>Domanda</th>
+            <th colspan="6">Risposta</th>
+        </tr>
+
+
+        <tr>
+            <td>1. Sesso</td>
+            <td colspan="6">
+                <select name="dropdown">
+                    <option value="">Seleziona</option>
+                    <option value="maschio">Maschio</option>
+                    <option value="femmina">Femmina</option>
+                    <option value="altro">Altro</option>
+                    <option value="non_rispondere">Preferisco non rispondere</option>
+                    <option value="not_binary">Non binario</option>
+                </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>2. Qualifica</td>
+            <td colspan="6">
+                <select name="dropdown2">
+                    <option value="">Seleziona</option>
+                    <option value="studente">Studente</option>
+                    <option value="dottorando">Dottorando</option>
+                    <option value="assegnista">Assegnista di ricerca</option>
+                    <option value="ricercatore">Ricercatore</option>
+                    <option value="professore_associato">Professore associato</option>
+                    <option value="professore_ordinario">Professore ordinario</option>
+                    <option value="altro">Altro</option>
+                </select>
+            </td>
+        </tr>
+
+                <!-- Domanda a scelta multipla -->
+        <tr>
+            <td>3. Livello di conoscenza delle Basi di Dati</td>
+            <td colspan="6">
+                <select name="dropdown3">
+                    <option value="">Seleziona</option>
+                    <option value="nessuna">Nessuno</option>
+                    <option value="bassa">Bassa</option>
+                    <option value="media">Media</option>
+                    <option value="alta">Alta</option>
+                </select>
+            </td>
+        </tr>
+
+        <!-- Domanda a scelta multipla -->
+        <tr>
+            <td>4. Livello di conoscenza delle RFD</td>
+            <td colspan="6">
+                <select name="dropdown4">
+                    <option value="">Seleziona</option>
+                    <option value="nessuna">Nessuno</option>
+                    <option value="bassa">Bassa</option>
+                    <option value="media">Media</option>
+                    <option value="alta">Alta</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Domanda</th>
+            <th> 1 <br>(Fortemente contrario)</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6 <br> (Fortemente d'accordo)</th>
+        </tr>
+
+        <tr>
+            <td>5. Il tool è semplice da utilizzare.</td>
+            <td><input type="radio" name="likert5" value="1"></td>
+            <td><input type="radio" name="likert5" value="2"></td>
+            <td><input type="radio" name="likert5" value="3"></td>
+            <td><input type="radio" name="likert5" value="4"></td>
+            <td><input type="radio" name="likert5" value="5"></td>
+            <td><input type="radio" name="likert5" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>6. Il tool è facile da imparare.</td>
+            <td><input type="radio" name="likert6" value="1"></td>
+            <td><input type="radio" name="likert6" value="2"></td>
+            <td><input type="radio" name="likert6" value="3"></td>
+            <td><input type="radio" name="likert6" value="4"></td>
+            <td><input type="radio" name="likert6" value="5"></td>
+            <td><input type="radio" name="likert6" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>7. L'interfaccia è gradevole.</td>
+            <td><input type="radio" name="likert7" value="1"></td>
+            <td><input type="radio" name="likert7" value="2"></td>
+            <td><input type="radio" name="likert7" value="3"></td>
+            <td><input type="radio" name="likert7" value="4"></td>
+            <td><input type="radio" name="likert7" value="5"></td>
+            <td><input type="radio" name="likert7" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>8. L'interfaccia mostra tutte le informazioni rilevanti.</td>
+            <td><input type="radio" name="likert8" value="1"></td>
+            <td><input type="radio" name="likert8" value="2"></td>
+            <td><input type="radio" name="likert8" value="3"></td>
+            <td><input type="radio" name="likert8" value="4"></td>
+            <td><input type="radio" name="likert8" value="5"></td>
+            <td><input type="radio" name="likert8" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>9. L'RFD tree ed il Sunburst chart forniscono una panoramica chiara delle dipendenze analizzate.</td>
+            <td><input type="radio" name="likert9" value="1"></td>
+            <td><input type="radio" name="likert9" value="2"></td>
+            <td><input type="radio" name="likert9" value="3"></td>
+            <td><input type="radio" name="likert9" value="4"></td>
+            <td><input type="radio" name="likert9" value="5"></td>
+            <td><input type="radio" name="likert9" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>10. La sintassi utilizzata per rappresentare le RFD è chiara.</td>
+            <td><input type="radio" name="likert10" value="1"></td>
+            <td><input type="radio" name="likert10" value="2"></td>
+            <td><input type="radio" name="likert10" value="3"></td>
+            <td><input type="radio" name="likert10" value="4"></td>
+            <td><input type="radio" name="likert10" value="5"></td>
+            <td><input type="radio" name="likert10" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>10.Individuare l'RFD obiettivo è stato facile.</td>
+            <td><input type="radio" name="likert11" value="1"></td>
+            <td><input type="radio" name="likert11" value="2"></td>
+            <td><input type="radio" name="likert11" value="3"></td>
+            <td><input type="radio" name="likert11" value="4"></td>
+            <td><input type="radio" name="likert11" value="5"></td>
+            <td><input type="radio" name="likert11" value="6"></td>
+        </tr>
+
+
+        <tr>
+            <td>12. L'interfaccia mostra chiaramente come una RFD è stata specializzata/generalizzata.</td>
+            <td><input type="radio" name="likert12" value="1"></td>
+            <td><input type="radio" name="likert12" value="2"></td>
+            <td><input type="radio" name="likert12" value="3"></td>
+            <td><input type="radio" name="likert12" value="4"></td>
+            <td><input type="radio" name="likert12" value="5"></td>
+            <td><input type="radio" name="likert12" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>13. La spiegazione fornita dall'LLM è stata chiara.</td>
+            <td><input type="radio" name="likert13" value="1"></td>
+            <td><input type="radio" name="likert13" value="2"></td>
+            <td><input type="radio" name="likert13" value="3"></td>
+            <td><input type="radio" name="likert13" value="4"></td>
+            <td><input type="radio" name="likert13" value="5"></td>
+            <td><input type="radio" name="likert13" value="6"></td>
+        </tr>
+
+        
+        <tr>
+            <td>14. La spiegazione fornita dall'LLM è stata approfondita.</td>
+            <td><input type="radio" name="likert14" value="1"></td>
+            <td><input type="radio" name="likert14" value="2"></td>
+            <td><input type="radio" name="likert14" value="3"></td>
+            <td><input type="radio" name="likert14" value="4"></td>
+            <td><input type="radio" name="likert14" value="5"></td>
+            <td><input type="radio" name="likert14" value="6"></td>
+        </tr>
+
+
+        <tr>
+            <td>15. La spiegazione fornita dall'LLM è più chiara rispetto al prompt pre-compilato.</td>
+            <td><input type="radio" name="likert15" value="1"></td>
+            <td><input type="radio" name="likert15" value="2"></td>
+            <td><input type="radio" name="likert15" value="3"></td>
+            <td><input type="radio" name="likert15" value="4"></td>
+            <td><input type="radio" name="likert15" value="5"></td>
+            <td><input type="radio" name="likert15" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>16. La spiegazione fornita dall'LLM rende più facile identificare cosa ha causato l'evoluzione delle RFD rispetto al prompt pre-compilato.</td>
+            <td><input type="radio" name="likert16" value="1"></td>
+            <td><input type="radio" name="likert16" value="2"></td>
+            <td><input type="radio" name="likert16" value="3"></td>
+            <td><input type="radio" name="likert16" value="4"></td>
+            <td><input type="radio" name="likert16" value="5"></td>
+            <td><input type="radio" name="likert16" value="6"></td>
+        </tr>
+
+        <tr>
+            <td>17. Mi piacerebbe utilizzare il tool in futuro.</td>
+            <td><input type="radio" name="likert17" value="1"></td>
+            <td><input type="radio" name="likert17" value="2"></td>
+            <td><input type="radio" name="likert17" value="3"></td>
+            <td><input type="radio" name="likert17" value="4"></td>
+            <td><input type="radio" name="likert17" value="5"></td>
+            <td><input type="radio" name="likert17" value="6"></td>
+        </tr>
+
+
+        <!-- Domanda a risposta libera -->
+        <tr>
+            <td>18. Qual è la tua impressione generale del tool.</td>
+            <td colspan="6"><textarea name="open18" rows="4" style="width: 100%;"></textarea></td>
+        </tr>
+
+                <!-- Domanda a risposta libera -->
+        <tr>
+            <td>19. Hai dei suggerimenti per migliorare il tool?</td>
+            <td colspan="6"><textarea name="open19" rows="4" style="width: 100%;"></textarea></td>
+        </tr>
+
+        <tr>
+            <td>20. Quale feature del tool hai gradito maggiormente?</td>
+            <td colspan="6"><textarea name="open20" rows="4" style="width: 100%;"></textarea></td>
+        </tr>
+
+        <tr>
+            <td>21. Quale feature del tool hai gradito di meno?</td>
+            <td colspan="6"><textarea name="open21" rows="4" style="width: 100%;"></textarea></td>
+        </tr>
+
+
+
+        <!-- Altre domande possono essere aggiunte qui nello stesso modo -->
+
+    </table>
+    
+    <p class="error" id="error">Per favore, completa tutte le domande prima di inviare il modulo.</p>
+    
+    <button type="submit">Invia</button>
+</form>
+
+<script>
+    document.getElementById('questionario').addEventListener('submit', function(event) {
+        let valid = true;
+
+                // Controlla domande a scelta multipla
+        const dropdownQuestions1 = ['dropdown'];
+        dropdownQuestions1.forEach(name => {
+            if (document.querySelector(`select[name="${name}"]`).value === '') {
+                valid = false;
+            }
+        });
+
+        const dropdownQuestions2 = ['dropdown2'];
+        dropdownQuestions2.forEach(name => {
+            if (document.querySelector(`select[name="${name}"]`).value === '') {
+                valid = false;
+            }
+        });
+
+        const dropdownQuestions3 = ['dropdown3'];
+        dropdownQuestions3.forEach(name => {
+            if (document.querySelector(`select[name="${name}"]`).value === '') {
+                valid = false;
+            }
+        });
+
+        const dropdownQuestions4 = ['dropdown4'];
+        dropdownQuestions4.forEach(name => {
+            if (document.querySelector(`select[name="${name}"]`).value === '') {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions5 = ['likert5'];
+        likertQuestions5.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+                // Controlla domande con scala Likert
+        const likertQuestions6 = ['likert6'];
+        likertQuestions6.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions7 = ['likert7'];
+        likertQuestions7.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions8 = ['likert8'];
+        likertQuestions8.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions9 = ['likert9'];
+        likertQuestions9.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions10 = ['likert10'];
+        likertQuestions10.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions11 = ['likert11'];
+        likertQuestions11.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+
+        // Controlla domande con scala Likert
+        const likertQuestions12 = ['likert12'];
+        likertQuestions12.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande con scala Likert
+        const likertQuestions13 = ['likert13'];
+        likertQuestions13.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        const likertQuestions14 = ['likert14'];
+        likertQuestions14.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        const likertQuestions15 = ['likert15'];
+        likertQuestions15.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        const likertQuestions16 = ['likert16'];
+        likertQuestions16.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        const likertQuestions17 = ['likert17'];
+        likertQuestions17.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                valid = false;
+            }
+        });
+
+        // Controlla domande a risposta libera
+        const openQuestions18 = ['open18'];
+        openQuestions18.forEach(name => {
+            if (document.querySelector(`textarea[name="${name}"]`).value.trim() === '') {
+                valid = false;
+            }
+        });
+
+        // Controlla domande a risposta libera
+        const openQuestions19 = ['open19'];
+        openQuestions19.forEach(name => {
+            if (document.querySelector(`textarea[name="${name}"]`).value.trim() === '') {
+                valid = false;
+            }
+        });
+
+        // Controlla domande a risposta libera
+        const openQuestions20 = ['open20'];
+        openQuestions20.forEach(name => {
+            if (document.querySelector(`textarea[name="${name}"]`).value.trim() === '') {
+                valid = false;
+            }
+        });
+
+        // Controlla domande a risposta libera
+        const openQuestions21 = ['open21'];
+        openQuestions21.forEach(name => {
+            if (document.querySelector(`textarea[name="${name}"]`).value.trim() === '') {
+                valid = false;
+            }
+        });
+
+
+        // Se non valido, mostra errore e blocca invio
+        if (!valid) {
+            document.getElementById('error').style.display = 'block';
+            event.preventDefault();
+        } else {
+            document.getElementById('error').style.display = 'none';
+        }
+
+
+        const formData = {
+            dropdown: document.querySelector('select[name="dropdown"]').value,
+            dropdown2: document.querySelector('select[name="dropdown2"]').value,
+            dropdown3: document.querySelector('select[name="dropdown3"]').value,
+            dropdown4: document.querySelector('select[name="dropdown4"]').value,
+            likert5: document.querySelector('input[name="likert5"]:checked').value,
+            likert6: document.querySelector('input[name="likert6"]:checked').value,
+            likert7: document.querySelector('input[name="likert7"]:checked').value,
+            likert8: document.querySelector('input[name="likert8"]:checked').value,
+            likert9: document.querySelector('input[name="likert9"]:checked').value,
+            likert10: document.querySelector('input[name="likert10"]:checked').value,
+            likert11: document.querySelector('input[name="likert11"]:checked').value,
+            likert12: document.querySelector('input[name="likert12"]:checked').value,
+            likert13: document.querySelector('input[name="likert13"]:checked').value,
+            likert14: document.querySelector('input[name="likert14"]:checked').value,
+            likert15: document.querySelector('input[name="likert15"]:checked').value,
+            likert16: document.querySelector('input[name="likert16"]:checked').value,
+            likert17: document.querySelector('input[name="likert17"]:checked').value,
+            open18: document.querySelector('textarea[name="open18"]').value,
+            open19: document.querySelector('textarea[name="open19"]').value,
+            open20: document.querySelector('textarea[name="open20"]').value,
+            open21: document.querySelector('textarea[name="open21"]').value,
+
+        };
+
+        if(valid){
+            console.log(formData);
+
+            // Invio dei dati tramite fetch (AJAX)
+            fetch('/saveResults', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Questionario inviato con successo!');
+                // Puoi fare il redirect o mostrare un messaggio di successo qui
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Si è verificato un errore durante l\'invio del questionario.');
+            });
+        }
+
+
+
+    });
+
+
+    
+</script>
+
+</body>
+</html>

@@ -25,9 +25,21 @@ def root():
 def main_page_explanation():
     return render_template('LLM_Answer2.html')
 
+@app.route('/Survey.html')
+def main_page_survey():
+    return render_template('Survey.html')
+
 @app.route('/LLM_Chat.html')
 def main_page_interaction():
     return render_template('LLM_Chat.html')
+
+@app.route('/saveResults', methods=['POST'])
+def submit():
+    data = request.get_json()  # Ottieni i dati inviati dal client in formato JSON
+    print(data)  # Puoi salvare i dati in un database o elaborarli qui
+
+    # Invia una risposta di successo al client
+    return {'status': 'success', 'message': 'Dati ricevuti con successo!'}
 
 
 @app.route('/askllm', methods=['GET'])
