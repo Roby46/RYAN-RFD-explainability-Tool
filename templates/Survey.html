@@ -31,14 +31,20 @@
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #1590bf;
             text-align: center;
+            color: white;
         }
         .error {
             color: red;
             display: none;
             font-weight: bolder;
         }
+
+        input[type="radio"] {
+        transform: scale(1.5); /* Oppure usa zoom: 1.5 */
+        margin: 10px;
+    }
     </style>
 </head>
 <body>
@@ -260,14 +266,18 @@
             <td><input type="radio" name="likert17" value="6"></td>
         </tr>
 
-
-        <!-- Domanda a risposta libera -->
         <tr>
-            <td>18. Qual è la tua impressione generale del tool.</td>
-            <td colspan="6"><textarea name="open18" rows="4" style="width: 100%;"></textarea></td>
+            <td>18. In generale, il tool mi ha fatto una buona impressione.</td>
+            <td><input type="radio" name="likert18" value="1"></td>
+            <td><input type="radio" name="likert18" value="2"></td>
+            <td><input type="radio" name="likert18" value="3"></td>
+            <td><input type="radio" name="likert18" value="4"></td>
+            <td><input type="radio" name="likert18" value="5"></td>
+            <td><input type="radio" name="likert18" value="6"></td>
         </tr>
 
-                <!-- Domanda a risposta libera -->
+
+        <!-- Domanda a risposta libera -->
         <tr>
             <td>19. Hai dei suggerimenti per migliorare il tool?</td>
             <td colspan="6"><textarea name="open19" rows="4" style="width: 100%;"></textarea></td>
@@ -428,10 +438,9 @@
             }
         });
 
-        // Controlla domande a risposta libera
-        const openQuestions18 = ['open18'];
-        openQuestions18.forEach(name => {
-            if (document.querySelector(`textarea[name="${name}"]`).value.trim() === '') {
+        const likertQuestions18 = ['likert18'];
+        likertQuestions18.forEach(name => {
+            if (!document.querySelector(`input[name="${name}"]:checked`)) {
                 valid = false;
             }
         });
@@ -488,7 +497,7 @@
             likert15: document.querySelector('input[name="likert15"]:checked').value,
             likert16: document.querySelector('input[name="likert16"]:checked').value,
             likert17: document.querySelector('input[name="likert17"]:checked').value,
-            open18: document.querySelector('textarea[name="open18"]').value,
+            likert18: document.querySelector('input[name="likert18"]:checked').value,
             open19: document.querySelector('textarea[name="open19"]').value,
             open20: document.querySelector('textarea[name="open20"]').value,
             open21: document.querySelector('textarea[name="open21"]').value,

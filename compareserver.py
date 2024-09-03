@@ -8,12 +8,24 @@ import copy
 import llm_interaction as llm
 import json
 import Levenshtein
+import os
+import csv
 
 app = Flask(__name__, template_folder='./templates', static_url_path='/static')
 CORS(app)
 #model = llm.load_model()
 #print("Large Language Model", model)
 global dataset, prompt, rhs, lhs, old_lhs, old_rhs, rfd_type
+
+
+CSV_FILE = 'risposte_questionario.csv'
+
+# Creare il file CSV e inserire l'intestazione (se non esiste già)
+if not os.path.exists(CSV_FILE):
+    with open(CSV_FILE, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        # Inserisci qui le intestazioni delle colonne (codici delle domande)
+        writer.writerow(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'])
 
 
 @app.route('/')
@@ -36,7 +48,39 @@ def main_page_interaction():
 @app.route('/saveResults', methods=['POST'])
 def submit():
     data = request.get_json()  # Ottieni i dati inviati dal client in formato JSON
-    print(data)  # Puoi salvare i dati in un database o elaborarli qui
+    #print("This is the received data:")
+    print(data)  
+
+
+    risposta = [
+        data.get('dropdown', ''),
+        data.get('dropdown2', ''),
+        data.get('dropdown3', ''),
+        data.get('dropdown4', ''),
+        data.get('likert5', ''),
+        data.get('likert6', ''),
+        data.get('likert7', ''),
+        data.get('likert8', ''),
+        data.get('likert9', ''),
+        data.get('likert10', ''),
+        data.get('likert11', ''),
+        data.get('likert12', ''),
+        data.get('likert13', ''),
+        data.get('likert14', ''),
+        data.get('likert15', ''),
+        data.get('likert16', ''),
+        data.get('likert17', ''),
+        data.get('likert18', ''),
+        data.get('open19', ''),
+        data.get('open20', ''),
+        data.get('open21', '')
+
+    ]
+
+    # Aggiungi una nuova riga al file CSV con i dati ricevuti
+    with open(CSV_FILE, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(risposta)
 
     # Invia una risposta di successo al client
     return {'status': 'success', 'message': 'Dati ricevuti con successo!'}
