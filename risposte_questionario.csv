@@ -1,2 +1,7 @@
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
-maschio,dottorando,alta,alta,6,6,5,6,6,6,6,6,6,6,6,6,6,6,Aggiungere una funzione filtro all'RFD tree,La possibilità di farsi spiegare l'evoluzione delle RFD dall'LLM,Nessuna
+maschio,dottorando,alta,alta,6,6,5,6,6,6,6,6,6,6,6,6,6,6,Aggiungere una funzione filtro all'RFD tree,La possibilitï¿½ di farsi spiegare l'evoluzione delle RFD dall'LLM,Nessuna
+maschio,altro,bassa,nessuna,5,5,5,5,5,5,5,5,5,5,5,5,5,5,No,Tutte,Nessuna
+not_binary,assegnista,alta,media,5,5,5,5,6,6,6,6,5,6,5,6,2,3,NI,N I,NI
+maschio,studente,media,nessuna,6,6,5,5,5,5,6,6,4,6,5,5,5,6,nessuno,la funzione interact,nessuno
+maschio,studente,media,nessuna,6,6,6,5,5,4,6,5,5,4,5,4,6,6,nessuna,nessuna,nessuna
+maschio,studente,alta,alta,6,5,6,6,5,6,6,5,5,6,6,6,6,6,Aggiungere la possibilità di rendere disponibili i risultati sulla homepage evitando di ricaricare dataset e risultati.,La navigazione dell'RFD tree.,Tutto bellissimo.
