@@ -18,7 +18,7 @@ CORS(app)
 global dataset, prompt, rhs, lhs, old_lhs, old_rhs, rfd_type
 
 
-CSV_FILE = 'risposte_questionario.csv'
+CSV_FILE = 'risposte_questionario_5.csv'
 
 # Creare il file CSV e inserire l'intestazione (se non esiste già)
 if not os.path.exists(CSV_FILE):

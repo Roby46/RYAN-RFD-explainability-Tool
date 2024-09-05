@@ -1,0 +1,14 @@
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+maschio,studente,media,nessuna,5,5,4,4,4,4,5,5,3,5,4,4,4,5,nessuno,la funzione interact,nessuno
+maschio,studente,media,nessuna,5,5,5,4,4,3,5,4,4,3,4,3,5,5,nessuna,nessuna,nessuna
+maschio,studente,alta,alta,5,4,5,5,4,5,5,4,4,5,5,5,5,5,Aggiungere la possibilit� di rendere disponibili i risultati sulla homepage evitando di ricaricare dataset e risultati.,La navigazione dell'RFD tree.,Tutto bellissimo.
+maschio,studente,alta,media,5,5,4,5,4,4,5,5,5,5,3,3,4,4,no,visualizzazione dell'albero,nessuna
+maschio,studente,alta,media,5,5,4,5,4,5,5,5,5,4,3,4,4,4,no,visualizzazione ad albero e spiegazione dell'LLM,nessuno
+maschio,studente,bassa,bassa,3,3,3,4,4,2,3,4,3,3,3,4,4,5,"quanto si clicca il tasto delle info si pu� chiudere anche senza cliccare start, i titoli sul RFD tree sono sovrapposti ai rami e renderla lettura un po' meno gradevole, per la spiegazione � possibile ridurre la grandezza del font",RFD tree e la explanation,nessuna in particolare
+femmina,studente,media,bassa,4,3,4,4,3,3,3,5,5,5,5,4,3,5,migliorare l'interfaccia del RDF tree,explanation,nessuna in particolare
+maschio,studente,bassa,nessuna,5,5,3,5,5,5,5,5,5,5,4,5,4,5,"se fattibile, migliorare la visualizzazione dell'rfd tree",grafico sunburst,"rfd tree, spiegazione poco chiara per chi non sa ancora questo argomento"
+maschio,studente,media,bassa,4,3,4,5,3,3,5,3,5,4,3,3,4,4,no,explain,sunburst
+maschio,studente,media,nessuna,4,3,4,4,3,3,3,4,3,3,3,3,3,3,no,rfdtree,sumburst
+maschio,studente,media,nessuna,5,4,3,4,3,5,5,4,4,3,4,5,4,4,no,rfd tree,nessuno
+maschio,studente,media,nessuna,4,3,3,3,5,3,5,3,3,5,4,5,3,4,Rendere un po' pi� pulita l'interfaccia.,Sunburst e rfdtree. Belli da vedere e facili da comprendere.,Principalmente la spiegazione. Molto dettagliata ma confusionaria per chi non ne sa molto dell'argomento.
+maschio,dottorando,alta,alta,5,5,4,5,5,5,5,5,5,5,5,4,5,5,Aggiungere funzione di filtro all'RFD tree,Explain e Interact,Nessuna

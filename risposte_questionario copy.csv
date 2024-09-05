@@ -4,7 +4,7 @@ maschio,studente,media,nessuna,6,6,6,5,5,4,6,5,5,4,5,4,6,6,nessuna,nessuna,nessu
 maschio,studente,alta,alta,6,5,6,6,5,6,6,5,5,6,6,6,6,6,Aggiungere la possibilit� di rendere disponibili i risultati sulla homepage evitando di ricaricare dataset e risultati.,La navigazione dell'RFD tree.,Tutto bellissimo.
 maschio,studente,alta,media,6,6,5,6,5,5,6,6,6,6,4,3,5,5,no,visualizzazione dell'albero,nessuna
 maschio,studente,alta,media,6,6,5,6,5,6,6,6,6,5,4,5,5,5,no,visualizzazione ad albero e spiegazione dell'LLM,nessuno
-maschio,studente,bassa,bassa,4,4,2,5,5,4,4,5,4,4,4,5,5,6,"quanto si clicca il tasto delle info si pu� chiudere anche senza cliccare start, i titoli sul RFD tree sono sovrapposti ai rami e renderla lettura un po' meno gradevole, per la spiegazione � possibile ridurre la grandezza del font",RFD tree e la explanation,nessuna in particolare
+maschio,studente,bassa,bassa,4,4,4,5,5,4,4,5,4,4,4,5,5,6,"quanto si clicca il tasto delle info si pu� chiudere anche senza cliccare start, i titoli sul RFD tree sono sovrapposti ai rami e renderla lettura un po' meno gradevole, per la spiegazione � possibile ridurre la grandezza del font",RFD tree e la explanation,nessuna in particolare
 femmina,studente,media,bassa,5,4,5,5,4,4,4,6,6,6,6,5,4,6,migliorare l'interfaccia del RDF tree,explanation,nessuna in particolare
 maschio,studente,bassa,nessuna,6,6,4,6,6,6,6,6,6,6,5,6,5,6,"se fattibile, migliorare la visualizzazione dell'rfd tree",grafico sunburst,"rfd tree, spiegazione poco chiara per chi non sa ancora questo argomento"
 maschio,studente,media,bassa,5,4,5,6,4,4,6,4,6,5,4,4,5,5,no,explain,sunburst

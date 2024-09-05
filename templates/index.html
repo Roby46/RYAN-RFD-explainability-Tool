@@ -467,8 +467,13 @@
 
     // Mostra l'overlay quando il pulsante viene cliccato
     tutorialButton.addEventListener('click', () => {
+      if (tutorialOverlay.style.display === 'block') {
+        // Se l'overlay è già visibile, nascondilo
+        tutorialOverlay.style.display = 'none';
+    } else {
+        // Altrimenti, mostralo
         tutorialOverlay.style.display = 'block';
-    });
+    }    });
 
     // Nascondi l'overlay quando il pulsante di chiusura viene cliccato
     closeBtn.addEventListener('click', () => {
