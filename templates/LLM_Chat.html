@@ -26,13 +26,13 @@ body {
 }
 #paper {
 	color:#FFF;
-	font-size:20px;
+	font-size:16px;
     display: flex;
     width: 100%;
 }
 #paper2 {
 	color:#FFF;
-	font-size:20px;
+	font-size:16px;
     display: flex;
     width: 100%;
 }
@@ -257,6 +257,7 @@ body {
 		
 
 		<div id="wrapper">
+			<h3>Pre-Compiled Prompt<br></h3>
 			<form id="paper" method="get" action="">
 				<textarea 
 					placeholder="LLM Answer..."
@@ -265,6 +266,8 @@ body {
 					spellcheck="false" 
 					rows="4" 
 					style="
+						margin-top: 10px;
+						margin-bottom: -20px;
 						width: 100%;
 						height: auto; /* Altezza automatica */
 						min-height: 150px; /* Altezza minima */
@@ -289,9 +292,10 @@ body {
 			</form>
 		</div>
 
-		<center><button class="button-83-pushable" role="button" onclick="send_modified_prompt()"> <span class="button-83-shadow"></span> <span class="button-83-edge"></span> <span class="button-83-front text"> Ask </span></button></center>
+		<center><button class="button-83-pushable" role="button" onclick="send_modified_prompt()" style="margin-top: 0px;"> <span class="button-83-shadow"></span> <span class="button-83-edge"></span> <span class="button-83-front text"> Ask </span></button></center>
 
 		<div id="wrapper2">
+			<h3 id="model-title" style="display: none;">Model Answer<br></h3>
 			<form id="paper2" method="get" action="">
 				<textarea
 					placeholder="Please wait a few seconds for the answer..."
@@ -301,6 +305,7 @@ body {
 					rows="4"
 					style="
 						width: 100%;
+						margin-top: 10px;
 						height: auto; /* Altezza automatica */
 						min-height: 150px; /* Altezza minima */
 						border: 2px solid #000;
@@ -352,8 +357,19 @@ body {
 		pulito = pulito[1].split("\"}")
         $('#title').focus();
         autosize($('#text'));
-        final_string = pulito[0].replace(/\n/g, "<br>");
-		$('#text').html(pulito[0]);
+        //final_string = pulito[0].replace(/\n/g, "<br>");
+		//$('#text').html(pulito[0]);
+		var formattedText = pulito[0].replace(": -", ":\n-");
+		var formattedText = formattedText.replace(".-", ".\n-");
+		var formattedText = formattedText.replace("The RFD", "\n\nThe RFD");
+		var formattedText = formattedText.replace("This happened", "\nThis happened");
+		var formattedText = formattedText.replace("Basing", "\n\nBasing");
+
+		$('#text').val(formattedText);
+
+		var textareaOriginal = document.getElementById('text');
+		adjustHeight(textareaOriginal);
+
 	});
 
 	function getParams ()
@@ -377,6 +393,7 @@ body {
 	<script>
 		function send_modified_prompt(){
 			var prompt = $("#text").val();
+			$('#model-title').css("display", "block");
 			$('#text2').html("");
 			var textarea = document.getElementById('text2');
 			adjustHeight(textarea);

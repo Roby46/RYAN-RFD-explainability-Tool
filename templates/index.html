@@ -208,11 +208,11 @@
         <td style="border: 1px solid #000; padding: 8px;">10000</td>
         <td style="border: 1px solid #000; padding: 8px;">1</td>
     </tr>
-    <tr style="background-color: #2CD200;">
+    <tr style="background-color: #2CD200;color: white;">
       <td style="border: 1px solid #000; padding: 8px;">5</td>
       <td style="border: 1px solid #000; padding: 8px;">Renault Clio dci</td>
       <td style="border: 1px solid #000; padding: 8px;">2019</td>
-      <td style="border: 1px solid #000; padding: 8px;">5500</td>
+      <td style="border: 1px solid #000; padding: 8px; ">5500</td>
       <td style="border: 1px solid #000; padding: 8px;">3</td>
   </tr>
   </tbody>
@@ -264,11 +264,11 @@
         <td style="border: 1px solid #000; padding: 8px;">10000</td>
         <td style="border: 1px solid #000; padding: 8px;">1</td>
     </tr>
-    <tr style="background-color: red;">
+    <tr style="background-color: red;color: white;">
       <td style="border: 1px solid #000; padding: 8px;">5</td>
       <td style="border: 1px solid #000; padding: 8px;">Renault Clio dci</td>
       <td style="border: 1px solid #000; padding: 8px;">2019</td>
-      <td style="border: 1px solid #000; padding: 8px;">5500</td>
+      <td style="border: 1px solid #000; padding: 8px; ">5500</td>
       <td style="border: 1px solid #000; padding: 8px;">3</td>
   </tr>
   </tbody>
@@ -404,8 +404,8 @@
 <!-- Content after the slideshow -->
 <div style="margin-top: 20px;">
   <h3>Descrizione del Task</h3>
-  <p id="tutorial-instructions">In questo esperimento, ti verrà chiesto di <b>caricare un dataset e un file con i risultati di due discovery</b> di RFD fatti prima e dopo delle operazioni di inserimento e cancellazione. Ti verrà assegnata una <b>RFD target</b> scoperta sui dati aggiornati e appartenente alla categoria <b> ‘Specializzata’ o ‘Generalizzata’</b>. Dovrai poi espandere l'<b>RFD tree</b> selezionando la categoria corretta e poi l' RHS di interesse. A questo punto, nella tabella comparativa, sarà necessario cercare la dipendenza target e sfruttare le funzionalità <b>Explain e Interact</b> offerte da RYAN. Lo scopo è capire il motivo per cui l'RFD si è evoluta. Al termine del task ti verrà fornito un breve questionario da compilare. </p>
-  <p id="objective-text"></p>
+  <p id="tutorial-instructions">In questo esperimento, ti verrà chiesto di <b>caricare un dataset e un file con i risultati di due discovery</b> di RFD fatti prima e dopo delle operazioni di inserimento e cancellazione. Ti verrà assegnata una <b>RFD target</b> scoperta sui dati aggiornati e appartenente alla categoria <b> ‘Specializzata’ o ‘Generalizzata’</b>. Dovrai poi espandere l'<b>RFD tree</b> selezionando la categoria corretta e poi l' RHS di interesse. A questo punto, nella tabella comparativa, sarà necessario cercare la dipendenza target e sfruttare le funzionalità <b>Interact</b> offerte da RYAN. Lo scopo è capire il motivo per cui l'RFD si è evoluta. Al termine del task ti verrà fornito un breve questionario da compilare. </p>
+  <p id="objective-text" style="background-color: #19a4c081; padding: 5px; border-style: solid; color: white; font-weight: bold; border-color: black;"></p>
   <p id="tutorial-instructions"><b>Questo tutorial rimarrà disponibile durante il test se ne hai bisogno.</b></p>
   <p id="tutorial-instructions">Se sei pronto, puoi cliccare sul pulsante qui sotto per iniziare l'esperimento. Altrimenti, puoi chiedere ulteriori dettagli!</p>
   </div>
@@ -452,9 +452,9 @@
 
     // Array di obiettivi
     const objectives = [
-    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Naviga nell'albero RFD espandendo il nodo 'Specializzazioni'. Poi, espandi il nodo che contiene tutte le RFD con RHS 'serum-creatinine'. Nella tabella, seleziona la RFD con LHS 'age, platelets, serum-sodium'. Devi capire perché questa RFD specializzata è stata scoperta invece di quella originale. Clicca sul pulsante Explain e attendi la risposta del modello. Una volta pronta, leggi attentamente la spiegazione. Infine, chiudi la finestra di spiegazione e clicca sul pulsante Interact nella stessa riga. Leggi attentamente il prompt compilato, poiché il questionario finale ti chiederà di confrontare il prompt con la spiegazione del modello.",
-    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Naviga nell'albero RFD espandendo il nodo 'Generalizzazioni'. Poi, espandi il nodo che contiene tutte le RFD con RHS 'DEATH-EVENT'. Nella tabella, trova la RFD con LHS 'platelets', che è una generalizzazione di una vecchia RFD con LHS 'platelets, age'. Devi capire perché questa RFD generalizzata è stata scoperta invece di quella originale. Clicca sul pulsante Explain e attendi la risposta del modello. Una volta pronta, leggi attentamente la spiegazione. Infine, chiudi la finestra di spiegazione e clicca sul pulsante Interact nella stessa riga. Leggi attentamente il prompt compilato, poiché il questionario finale ti chiederà di confrontare il prompt con la spiegazione del modello.",
-    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Naviga nell'albero RFD espandendo il nodo 'Generalizzazioni'. Poi, espandi il nodo che contiene tutte le RFD con RHS 'DEATH-EVENT'. Nella tabella, trova la RFD con LHS 'platelets', che è una generalizzazione di una vecchia RFD con LHS 'platelets, ejection-fraction'. Devi capire perché questa RFD generalizzata è stata scoperta invece di quella originale. Clicca sul pulsante Explain e attendi la risposta del modello. Una volta pronta, leggi attentamente la spiegazione. Infine, chiudi la finestra di spiegazione e clicca sul pulsante Interact nella stessa riga. Leggi attentamente il prompt compilato, poiché il questionario finale ti chiederà di confrontare il prompt con la spiegazione del modello."
+    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Per prima cosa, guarda il sunburst chart per vedere la percentuale di RFD che sono state specializzate rispetto alle originali. Successivamente, naviga nell'albero RFD espandendo il nodo 'Specializzazioni' ed espandi il nodo che contiene tutte le RFD con RHS 'serum-creatinine'. Nella tabella, seleziona la RFD con LHS 'age, platelets, serum-sodium'. Devi capire perché questa RFD specializzata è stata scoperta invece di quella originale. Clicca sul pulsante Interact e leggi il prompt compilato dal tool. Successivamente, clicca su ASK e attendi la risposta del modello. Leggi attentamente la risposta, valutando se la spiegazione ti sembra corretta. ",
+    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Per prima cosa, guarda il sunburst chart per vedere la percentuale di RFD che sono state generalizzate rispetto alle originali. Successivamente, naviga nell'albero RFD espandendo il nodo 'Generalizzazioni' ed espandi il nodo che contiene tutte le RFD con RHS 'DEATH-EVENT'. Nella tabella, trova la RFD che generalizza la vecchia RFD con LHS 'platelets, age'. Devi capire perché questa è stata generalizzata. Clicca sul pulsante Interact e leggi il prompt compilato dal tool. Successivamente, clicca su ASK e attendi la risposta del modello. Leggi attentamente la risposta, valutando se la spiegazione ti sembra corretta. ",
+    "Task: Carica il dataset in formato csv e il file json con risultati del discovery di RFD. Per prima cosa, guarda il sunburst chart per vedere la percentuale di RFD che sono state generalizzate rispetto alle originali. Successivamente, naviga nell'albero RFD espandendo il nodo 'Generalizzazioni' ed espandi il nodo che contiene tutte le RFD con RHS 'DEATH-EVENT'. Nella tabella, trova la RFD che generalizza la vecchia RFD con LHS 'platelets, ejection-fraction'. Devi capire perché questa RFD è stata generalizzata. Clicca sul pulsante Interact e leggi il prompt compilato dal tool. Successivamente, clicca su ASK e attendi la risposta del modello. Leggi attentamente la risposta, valutando se la spiegazione ti sembra corretta. "
 ];
 
 
