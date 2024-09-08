@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker  # Import ticker per minor locators
-from matplotlib.ticker import MaxNLocator  # Import MaxNLocator per impostare x ticks come interi
+import matplotlib.ticker as ticker
+from matplotlib.ticker import MaxNLocator
 
 # Load CSV file
 df = pd.read_csv("risposte_questionario_5.csv")
@@ -25,8 +25,14 @@ counts_df = pd.DataFrame(index=range(1, 6), columns=selected_questions)
 for question in selected_questions:
     counts_df[question] = df[question].value_counts().reindex(range(1, 6), fill_value=0)
 
-# (Skip normalization step for absolute values)
-# counts_df = counts_df.div(counts_df.sum(axis=0), axis=1) * 100
+# Define labels for Likert scale values
+likert_labels = {
+    1: 'Strongly Disagree',
+    2: 'Disagree',
+    3: 'Neutral',
+    4: 'Agree',
+    5: 'Strongly Agree'
+}
 
 # Plotting the stacked horizontal bar chart
 fig, ax = plt.subplots(figsize=(10, len(selected_questions) * 0.25))
@@ -43,7 +49,7 @@ for likert_value in range(1, 6):
         color=colors[likert_value],
         edgecolor='black',  # Add black borders
         height=0.6,  # Reduce bar height for thinner bars
-        label=f'{likert_value}'
+        label=likert_labels[likert_value]  # Use custom label for the legend
     )
     # Update bottom to stack the next bar on top
     bottom += counts_df.loc[likert_value]
@@ -51,26 +57,26 @@ for likert_value in range(1, 6):
 # Adjust the x-axis limits based on the maximum sum of responses across all questions
 ax.set_xlim(0, counts_df.sum(axis=0).max())
 
-# Set x-axis ticks to integer values
-ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+# Set x-axis ticks to integer values from 1 to 19
+ax.set_xticks(range(1, 20))
+ax.set_xticklabels(range(1, 20))
+
+# Reduce the size of y ticks and x ticks
+ax.tick_params(axis='y', labelsize=8)
+ax.tick_params(axis='x', labelsize=8)
+
+# Invert the order of questions on the y-axis
+ax.invert_yaxis()
+
+# Adding grid and sub-grid
+ax.grid(True, which='major', axis='x', linestyle='--', color='grey', alpha=0.7)  # Main grid
+
+# Adjusting the legend to be horizontal and placed above the plot
+ax.legend(bbox_to_anchor=(0.5, 1.02), loc='lower center', ncol=5, fontsize=8)
 
 # Adding labels and title
 ax.set_xlabel('Number of Responses', fontsize=8)  # Updated label for absolute values
 ax.set_ylabel('Question ID', fontsize=8)
-
-ax.set_yticklabels(ax.get_yticklabels(), fontsize=8)  # Riduce la dimensione dei y ticks
-ax.set_xticklabels(ax.get_xticklabels(), fontsize=8)  # Riduce la dimensione degli x ticks
-
-
-# Adding grid and sub-grid
-ax.grid(True, which='major', axis='x', linestyle='--', color='grey', alpha=0.7)  # Main grid
-ax.grid(True, which='minor', axis='x', linestyle=':', color='lightgrey', alpha=0.7)  # Sub-grid
-
-# Enable minor ticks only on the x-axis
-ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))  # Adjust number of minor ticks as needed
-
-# Adjusting the legend to be horizontal and placed above the plot
-ax.legend(bbox_to_anchor=(0.5, 1.02), loc='lower center', ncol=5, fontsize=8)
 
 plt.savefig("likert.pdf", bbox_inches='tight')
 
