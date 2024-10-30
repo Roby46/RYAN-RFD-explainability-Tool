@@ -44,15 +44,15 @@ color_map = {
     'High': '#003049',
     'Medium': '#d62828',
     'Low': '#f77f00',
-    'None': '#fcbf49'
+    'N.A.': '#fcbf49'
 }
 
 # Definisci l'ordine dei segmenti per ogni domanda
 order_map = {
     "1": ["Female", "Male"],
     "2": ["Pr.", "R.F.", "Ph.D. Student", "Student"],
-    "3": ["High", "Medium", "Low", "None"],
-    "4": ["High", "Medium", "Low", "None"],
+    "3": ["High", "Medium", "Low", "N.A."],
+    "4": ["High", "Medium", "Low", "N.A."],
 }
 
 # Crea il grafico a barre impilate orizzontali
@@ -65,10 +65,11 @@ bottom = np.zeros(len(selected_questions))
 for j, question in enumerate(selected_questions):
     # Ottieni l'ordine specificato per la domanda corrente
     ordered_values = order_map.get(question, counts_df.index)
-
+    print(counts_df)
     for value in ordered_values:
         if value in counts_df.index:
             width = counts_df.loc[value, question]
+            print(width)
             if width > 0:
                 bar = ax.barh(
                     y=f'Q{int(j)+1}',  # Etichetta ogni barra con il nome della domanda
@@ -76,7 +77,7 @@ for j, question in enumerate(selected_questions):
                     left=bottom[j],
                     color=color_map.get(value, '#cccccc'),  # Colore specificato per ogni valore unico, con default se non trovato
                     edgecolor='black',  # Bordi neri
-                    height=0.75,  # Altezza della barra
+                    height=0.65,  # Altezza della barra
                     zorder=3,
                 )
                 # Aggiungi il valore assunto al centro della barra
