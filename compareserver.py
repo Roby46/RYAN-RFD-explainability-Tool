@@ -30,7 +30,7 @@ if not os.path.exists(CSV_FILE):
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    return render_template('index ita.html')
 
 
 @app.route('/LLM_Answer2.html')
